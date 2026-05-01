@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [isPageClicked, setIsPageClicked] = useState(false)
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10)
@@ -22,7 +23,7 @@ export default function Navbar() {
           <button
             data-collapse-toggle="navbar-default"
             type="button"
-            className="inline-flex p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary"
+            className={`inline-flex p-2 ${scrolled ? 'invert' : ''} w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary`}
             aria-controls="navbar-default"
             aria-expanded="false"
             onClick={() => setIsOpen(!isOpen)}
@@ -61,12 +62,65 @@ export default function Navbar() {
             >
               Appointment
             </a>
-            <a
-              href="#"
-              className="block py-2 px-3 rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
-            >
-              Pages
-            </a>
+            <div className="relative">
+              <button
+                onClick={() => setIsPageClicked(!isPageClicked)}
+                className="py-2 px-3 rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent flex justify-center items-center"
+              >
+                Pages
+                <svg
+                  className="w-4 h-4 ms-1.5"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="m19 9-7 7-7-7"
+                  />
+                </svg>
+              </button>
+              <div
+                id="dropdownNavbar"
+                className={`absolute z-10 ${isPageClicked ? 'block' : 'hidden'} top-full bg-white text-black rounded-base shadow-lg w-44`}
+              >
+                <ul
+                  className="p-2 text-sm text-body font-medium"
+                  aria-labelledby="dropdownNvbarButton"
+                >
+                  <li>
+                    <a
+                      href="#"
+                      className="inline-flex items-center w-full p-2 hover:bg-gray-300 hover:text-heading rounded"
+                    >
+                      Dashboard
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      className="inline-flex items-center w-full p-2 hover:bg-gray-300 hover:text-heading rounded"
+                    >
+                      Settings
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      className="inline-flex items-center w-full p-2 hover:bg-gray-300 hover:text-heading rounded"
+                    >
+                      Earnings
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
         <div>

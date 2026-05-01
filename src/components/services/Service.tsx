@@ -67,10 +67,10 @@ export default function Service() {
           <div className="overflow-hidden w-full">
             <div
               className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentIndex * 25}%)` }}
+              style={{ transform: `translateX(-${currentIndex * 10}%)` }}
             >
-              {logos.map((l) => (
-                <div key={l.alt} className="flex-none justify-center">
+              {[...logos, ...logos].map((l, i) => (
+                <div key={i} className="flex-none justify-center">
                   <Image
                     src={l.src}
                     alt={l.alt}
