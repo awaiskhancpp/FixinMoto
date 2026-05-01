@@ -16,13 +16,13 @@ export default function Testimonials() {
   return (
     <section className="bg-[#292929] w-full">
       <div className="grid grid-cols-12 text-white py-10 px-10">
-        <div className="col-span-8">
+        <div className="lg:col-span-8 md:col-span-6 col-span-12">
           <p className="text-slate-400">Testimonials</p>
           <h1 className="font-bold text-2xl md:text-4xl lg:text-6xl">
             What Drivers are Saying About <span className="text-red-500">FixinMoto </span>
           </h1>
         </div>
-        <div className="col-span-4 flex justify-center items-center text-center ">
+        <div className="md:col-span-4 col-span-12 flex justify-center items-center text-center ">
           <p className="text-slate-400">
             Read what our satisfied customers have to say about our products and services
           </p>
@@ -31,15 +31,15 @@ export default function Testimonials() {
       <div className="pt-10 md:w-[80%] ml-auto md:rounded-tl-[24px] bg-[#DB323E] h-[600px] flex flex-col">
         <div
           id="default-carousel"
-          className="relative px-20 overflow-hidden space-x-2 w-full"
+          className="relative overflow-hidden space-x-2 w-full"
           data-carousel="slide"
         >
           <div
-            className="flex justify-center w-full px-3 md:gap-6 pl-2 transition-transform duration-500"
+            className="flex justify-center gap-3 md:gap-6 transition-transform duration-500"
             style={{ transform: `translateX(-${currentIndex * (isMobile ? 100 : 40)}%)` }}
           >
             {[...nums, ...nums].map((t, i) => (
-              <div key={i} className="w-full duration-700 ease-in-out " data-carousel-item>
+              <div key={i} className="duration-700 ease-in-out " data-carousel-item>
                 <TestimonialCard />
               </div>
             ))}
@@ -106,7 +106,7 @@ export default function Testimonials() {
 
 function TestimonialCard() {
   return (
-    <div className="rounded-lg bg-white w-[90vw] h-auto md:w-[400px] md:h-[460px] px-6 pt-20 ">
+    <div className="rounded-lg bg-white w-[85vw] h-auto md:w-[400px] md:h-[460px] px-6 pt-20 pb-20 ">
       <div>
         <Image
           src="/heroimg.png"

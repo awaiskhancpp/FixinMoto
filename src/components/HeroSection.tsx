@@ -3,13 +3,13 @@ export default function HeroSection() {
   return (
     <div className="relative w-full h-screen">
       <Image
-        src="/heroimg.png"
+        src="/heroImg.png"
         alt="heroimage"
         fill
         className="w-full object-center object-cover"
       />
-      <div className="absolute inset-0 bg-[linear-gradient(269.96deg,_rgba(0,0,0,0.79)_4.05%,_rgba(0,0,0,0)_92.43%)]" />
-      <div className="absolute pt-30 lg:pt-24 md:pt-40">
+      <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent" />
+      <div className="absolute pt-30 z-[600] lg:pt-24 md:pt-40">
         <div className="pl-6 md:pl-20">
           <div className="text-4xl md:text-6xl lg:text-8xl text-white">
             Drive Confidently with <span className="text-red-600">FixinMoto</span>

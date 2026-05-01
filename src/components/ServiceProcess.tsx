@@ -12,13 +12,13 @@ export default function ServiceProcess() {
       </section>
       <section className="w-full bg-black">
         <div className="grid grid-cols-12 text-white py-10 px-10">
-          <div className="col-span-6">
+          <div className="md:col-span-8 col-span-12">
             <p className="text-slate-400">Service Process</p>
             <h1 className="font-bold text-2xl md:text-4xl lg:text-6xl">
               What to Expect with <span className="text-red-500">FixinMoto </span>
             </h1>
           </div>
-          <div className="col-span-6 flex justify-center items-center text-center ">
+          <div className="md:col-span-4 col-span-12 flex justify-center items-center text-center ">
             <p className="text-slate-400">
               A smooth and transparent process
               <br /> for all your vehicle needs.

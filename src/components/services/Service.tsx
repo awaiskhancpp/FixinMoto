@@ -76,7 +76,7 @@ export default function Service() {
                     alt={l.alt}
                     width={120}
                     height={60}
-                    className="invert object-contain"
+                    className="invert object-fit object-contain"
                   />
                 </div>
               ))}

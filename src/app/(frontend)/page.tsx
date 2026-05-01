@@ -12,6 +12,7 @@ import Service from '@/components/services/Service'
 import WhyChooseUS from '@/components/WhyChooseUs'
 import ServiceProcess from '@/components/ServiceProcess'
 import Testimonials from '@/components/Testimonials'
+import Blog from '@/components/Blog'
 
 import config from '@/payload.config'
 import './styles.css'
@@ -33,6 +34,8 @@ export default async function HomePage() {
         <WhyChooseUS />
         <ServiceProcess />
         <Testimonials />
+        <Blog />
+        <CoverageArea />
         <CallToAction />
         <Footer />
       </div>

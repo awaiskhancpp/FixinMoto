@@ -17,7 +17,7 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed z-50 flex items-center justify-around w-full pt-6 pb-3 ${scrolled ? ' bg-white text-black' : 'bg-transparent text-white'}`}
+        className={`fixed z-[1000] flex items-center justify-around w-full pt-6 pb-3 ${scrolled ? ' bg-white text-black' : 'bg-transparent text-white'}`}
       >
         <div className="flex items-center">
           <button
@@ -115,7 +115,7 @@ export default function Navbar() {
                       href="#"
                       className="inline-flex items-center w-full p-2 hover:bg-gray-300 hover:text-heading rounded"
                     >
-                      Earnings
+                      Nothing
                     </a>
                   </li>
                 </ul>
