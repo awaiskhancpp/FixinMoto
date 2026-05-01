@@ -2,9 +2,14 @@ import Image from 'next/image'
 export default function HeroSection() {
   return (
     <div className="relative w-full h-screen">
-      <Image src="/heroimg.png" alt="heroimage" fill className="w-full h-screen object-cover" />
+      <Image
+        src="/heroimg.png"
+        alt="heroimage"
+        fill
+        className="w-full object-center object-cover"
+      />
       <div className="absolute inset-0 bg-[linear-gradient(269.96deg,_rgba(0,0,0,0.79)_4.05%,_rgba(0,0,0,0)_92.43%)]" />
-      <div className="absolute pt-24 md:pt-40">
+      <div className="absolute pt-30 lg:pt-24 md:pt-40">
         <div className="pl-6 md:pl-20">
           <div className="text-4xl md:text-6xl lg:text-8xl text-white">
             Drive Confidently with <span className="text-red-600">FixinMoto</span>
@@ -19,7 +24,7 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
-      <div className="absolute bottom-10 right-4 md:bottom-16 md:right-16 lg:bottom-20 lg:right-40">
+      <div className="absolute bottom-10 right-10 md:bottom-16 md:right-16 lg:bottom-20 lg:right-40">
         <p>
           Your car deserves the best care, and we deliver it with
           <br /> precision, speed, and reliability. Book your

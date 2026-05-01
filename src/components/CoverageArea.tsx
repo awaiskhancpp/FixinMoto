@@ -4,5 +4,6 @@ export default function CoverageArea() {
     //   <div></div>
     //   <div></div>
     // </section>
-      )
+    <></>
+  )
 }

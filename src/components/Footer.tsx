@@ -56,8 +56,8 @@ export default function Footer() {
               </p>
               <input
                 type="text"
-                placeholder="Email Address"
-                className="w-full border-[0.5px] pt-2 pr-[24px] pb-[10px] pl-[10px] border-white rounded-[8px]"
+                placeholder=" Email Address"
+                className="w-full border-[0.5px] pt-2 pr-1.5 pb-2 pl-1rem border-white rounded-lg"
               />
               <button className="bg-red-500 p-2 rounded-lg px-3 pr-3 flex">
                 Submit

@@ -8,6 +8,10 @@ import HeroSection from '@/components/HeroSection'
 import Footer from '@/components/Footer'
 import CallToAction from '@/components/CallToAction'
 import CoverageArea from '@/components/CoverageArea'
+import Service from '@/components/services/Service'
+import WhyChooseUS from '@/components/WhyChooseUs'
+import ServiceProcess from '@/components/ServiceProcess'
+import Testimonials from '@/components/Testimonials'
 
 import config from '@/payload.config'
 import './styles.css'
@@ -25,6 +29,10 @@ export default async function HomePage() {
       <div>
         <Navbar />
         <HeroSection />
+        <Service />
+        <WhyChooseUS />
+        <ServiceProcess />
+        <Testimonials />
         <CallToAction />
         <Footer />
       </div>
