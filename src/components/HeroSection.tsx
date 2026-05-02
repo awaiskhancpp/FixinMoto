@@ -2,12 +2,7 @@ import Image from 'next/image'
 export default function HeroSection() {
   return (
     <div className="relative w-full h-screen">
-      <Image
-        src="/heroImg.png"
-        alt="heroimage"
-        fill
-        className="w-full object-center object-cover"
-      />
+      <Image src="/heroImg.png" alt="heroimage" fill className="w-full object-center " />
       <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent" />
       <div className="absolute pt-30 z-[600] lg:pt-24 md:pt-40">
         <div className="pl-6 md:pl-20">
@@ -24,7 +19,7 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
-      <div className="absolute bottom-10 right-10 md:bottom-16 md:right-16 lg:bottom-20 lg:right-40">
+      <div className="absolute bottom-10 right-10 text-white md:bottom-16 md:right-16 lg:bottom-20 lg:right-40">
         <p>
           Your car deserves the best care, and we deliver it with
           <br /> precision, speed, and reliability. Book your
