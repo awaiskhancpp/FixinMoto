@@ -30,7 +30,7 @@ const CARDS = [
   },
   {
     cardNo: 3,
-    mainImg: 'break&services.webp',
+    mainImg: '/break&services.webp',
     logoImg: '/breakinspection.png',
     title: 'Brake Services',
   },
