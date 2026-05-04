@@ -17,7 +17,7 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed z-[1000] flex items-center justify-around w-full pt-6 pb-3 ${scrolled ? ' bg-white text-black' : 'bg-transparent text-white'}`}
+        className={`fixed z-[900] flex items-center justify-around w-full pt-6 pb-3 ${scrolled ? ' bg-white text-black' : 'bg-transparent text-white'}`}
       >
         <div className="flex items-center">
           <button
@@ -48,7 +48,7 @@ export default function Navbar() {
             </svg>
           </button>
           <div
-            className={`${isOpen ? 'flex' : 'hidden'} bg-white flex-col md:top-auto top-full gap-4 border-none absolute  md:flex md:flex-row md:bg-transparent md:w-auto text-l `}
+            className={`${isOpen ? 'flex' : 'hidden'} md:static bg-white flex-col md:top-auto top-full gap-4 border-none absolute  md:flex md:flex-row md:bg-transparent md:w-auto text-l `}
           >
             <a
               href="#"

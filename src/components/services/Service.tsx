@@ -1,7 +1,7 @@
 'use client'
 import Card from '../Card'
 import Image from 'next/image'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 interface Card {
   serviceNumber: number
@@ -9,58 +9,118 @@ interface Card {
   serviceIcon: { url: string; alt: string } | null
   backgroundImage: { url: string; alt: string } | null
 }
-
+const CARDS = [1, 2, 3, 4]
+const logos = [
+  { src: '/toyota.png', alt: 'toyota' },
+  { src: '/opel.png', alt: 'opel' },
+  { src: '/kia.png', alt: 'kia' },
+  { src: '/honda-car.png', alt: 'honda-car' },
+  { src: '/audi.png', alt: 'audi' },
+]
 export default function Service() {
   const [currentIndex, setCurrentIndex] = useState(0)
-  //   const service = await getServices()
-  const logos = [
-    { src: '/toyota.png', alt: 'toyota' },
-    { src: '/opel.png', alt: 'opel' },
-    { src: '/kia.png', alt: 'kia' },
-    { src: '/honda-car.png', alt: 'honda-car' },
-    { src: '/audi.png', alt: 'audi' },
-  ]
+
+  const [logoIndex, setLogoIndex] = useState(0)
+  const [activeCard, setActiveCard] = useState(0)
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const touchStartX = useRef<number>(0)
+  const touchStartScrollLeft = useRef<number>(0)
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % logos.length)
     }, 2000)
     return () => clearInterval(interval)
   }, [])
+  const handleScroll = () => {
+    const el = scrollRef.current
+    if (!el) return
+    const index = Math.round(el.scrollLeft / el.clientWidth)
+    setActiveCard(index)
+  }
+  const onTouchStart = (e: React.TouchEvent) => {
+    const el = scrollRef.current
+    if (!el) return
+    touchStartX.current = e.touches[0].clientX
+    touchStartScrollLeft.current = el.scrollLeft
+  }
+  const onTouchMove = (e: React.TouchEvent) => {
+    const el = scrollRef.current
+    if (!el) return
+    const deltaX = e.touches[0].clientX - touchStartX.current
+    el.scrollLeft = touchStartScrollLeft.current - deltaX
+  }
+  const onTouchEnd = () => {
+    const el = scrollRef.current
+    if (!el) return
+    const index = Math.round(el.scrollLeft / el.clientWidth)
+    el.scrollTo({ left: index * el.clientWidth, behavior: 'smooth' })
+    setActiveCard(index)
+  }
+  const scrollToCard = (index: number) => {
+    const el = scrollRef.current
+    if (!el) return
+    el.scrollTo({ left: index * el.clientWidth, behavior: 'smooth' })
+    setActiveCard(index)
+  }
   return (
     <>
-      <section className="w-full bg-[#222222] text-white relative md:p-23 p-10">
-        <div>
-          <p className="text-sm text-slate-500">Our Services</p>
-          <h1 className="md:text-7xl text-3xl">
-            <span className="text-[#DB323E]">Comprehensive</span>
-            <br /> Automotive <span className="text-[#DB323E]">Solutions</span>
-          </h1>
-          <p className="lg:absolute lg:top-30 lg:right-30 text-slate-500">
-            From routine maintenance to advanced
-            <br /> diagnostics, we’ve got all your automotive
-            <br /> needs covered.
-          </p>
+      <section className="w-full bg-[#222222] text-white relative md:px-20 md:py-10 px-4 py-4">
+        <div className="grid grid-cols-12 text-white">
+          <div className="lg:col-span-8 md:col-span-6 col-span-12">
+            <p className="text-slate-400">Our Services</p>
+            <h2 className="font-bold text-2xl md:text-4xl lg:text-6xl">
+              <span className="text-secondary">Comprehensive</span>
+              <br />
+              Automotive <span className="text-secondary">Solutions</span>
+            </h2>
+          </div>
+          <div className="md:col-span-4 col-span-12 flex md:justify-center md:items-center md:text-center justify-start">
+            <p className="text-slate-400">
+              From routine maintenance to advanced diagnostics, we’ve got all your automotive needs
+              covered.
+            </p>
+          </div>
         </div>
-        <div className="pt-20">
-          <div className="grid grid-cols-12 gap-x-3 justify-items-center space-y-4">
-            <a href="#" className="sm:col-span-6 lg:col-span-3 col-span-12">
-              <Card />
-            </a>
-            <a href="#" className="sm:col-span-6 lg:col-span-3 col-span-12">
-              <Card />
-            </a>
-            <a href="#" className="sm:col-span-6 lg:col-span-3 col-span-12">
-              <Card />
-            </a>
-            <a href="#" className="sm:col-span-6 lg:col-span-3 col-span-12">
-              <Card />
-            </a>
+        <div className="pt-10">
+          <div
+            className="flex gap-4 overflow-x-auto snap-x snap-mandatory md:px-4 md:pb-4 sm:hidden"
+            ref={scrollRef}
+            onScroll={handleScroll}
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+            style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
+          >
+            {CARDS.map((_, i) => (
+              <a href="#" key={i} className="">
+                <Card />
+              </a>
+            ))}
+          </div>
+          <div className="flex justify-center gap-2 mt-3">
+            {CARDS.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => scrollToCard(i)}
+                aria-label={`Go to card ${i + 1}`}
+                className="w-2 h-2 rounded-full transition-colors duration-300 md:hidden"
+                style={{ background: i === activeCard ? '#ef4444' : '#6b7280' }}
+              />
+            ))}
+          </div>
+          <div className="hidden md:grid md:grid-cols-12 md:gap-x-3 md:space-y-4">
+            {CARDS.map((_, i) => (
+              <a href="#" key={i} className="sm:col-span-6 lg:col-span-3 col-span-12">
+                <Card />
+              </a>
+            ))}
           </div>
         </div>
       </section>
-      <section className="w-full bg-[#222222] text-white pb-10">
-        <div className="flex w-full pl-20">
-          <div className="text-2xl w-[70%]">
+      <section className="w-full bg-[#222222]  text-white pb-2">
+        <div className="flex w-full pl-4 md:pl-20">
+          <div className="text-2xl w-[70%] justify-center items-center">
             Quality Car Repair You Can <br />
             Count On !
           </div>

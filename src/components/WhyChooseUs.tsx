@@ -2,13 +2,13 @@ import { CircleCheck } from 'lucide-react'
 import Image from 'next/image'
 export default function WhyChooseUS() {
   return (
-    <section className="w-full bg-[#292929]">
-      <div className="py-30 px-20 md:flex">
+    <section className="w-full bg-primary">
+      <div className="py-4 px-4 md:py-15 md:px-20 md:flex">
         <div className="text-slate-500 mr-8 pb-2 w-full">
           <p>Why Choose Us</p>
-          <h1 className="text-white ld:text-7xl md:text-4xl text-2xl">
-            The FixinMoto <br /> <span className="text-red-500">Difference</span>
-          </h1>
+          <h2 className="text-white ld:text-7xl md:text-4xl text-2xl">
+            The FixinMoto <br /> <span className="text-secondary">Difference</span>
+          </h2>
           <p>Discover why FixinMoto is the trusted choice for hundreds of car owners.</p>
           <div className="space-y-2 pt-3">
             <div className="flex text-base">
@@ -30,24 +30,24 @@ export default function WhyChooseUS() {
           </div>
           <button className="text-white bg-red-500 px-7 py-4 rounded-lg mt-3">Learn More</button>
         </div>
-        <div className="md:relative lg:space-y-3 ">
+        <div className="relative w-full aspect-[4/3] rounded-xl overflow-visible">
           <Image
             src="/heroimg.png"
             alt="middleimg"
             width={619}
             height={638}
-            className="overflow-visible rounded-lg pb-3"
+            className="object-cover"
           />
-          <div className="md:absolute bg-[#DB323E] -top-6 w-full pb-3 -right-6 grid justify-center items-center rounded-lg md:w-40 md:h-20 ">
-            <h1 className="text-3xl text-white font-bold pl-2">+15</h1>
-            <p className="text-slate-400">Years of experience</p>
+          <div className="absolute -top-4 -right-4 bg-[#DB323E] w-28 h-20 flex flex-col items-center justify-center rounded-lg z-10">
+            <h3 className="text-2xl text-white font-bold">+15</h3>
+            <p className="text-red-200 text-xs">Years of experience</p>
           </div>
           <Image
             src="/heroimg.png"
             alt="lowerimg"
             width={244}
             height={244}
-            className="border rounded-lg md:absolute  bottom-8 -left-8 z-1"
+            className="border rounded-lg absolute h-25 w-40 -bottom-2 -left-3 md:h-40 md:w-60  md:bottom-8 md:-left-8 md:z-1"
           />
         </div>
       </div>
