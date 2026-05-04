@@ -133,7 +133,7 @@ export default function Navbar() {
           />
         </div>
         <div>
-          <button className="rounded-lg bg-[#DB323E] w-25 h-12 text-white">Login</button>
+          <button className="rounded-lg bg-secondary w-25 h-12 text-white">Login</button>
         </div>
       </nav>
     </>

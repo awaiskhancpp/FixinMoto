@@ -9,7 +9,33 @@ interface Card {
   serviceIcon: { url: string; alt: string } | null
   backgroundImage: { url: string; alt: string } | null
 }
-const CARDS = [1, 2, 3, 4]
+interface CARD {
+  cardNo: number
+  mainImg: string
+  logoImg: string
+  title: string
+}
+const CARDS = [
+  {
+    cardNo: 1,
+    mainImg: '/engineRepairMain.png',
+    logoImg: '/servicelogo1.png',
+    title: 'Engine Repair & Maintenance',
+  },
+  {
+    cardNo: 2,
+    mainImg: '/oil&filterChange.webp',
+    logoImg: '/oilandfilterchange.png',
+    title: 'Oil & Filter Changes',
+  },
+  {
+    cardNo: 3,
+    mainImg: 'break&services.webp',
+    logoImg: '/breakinspection.png',
+    title: 'Brake Services',
+  },
+  { cardNo: 4, mainImg: '/tireCareMain.webp', logoImg: '/tirerotation.png', title: 'Tire Care' },
+]
 const logos = [
   { src: '/toyota.png', alt: 'toyota' },
   { src: '/opel.png', alt: 'opel' },
@@ -92,9 +118,14 @@ export default function Service() {
             onTouchEnd={onTouchEnd}
             style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
           >
-            {CARDS.map((_, i) => (
-              <a href="#" key={i} className="">
-                <Card />
+            {CARDS.map((card, i) => (
+              <a href="#" key={i}>
+                <Card
+                  title={card.title}
+                  mainImg={card.mainImg}
+                  logoImg={card.logoImg}
+                  cardNo={card.cardNo}
+                />
               </a>
             ))}
           </div>
@@ -110,9 +141,14 @@ export default function Service() {
             ))}
           </div>
           <div className="hidden md:grid md:grid-cols-12 md:gap-x-3 md:space-y-4">
-            {CARDS.map((_, i) => (
+            {CARDS.map((card, i) => (
               <a href="#" key={i} className="sm:col-span-6 lg:col-span-3 col-span-12">
-                <Card />
+                <Card
+                  title={card.title}
+                  mainImg={card.mainImg}
+                  logoImg={card.logoImg}
+                  cardNo={card.cardNo}
+                />
               </a>
             ))}
           </div>

@@ -1,5 +1,12 @@
 import Image from 'next/image'
-export default function Card() {
+interface CARD {
+  cardNo: number
+  mainImg: string
+  logoImg: string
+  title: string
+}
+
+export default function Card({ cardNo, mainImg, logoImg, title }: CARD) {
   return (
     <>
       <div className="relative w-[90vw] h-100 md:w-70 rounded-[15px] overflow-hidden">
