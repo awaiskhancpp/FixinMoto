@@ -1,7 +1,7 @@
 'use client'
 import { HeadingGrid } from './HeadingGrid'
 import { LocationForm } from './LocationForm'
-// import Map from './Map'
+import Map from './Map'
 
 export default function CoverageArea() {
   const word = ['Near', 'You']
@@ -14,7 +14,7 @@ export default function CoverageArea() {
         wordsToHighlight={word}
       />
       <div className="relative h-[300px] flex md:items-center">
-        {/* <Map /> */}
+        <Map />
         <div className="absolute inset-0 z-[500] pl-5 pt-10 md:pl-20">
           <LocationForm />
         </div>

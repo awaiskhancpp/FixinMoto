@@ -59,7 +59,7 @@ export default function Footer() {
                 placeholder=" Email Address"
                 className="w-full border-[0.5px] pt-2 pr-1.5 pb-2 pl-1rem border-white rounded-lg"
               />
-              <button className="bg-red-500 p-2 rounded-lg px-3 pr-3 flex">
+              <button className="bg-red-500 p-2 rounded-lg px-3 pr-3 flex justify-center items-center">
                 Submit
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
