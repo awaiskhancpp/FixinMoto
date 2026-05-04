@@ -15,7 +15,13 @@ export default function Card({ cardNo, mainImg, logoImg, title }: CARD) {
           <div className="absolute inset-0 bg-gradient-to-b from-gray-600 to-[#292929] p-10">
             <div>{cardNo}</div>
             <div className="mt-50">
-              <Image src={logoImg} alt="servicelogo1" width={64} height={64} />
+              <Image
+                src={logoImg}
+                alt="servicelogo1"
+                width={64}
+                height={64}
+                className="object-contain"
+              />
               <h3 className="text-lg">{title}</h3>
             </div>
           </div>

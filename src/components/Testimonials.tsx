@@ -16,14 +16,14 @@ export default function Testimonials() {
     return () => window.removeEventListener('resize', check)
   }, [])
   return (
-    <section className="bg-[#292929] w-full">
+    <section className="bg-primary w-full">
       <HeadingGrid
         pageDescription="Read what our satisfied customers have to say about our products and services."
         pageTitle="What Drivers are Saying About FixinMoto"
         pageName="Testimonials"
         wordsToHighlight={word}
       />
-      <div className="pt-10 md:w-[80%] ml-auto md:rounded-tl-[24px] bg-[#DB323E] h-[600px] flex flex-col">
+      <div className="pt-10 md:w-[80%] ml-auto md:rounded-tl-[24px] bg-secondary h-[600px] flex flex-col">
         <div
           id="default-carousel"
           className="relative overflow-hidden space-x-2 w-full"

@@ -3,7 +3,7 @@ import { MapPin, Phone, Mail, Globe } from 'lucide-react'
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-[#292929]">
+    <footer className="w-full bg-primary">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 py-4 px-4 lg:px-20 text-white">
         <div className="lg:col-span-3 pt-4">
           <Image src="/logonavbar.png" width={140} height={42} alt="footerlogo" />
@@ -27,7 +27,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="lg:col-span-3 py-5">
-          <h1 className="font-medium ">Opening Hours</h1>
+          <h3 className="font-medium ">Opening Hours</h3>
           <div className="space-y-2 mt-7">
             <p>Mon-Fri : 08.00 - 20.00</p>
             <p>Sat-Sun: 10.00 - 16.00</p>
@@ -35,7 +35,7 @@ export default function Footer() {
         </div>
         <div className="lg:col-span-3 ">
           <div className="grid">
-            <h1 className="font-medium mt-6">Quick Links</h1>
+            <h3 className="font-medium mt-6">Quick Links</h3>
             <div className="space-y-2 mt-4 grid">
               <a href="#">About us</a>
               <a href="#">Why with us</a>
@@ -48,7 +48,7 @@ export default function Footer() {
         </div>
         <div className="lg:col-span-3">
           <div className="grid-cols-1">
-            <h1 className="font-medium pt-6">Subscribe to Our Newsletter</h1>
+            <h3 className="font-medium pt-6">Subscribe to Our Newsletter</h3>
             <div className="space-y-5 mt-3">
               <p>
                 Sign up for our newsletter to receive exclusive promotions, news, and tips straight

@@ -91,7 +91,7 @@ const BlogCard = () => {
           <button className="bg-[#DB323E] text-white rounded-md px-3 py-1">Category</button>
           <p className="text-gray-400">5 mint read</p>
         </div>
-        <h1 className="text-xl pb-1">Revving Up: The Future of Automotive Innovation</h1>
+        <h3 className="text-xl pb-1">Revving Up: The Future of Automotive Innovation</h3>
         <div className="flex justify-between items-center text-slate-400">
           <div className="flex items-center">
             <Clock className="size-4" />

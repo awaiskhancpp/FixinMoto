@@ -112,10 +112,10 @@ export default function Navbar() {
                   </li>
                   <li>
                     <a
-                      href="#"
+                      href="/services"
                       className="inline-flex items-center w-full p-2 hover:bg-gray-300 hover:text-heading rounded"
                     >
-                      Nothing
+                      Services
                     </a>
                   </li>
                 </ul>

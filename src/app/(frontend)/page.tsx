@@ -28,7 +28,6 @@ export default async function HomePage() {
   return (
     <>
       <div>
-        <Navbar />
         <HeroSection />
         <Service />
         <WhyChooseUS />
@@ -36,8 +35,6 @@ export default async function HomePage() {
         <Testimonials />
         <Blog />
         <CoverageArea />
-        <CallToAction />
-        <Footer />
       </div>
     </>
   )

@@ -30,15 +30,9 @@ export default function WhyChooseUS() {
           </div>
           <button className="text-white bg-red-500 px-7 py-4 rounded-lg mt-3">Learn More</button>
         </div>
-        <div className="relative w-full aspect-[4/3] rounded-xl overflow-visible">
-          <Image
-            src="/heroimg.png"
-            alt="middleimg"
-            width={619}
-            height={638}
-            className="object-cover"
-          />
-          <div className="absolute -top-4 -right-4 bg-[#DB323E] w-28 h-20 flex flex-col items-center justify-center rounded-lg z-10">
+        <div className="relative w-full h-[400px] md:h-[500px] lg:h-[580px] rounded-xl ">
+          <Image src="/heroimg.png" alt="middleimg" fill className="object-cover rounded-xl" />
+          <div className="absolute -top-5 left-20 bg-secondary w-38 h-20 flex flex-col items-center justify-center rounded-lg z-10">
             <h3 className="text-2xl text-white font-bold">+15</h3>
             <p className="text-red-200 text-xs">Years of experience</p>
           </div>
@@ -47,7 +41,7 @@ export default function WhyChooseUS() {
             alt="lowerimg"
             width={244}
             height={244}
-            className="border rounded-lg absolute h-25 w-40 -bottom-2 -left-3 md:h-40 md:w-60  md:bottom-8 md:-left-8 md:z-1"
+            className="border rounded-lg absolute h-25 w-50 -bottom-10 -left-5 md:h-40 md:w-60  md:-bottom-4 md:-left-15 md:z-1"
           />
         </div>
       </div>

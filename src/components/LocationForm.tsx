@@ -9,7 +9,7 @@ export const LocationForm = () => {
   }
   return (
     <>
-      <div className="bg-black md:w-[345px] md:h-[266px] w-[90vw] h-auto rounded-xl flex flex-col justify-center items-center space-y-3">
+      <div className="bg-black md:w-[345px] md:h-[266px] w-[90vw] h-auto rounded-xl flex flex-col justify-center items-center space-y-4 py-4">
         <input
           type="text"
           placeholder="Enter Your Location"
