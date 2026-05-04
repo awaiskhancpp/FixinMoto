@@ -1,11 +1,12 @@
 'use client'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
+import { HeadingGrid } from './HeadingGrid'
 export default function Testimonials() {
   const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
-
+  let word = ['FixinMoto']
   useEffect(() => {
     const check = () => {
       setIsMobile(window.innerWidth < 768)
@@ -16,19 +17,12 @@ export default function Testimonials() {
   }, [])
   return (
     <section className="bg-[#292929] w-full">
-      <div className="grid grid-cols-12 text-white md:py-10 md:px-20 px-4 py-4">
-        <div className="lg:col-span-8 md:col-span-6 col-span-12">
-          <p className="text-slate-400">Testimonials</p>
-          <h1 className="font-bold text-2xl md:text-4xl lg:text-6xl">
-            What Drivers are Saying About <span className="text-secondary">FixinMoto </span>
-          </h1>
-        </div>
-        <div className="md:col-span-4 col-span-12 flex justify-center items-center text-center ">
-          <p className="text-slate-400">
-            Read what our satisfied customers have to say about our products and services
-          </p>
-        </div>
-      </div>
+      <HeadingGrid
+        pageDescription="Read what our satisfied customers have to say about our products and services."
+        pageTitle="What Drivers are Saying About FixinMoto"
+        pageName="Testimonials"
+        wordsToHighlight={word}
+      />
       <div className="pt-10 md:w-[80%] ml-auto md:rounded-tl-[24px] bg-[#DB323E] h-[600px] flex flex-col">
         <div
           id="default-carousel"

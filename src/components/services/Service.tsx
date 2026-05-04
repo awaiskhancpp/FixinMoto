@@ -2,18 +2,13 @@
 import Card from '../Card'
 import Image from 'next/image'
 import { useState, useEffect, useRef } from 'react'
+import { HeadingGrid } from '../HeadingGrid'
 
 interface Card {
   serviceNumber: number
   serviceName: string
   serviceIcon: { url: string; alt: string } | null
   backgroundImage: { url: string; alt: string } | null
-}
-interface CARD {
-  cardNo: number
-  mainImg: string
-  logoImg: string
-  title: string
 }
 const CARDS = [
   {
@@ -51,6 +46,7 @@ export default function Service() {
   const scrollRef = useRef<HTMLDivElement>(null)
   const touchStartX = useRef<number>(0)
   const touchStartScrollLeft = useRef<number>(0)
+  let word = ['Comprehensive', 'Solutions']
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -91,8 +87,15 @@ export default function Service() {
   }
   return (
     <>
-      <section className="w-full bg-[#222222] text-white relative md:px-20 md:py-10 px-4 py-4">
-        <div className="grid grid-cols-12 text-white">
+      <section className="w-full bg-[#222222] text-white relative ">
+        <HeadingGrid
+          pageDescription="From routine maintenance to advanced diagnostics, we’ve got all your automotive needs
+              covered."
+          pageTitle="Comprehensive Automotive Solutions"
+          pageName="Our Services"
+          wordsToHighlight={word}
+        />
+        {/* <div className="grid grid-cols-12 text-white ">
           <div className="lg:col-span-8 md:col-span-6 col-span-12">
             <p className="text-slate-400">Our Services</p>
             <h2 className="font-bold text-2xl md:text-4xl lg:text-6xl">
@@ -107,8 +110,8 @@ export default function Service() {
               covered.
             </p>
           </div>
-        </div>
-        <div className="pt-10">
+        </div> */}
+        <div className="pt-10 md:px-20 md:py-10 px-4 py-4">
           <div
             className="flex gap-4 overflow-x-auto snap-x snap-mandatory md:px-4 md:pb-4 sm:hidden"
             ref={scrollRef}

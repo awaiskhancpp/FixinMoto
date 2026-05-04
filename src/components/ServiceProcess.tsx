@@ -1,5 +1,7 @@
 import Image from 'next/image'
+import { HeadingGrid } from './HeadingGrid'
 export default function ServiceProcess() {
+  let word = ['FixinMoto']
   return (
     <>
       <section className="w-full h-[380px] relative text-white ">
@@ -11,7 +13,13 @@ export default function ServiceProcess() {
         </div>
       </section>
       <section className="w-full bg-black ">
-        <div className="grid grid-cols-12 text-white md:px-20 md:py-10 px-4 py-4">
+        <HeadingGrid
+          pageDescription=" A smooth and transparent process for all your vehicle needs."
+          pageTitle="What to Expect with FixinMoto"
+          pageName="Service Process"
+          wordsToHighlight={word}
+        />
+        {/* <div className="grid grid-cols-12 text-white md:px-20 md:py-10 px-4 py-4">
           <div className="md:col-span-8 col-span-12">
             <p className="text-slate-400">Service Process</p>
             <h2 className="font-bold text-2xl md:text-4xl lg:text-5xl">
@@ -21,10 +29,10 @@ export default function ServiceProcess() {
           <div className="md:col-span-4 col-span-12 flex md:justify-center md:items-center md:text-center justify-start">
             <p className="text-slate-400">
               A smooth and transparent process
-              <br /> for all your vehicle needs.
+              for all your vehicle needs.
             </p>
           </div>
-        </div>
+        </div> */}
         <div className="grid grid-cols-12 md:px-20 md:py-10 px-4 py-4">
           <div className="lg:col-span-6 col-span-12 text-white space-y-8">
             <div>
