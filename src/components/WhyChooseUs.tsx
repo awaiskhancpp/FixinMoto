@@ -59,7 +59,7 @@ export default function WhyChooseUs() {
               Years of Experience
             </span>
           </div>
-          <div className="absolute -bottom-2 -left-4 z-10 h-[200px] w-[200px] overflow-hidden rounded-[15px] border border-white sm:h-[220px] sm:w-[220px] lg:-bottom-2 lg:left-[-4.7rem] lg:h-[244px] lg:w-[244px]">
+          <div className="absolute -bottom-2 -left-4 z-10 h-[200px] w-[200px] overflow-hidden rounded-[15px] sm:h-[220px] sm:w-[220px] lg:-bottom-2 lg:left-[-4.7rem] lg:h-[244px] lg:w-[244px]">
             <Image src="/heroimg.png" alt="" fill className="object-cover" sizes="244px" />
           </div>
         </div>

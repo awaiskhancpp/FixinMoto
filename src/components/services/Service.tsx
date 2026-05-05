@@ -126,7 +126,7 @@ export default function Service() {
                 />
               ))}
             </div>
-            <div className="hidden md:grid md:grid-cols-12 md:gap-x-3 md:space-y-4">
+            <div className="hidden md:grid md:grid-cols-12 md:gap-x-3 md:gap-4 md:space-y-4">
               {CARDS.map((card, i) => (
                 <a href="/services" key={i} className="sm:col-span-6 lg:col-span-3 col-span-12">
                   <Card
@@ -158,9 +158,9 @@ export default function Service() {
                     <Image
                       src={l.src}
                       alt={l.alt}
-                      width={120}
-                      height={60}
-                      className="object-contain object-fit px-3"
+                      width={110}
+                      height={50}
+                      className="object-contain object-fit px-6 "
                     />
                   </div>
                 ))}

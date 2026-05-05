@@ -102,7 +102,7 @@ export default function Blog() {
         <div
           ref={scrollRef}
           onScroll={handleScroll}
-          className="-mx-4 flex gap-8 md:px-16 px-4 pb-2 [scrollbar-width:none] md:mx-0 md:overflow-visible [&::-webkit-scrollbar]:hidden"
+          className="-mx-4 flex gap-8 overflow-x-auto pb-2 px-4 md:px-16 [scrollbar-width:none] md:mx-0 md:overflow-visible md:px-0  [&::-webkit-scrollbar]:hidden"
           style={{ scrollSnapType: 'x mandatory' }}
         >
           {POSTS.map((post) => (
