@@ -25,7 +25,7 @@ export function HeadingGrid({ pageName, pageTitle, pageDescription, wordsToHighl
           )}
         </h2>
       </div>
-      <div className="md:col-span-4 col-span-12 flex md:justify-center md:items-center md:text-center justify-start ">
+      <div className="md:col-span-4 col-span-12 flex md:justify-center md:items-center md:text-start justify-start ">
         <p className="text-slate-400">{pageDescription}</p>
       </div>
     </div>

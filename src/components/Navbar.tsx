@@ -124,13 +124,16 @@ export default function Navbar() {
           </div>
         </div>
         <div>
-          <Image
-            src={'/logonavbar.png'}
-            alt="navbarlogo"
-            width={140}
-            height={42}
-            className={`${scrolled ? 'invert' : ' '} object-cover object-center`}
-          />
+          <a href="/">
+            {' '}
+            <Image
+              src={'/logonavbar.png'}
+              alt="navbarlogo"
+              width={140}
+              height={42}
+              className={`${scrolled ? 'invert' : ' '} object-cover object-center`}
+            />
+          </a>
         </div>
         <div>
           <button className="rounded-lg bg-secondary w-25 h-12 text-white">Login</button>

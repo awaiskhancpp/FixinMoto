@@ -1,48 +1,67 @@
-import { CircleCheck } from 'lucide-react'
 import Image from 'next/image'
-export default function WhyChooseUS() {
+import { CircleCheck } from 'lucide-react'
+const bullets = [
+  'Certified and experienced technicians.',
+  'Transparent pricing with no hidden charges.',
+  'Advanced tools and diagnostic equipment.',
+  'Fast, reliable service you can trust.',
+]
+export default function WhyChooseUs() {
   return (
-    <section className="w-full bg-primary">
-      <div className="py-4 px-4 md:py-15 md:px-20 md:flex">
-        <div className="text-slate-500 mr-8 pb-2 w-full">
-          <p>Why Choose Us</p>
-          <h2 className="text-white ld:text-7xl md:text-4xl text-2xl">
-            The FixinMoto <br /> <span className="text-secondary">Difference</span>
-          </h2>
-          <p>Discover why FixinMoto is the trusted choice for hundreds of car owners.</p>
-          <div className="space-y-2 pt-3">
-            <div className="flex text-base">
-              <CircleCheck className="text-red-500 mr-3" />
-              <p>Certified and experienced technicians.</p>
-            </div>
-            <div className="flex">
-              <CircleCheck className="text-red-500 mr-3" />
-              <p>Certified and experienced technicians.</p>
-            </div>
-            <div className="flex">
-              <CircleCheck className="text-red-500 mr-3" />
-              <p>Certified and experienced technicians.</p>
-            </div>
-            <div className="flex">
-              <CircleCheck className="text-red-500 mr-3" />
-              <p>Certified and experienced technicians.</p>
-            </div>
+    <section className="w-full bg-primary py-28 px-4 md:px-16">
+      <div className="mx-auto flex max-w-[1440px] flex-col items-center gap-10 lg:flex-row lg:gap-8">
+        <div className="flex w-full flex-col gap-4 lg:max-w-none lg:flex-1">
+          <div className="flex flex-col gap-2">
+            <p className="text-base font-medium leading-normal text-white/50">Why Choose Us</p>
+            <h2 className="text-[clamp(2rem,5vw,4rem)] font-medium leading-[1.125] text-white">
+              The FixinMoto <span className="text-secondary">Difference</span>
+            </h2>
+            <p className="max-w-xl text-sm leading-[1.4286] text-white/50">
+              Discover why FixinMoto is the trusted choice for hundreds of car owners.
+            </p>
           </div>
-          <button className="text-white bg-red-500 px-7 py-4 rounded-lg mt-3">Learn More</button>
+          <ul className="flex flex-col gap-2 pt-[2px] lg:pt-0">
+            {bullets.map((line) => (
+              <li key={line} className="flex gap-6">
+                <CircleCheck
+                  className="size-6 shrink-0 text-secondary"
+                  strokeWidth={2}
+                  aria-hidden
+                />
+                <span className="text-sm leading-[1.4286] text-white/50">{line}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="flex flex-wrap gap-6 pt-4">
+            <button
+              type="button"
+              className="rounded-lg bg-secondary px-8 py-[15px] text-sm font-medium leading-[1.4286] text-white"
+            >
+              Learn More
+            </button>
+          </div>
         </div>
-        <div className="relative w-full h-[400px] md:h-[500px] lg:h-[580px] rounded-xl ">
-          <Image src="/heroimg.png" alt="middleimg" fill className="object-cover rounded-xl" />
-          <div className="absolute -top-5 left-20 bg-secondary w-38 h-20 flex flex-col items-center justify-center rounded-lg z-10">
-            <h3 className="text-2xl text-white font-bold">+15</h3>
-            <p className="text-red-200 text-xs">Years of experience</p>
+        <div className="relative h-[400px] w-full shrink-0 sm:h-[520px] lg:h-[638px] lg:max-w-[50%] lg:flex-1">
+          <div className="absolute inset-y-0 left-0 right-[8%] overflow-hidden rounded-[15px] lg:right-0">
+            <Image
+              src="/heroimg.png"
+              alt=""
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
           </div>
-          <Image
-            src="/heroimg.png"
-            alt="lowerimg"
-            width={244}
-            height={244}
-            className="border rounded-lg absolute h-25 w-50 -bottom-10 -left-5 md:h-40 md:w-60  md:-bottom-4 md:-left-15 md:z-1"
-          />
+          <div className="absolute right-[5%] top-0 z-10 flex -translate-y-6 flex-col gap-2 rounded-[15px] bg-secondary px-6 py-[18px] sm:right-[8%] lg:-right-[3%]">
+            <span className="text-center text-4xl font-bold leading-[1.125] text-white sm:text-5xl lg:text-[64px]">
+              +15
+            </span>
+            <span className="text-center text-lg leading-[1.444] text-white/50">
+              Years of Experience
+            </span>
+          </div>
+          <div className="absolute -bottom-2 -left-4 z-10 h-[200px] w-[200px] overflow-hidden rounded-[15px] border border-white sm:h-[220px] sm:w-[220px] lg:-bottom-2 lg:left-[-4.7rem] lg:h-[244px] lg:w-[244px]">
+            <Image src="/heroimg.png" alt="" fill className="object-cover" sizes="244px" />
+          </div>
         </div>
       </div>
     </section>

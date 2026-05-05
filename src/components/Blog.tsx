@@ -1,108 +1,138 @@
 'use client'
-import { HeadingGrid } from './HeadingGrid'
+
 import Image from 'next/image'
-import { Clock } from 'lucide-react'
-import { CircleUserRound } from 'lucide-react'
-import { useState, useRef } from 'react'
+import { Calendar, User } from 'lucide-react'
+import { useRef, useState } from 'react'
+
+const SECTION = {
+  eyebrow: 'Blog',
+  title: 'Rev Up Your Ride: The Latest in Automotive News and Insights',
+  description:
+    'Stay ahead of the curve with expert analysis, in-depth reviews, and the latest trends in the automotive world.',
+} as const
+
+const POSTS = [
+  {
+    title: 'Revving Up: The Future of Automotive Innovation',
+    date: 'December 29, 2024',
+    author: 'Alex Johnson',
+  },
+  {
+    title: 'Driving Change: Trends Shaping the Automotive Industry',
+    date: 'December 12, 2024',
+    author: 'Alex Johnson',
+  },
+  {
+    title: 'Under the Hood: Exploring the Latest in Automotive ',
+    date: 'December 7, 2024',
+    author: 'Alex Johnson',
+  },
+]
+interface BlogCard {
+  title: string
+  date: string
+  author: string
+}
+
+function BlogCard({ title, date, author }: BlogCard) {
+  return (
+    <article className="flex min-w-[min(100vw-2rem,calc((100%-64px)/3))] shrink-0 snap-center flex-col gap-6 rounded-[17px] bg-[#edf2fd] pb-[18px] md:min-w-0 md:flex-1">
+      <div className="relative aspect-[387/300] w-full overflow-hidden rounded-t-lg md:h-[300px] md:aspect-auto">
+        <Image
+          src="/heroimg.png"
+          alt=""
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 90vw, 33vw"
+        />
+      </div>
+
+      <div className="flex flex-col gap-4 px-[14px]">
+        <div className="flex flex-row flex-wrap items-center gap-4">
+          <span className="rounded-lg bg-secondary px-2 py-1 text-xs font-medium leading-[1.3] text-white">
+            Category
+          </span>
+          <span className="text-xs font-medium leading-[1.333] text-black/80">5 min read</span>
+        </div>
+
+        <h3 className="text-lg font-medium leading-[1.444] text-black">{title}</h3>
+      </div>
+
+      <div className="flex flex-row items-center justify-center gap-12 px-[14px] text-black/50 opacity-50">
+        <div className="flex flex-1 items-center justify-center gap-2 pl-[14px]">
+          <Calendar className="size-4 shrink-0" strokeWidth={1.5} aria-hidden />
+          <time className="text-xs font-normal leading-[1.333]" dateTime={date}>
+            {date}
+          </time>
+        </div>
+        <div className="flex flex-1 items-center justify-center gap-2 pr-[14px]">
+          <User className="size-4 shrink-0" strokeWidth={1.5} aria-hidden />
+          <span className="text-xs font-normal leading-[1.333]">{author}</span>
+        </div>
+      </div>
+    </article>
+  )
+}
 
 export default function Blog() {
-  const [activeCard, setActiveCard] = useState(0)
   const scrollRef = useRef<HTMLDivElement>(null)
-  const touchStartX = useRef<number>(0)
-  const touchStartScrollLeft = useRef<number>(0)
-  const highlightedWords = ['Automotive', 'Insights']
+  const [activeCard, setActiveCard] = useState(0)
 
   const handleScroll = () => {
     const el = scrollRef.current
     if (!el) return
-    setActiveCard(Math.round(el.scrollLeft / el.clientWidth))
+    const w = el.children[0]?.getBoundingClientRect().width ?? el.clientWidth
+    const gap = 16
+    setActiveCard(Math.round(el.scrollLeft / (w + gap)))
   }
-  const onTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX
-    touchStartScrollLeft.current = scrollRef.current?.scrollLeft ?? 0
-  }
-  const onTouchMove = (e: React.TouchEvent) => {
-    const el = scrollRef.current
-    if (!el) return
-    el.scrollLeft = touchStartScrollLeft.current - (e.touches[0].clientX - touchStartX.current)
-  }
-  const onTouchEnd = () => {
-    const el = scrollRef.current
-    if (!el) return
-    const index = Math.round(el.scrollLeft / el.clientWidth)
-    el.scrollTo({ left: index * el.clientWidth, behavior: 'smooth' })
-    setActiveCard(index)
-  }
-  const scrollToCard = (index: number) => {
-    scrollRef.current?.scrollTo({ left: index * scrollRef.current.clientWidth, behavior: 'smooth' })
-    setActiveCard(index)
-  }
-  return (
-    <section className="bg-black w-full ">
-      <HeadingGrid
-        pageName="Blog"
-        pageDescription="Stay ahead of the curve with expert analysis, in-depth reviews, and the latest trends in the automotive world."
-        pageTitle="Rev Up Your Ride: The Latest in Automotive News and Insights"
-        wordsToHighlight={highlightedWords}
-      />
-      <div
-        ref={scrollRef}
-        onScroll={handleScroll}
-        onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
-        className="flex md:hidden gap-4 overflow-x-auto snap-x snap-mandatory  py-4 md:py-10 md:px-20 px-4 "
-        style={{ scrollbarWidth: 'none' }}
-      >
-        {[0, 1, 2].map((i) => (
-          <div key={i} className="w-[90vw]">
-            <BlogCard />
-          </div>
-        ))}
-      </div>
 
-      <div className="flex md:hidden justify-center gap-2 mt-3 pb-4 ">
-        {[0, 1, 2].map((i) => (
-          <button
-            key={i}
-            onClick={() => scrollToCard(i)}
-            className="w-2 h-2 rounded-full transition-colors duration-300"
-            style={{ background: i === activeCard ? '#ffffff' : '#6b7280' }}
-          />
-        ))}
-      </div>
-      <div className="hidden md:flex md:flex-row pt-5 md:justify-center md:space-x-5 md:space-y-4 md:py-10 md:px-20 px-4 py-4">
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
+  const scrollToCard = (index: number) => {
+    const el = scrollRef.current
+    if (!el) return
+    const card = el.children[index] as HTMLElement
+    const left = card.offsetLeft
+    el.scrollTo({ left, behavior: 'smooth' })
+    setActiveCard(index)
+  }
+
+  return (
+    <section className="w-full bg-[#222222] px-4 py-20 md:px-16 md:py-20">
+      <div className="mx-auto flex max-w-[1440px] flex-col gap-20">
+        <header className="flex flex-col gap-4">
+          <p className="text-lg font-medium leading-[1.444] text-white/50">{SECTION.eyebrow}</p>
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-[110px]">
+            <h2 className="max-w-[739px] text-[clamp(2rem,4vw,3rem)] font-medium leading-[1.167] text-white">
+              {SECTION.title}
+            </h2>
+            <p className="max-w-xl flex-1 text-base leading-normal text-white/70">
+              {SECTION.description}
+            </p>
+          </div>
+        </header>
+        <div
+          ref={scrollRef}
+          onScroll={handleScroll}
+          className="-mx-4 flex gap-8 overflow-x-auto px-4 pb-2 [scrollbar-width:none] md:mx-0 md:overflow-visible md:px-0 [&::-webkit-scrollbar]:hidden"
+          style={{ scrollSnapType: 'x mandatory' }}
+        >
+          {POSTS.map((post) => (
+            <BlogCard key={post.title} {...post} />
+          ))}
+        </div>
+
+        <div className="flex justify-center gap-2 md:hidden">
+          {POSTS.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => scrollToCard(i)}
+              aria-label={`Go to article ${i + 1}`}
+              className="size-2 rounded-full transition-colors"
+              style={{ background: i === activeCard ? '#ffffff' : '#6b7280' }}
+            />
+          ))}
+        </div>
       </div>
     </section>
-  )
-}
-
-const BlogCard = () => {
-  return (
-    <div className="bg-white text-black w-[90vw] h-[470px] rounded-lg">
-      <div className="relative w-full lg:h-[340px]  h-[290px] ">
-        <Image src="/heroimg.png" alt=".." fill className="object-fit object-center" />
-      </div>
-      <div className="px-3 pb-3 ">
-        <div className="flex items-center space-x-2 pt-3">
-          <button className="bg-[#DB323E] text-white rounded-md px-3 py-1">Category</button>
-          <p className="text-gray-400">5 mint read</p>
-        </div>
-        <h3 className="text-xl pb-1">Revving Up: The Future of Automotive Innovation</h3>
-        <div className="flex justify-between items-center text-slate-400">
-          <div className="flex items-center">
-            <Clock className="size-4" />
-            <p>December 29, 2024</p>
-          </div>
-          <div className="flex items-center">
-            <CircleUserRound className="size-4" />
-            <p>Alex Johnson</p>
-          </div>
-        </div>
-      </div>
-    </div>
   )
 }

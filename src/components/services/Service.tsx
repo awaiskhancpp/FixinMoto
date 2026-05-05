@@ -32,11 +32,9 @@ const CARDS = [
   { cardNo: 4, mainImg: '/tireCareMain.webp', logoImg: '/tirerotation.png', title: 'Tire Care' },
 ]
 const logos = [
-  { src: '/toyota.png', alt: 'toyota' },
-  { src: '/opel.png', alt: 'opel' },
-  { src: '/kia.png', alt: 'kia' },
-  { src: '/honda-car.png', alt: 'honda-car' },
-  { src: '/audi.png', alt: 'audi' },
+  { src: '/logoCarousel/Logo1.png', alt: 'logo1' },
+  { src: '/logoCarousel/Logo.png', alt: 'logo2' },
+  { src: '/logoCarousel/Logo3.png', alt: 'logo3' },
 ]
 export default function Service() {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -87,7 +85,7 @@ export default function Service() {
   }
   return (
     <>
-      <section className="w-full bg-[#222222] text-white relative ">
+      <section className="w-full bg-[#222222] text-white relative">
         <div className="mx-auto max-w-[1440px]">
           <HeadingGrid
             pageDescription="From routine maintenance to advanced diagnostics, we’ve got all your automotive needs
@@ -145,8 +143,8 @@ export default function Service() {
       </section>
       <section className="w-full bg-[#222222]  text-white pb-2">
         <div className="mx-auto max-w-[1440px]">
-          <div className="flex w-full pl-4 md:pl-20">
-            <div className="text-2xl w-[70%] justify-center items-center">
+          <div className="flex w-full pl-4 md:pl-20 justify-center items-center">
+            <div className="text-2xl w-[70%] ">
               Quality Car Repair You Can <br />
               Count On !
             </div>
@@ -156,13 +154,13 @@ export default function Service() {
                 style={{ transform: `translateX(-${currentIndex * 10}%)` }}
               >
                 {[...logos, ...logos].map((l, i) => (
-                  <div key={i} className="flex-none justify-center">
+                  <div key={i} className="flex justify-center ">
                     <Image
                       src={l.src}
                       alt={l.alt}
                       width={120}
                       height={60}
-                      className="invert object-contain"
+                      className="object-contain object-fit px-3"
                     />
                   </div>
                 ))}

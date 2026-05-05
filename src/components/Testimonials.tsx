@@ -1,85 +1,170 @@
 'use client'
+
 import Image from 'next/image'
-import { useState, useEffect } from 'react'
-import { HeadingGrid } from './HeadingGrid'
-export default function Testimonials() {
-  const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [isMobile, setIsMobile] = useState(false)
-  let word = ['FixinMoto']
-  useEffect(() => {
-    const check = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
-    check()
-    window.addEventListener('resize', check)
-    return () => window.removeEventListener('resize', check)
-  }, [])
+import { Star } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+
+const TESTIMONIALS = [
+  {
+    name: 'Albert Flores',
+    image: '/person/person-1.webp',
+    quote:
+      "For years, I've trusted my car to FixinMoto, and they've never let me down. The staff is not only friendly but also incredibly knowledgeable, taking the time to walk me through every repair. I wholeheartedly recommend them to anyone in need of dependable auto repair services.",
+  },
+  {
+    name: 'Robert Fox',
+    image: '/person/person-2.webp',
+    quote:
+      'When I faced a sudden issue with my vehicle, FixinMoto managed to fit me in for an appointment on the same day. Their team quickly diagnosed the problem and had my car back on the road in no time. I truly appreciated their prompt and effective service.',
+  },
+  {
+    name: 'Eleanor Pena',
+    image: '/person/person-3.webp',
+    quote:
+      'I encountered an urgent problem with my vehicle and was fortunate to secure a same-day appointment at FixinMotopair. The staff swiftly identified the issue and got my car running again in no time. Their quick and efficient service was greatly appreciated.',
+  },
+]
+
+const CARD_WIDTH = 493
+const GAP = 20
+
+function StarRating() {
   return (
-    <section className="bg-primary w-full">
-      <HeadingGrid
-        pageDescription="Read what our satisfied customers have to say about our products and services."
-        pageTitle="What Drivers are Saying About FixinMoto"
-        pageName="Testimonials"
-        wordsToHighlight={word}
-      />
-      <div className="pt-10 md:w-[80%] ml-auto md:rounded-tl-[24px] bg-secondary h-[600px] flex flex-col">
-        <div
-          id="default-carousel"
-          className="relative overflow-hidden space-x-2 w-full"
-          data-carousel="slide"
-        >
-          <div
-            className="flex justify-center gap-3 md:gap-6 transition-transform duration-500 md:-ml-[210px]"
-            style={{ transform: `translateX(-${currentIndex * (isMobile ? 100 : 40)}%)` }}
-          >
-            {[...nums, ...nums].map((t, i) => (
-              <div key={i} className="duration-700 ease-in-out " data-carousel-item>
-                <TestimonialCard />
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="flex pt-4 justify-end">
-          <button
-            type="button"
-            onClick={() => setCurrentIndex((prev) => Math.max(0, prev - 1))}
-            className="flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-          >
-            <Image src="/VectorLeft.png" alt="prev-button" width={36} height={26} />
-          </button>
-          <button
-            type="button"
-            onClick={() => setCurrentIndex((prev) => Math.min(nums.length - 2, prev + 1))}
-            className="flex items-center justify-center h-full px-4 cursor-pointer"
-          >
-            <Image src="/VectorRight.png" alt="next-button" width={36} height={26} />
-          </button>
-        </div>
+    <div className="flex gap-0.5" aria-hidden>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <Star key={i} className="size-4 fill-secondary text-secondary" strokeWidth={0} />
+      ))}
+    </div>
+  )
+}
+interface TestimonialCardProps {
+  name: string
+  image: string
+  quote: string
+}
+
+function TestimonialCard(props: TestimonialCardProps) {
+  const { name, image, quote } = props
+  return (
+    <article
+      className="flex w-[min(493px,calc(100vw-3rem))] shrink-0 snap-center flex-col gap-2.5 rounded-[15px] bg-[#F8F8F6] px-[46px] py-[67px] md:w-[493px]"
+      style={{ minHeight: 528 }}
+    >
+      <div className="relative size-[116px] shrink-0 overflow-hidden rounded-md">
+        <Image src={image} alt="" fill className="object-cover" sizes="116px" />
       </div>
-    </section>
+      <p className="text-base font-medium leading-normal text-black/50">{quote}</p>
+      <h3 className="text-2xl font-medium leading-[1.333] text-primary">{name}</h3>
+      <StarRating />
+    </article>
   )
 }
 
-function TestimonialCard() {
+export default function Testimonials() {
+  const railRef = useRef<HTMLDivElement>(null)
+  const [index, setIndex] = useState(0)
+  const [desktop, setDesktop] = useState(false)
+
+  useEffect(() => {
+    const media = window.matchMedia('(min-width: 768px)')
+    const start = () => setDesktop(media.matches)
+    start()
+    media.addEventListener('change', start)
+    return () => media.removeEventListener('change', start)
+  }, [])
+
+  const last = TESTIMONIALS.length - 1
+  const offset = index * (CARD_WIDTH + GAP)
+
+  const scrollMobileTo = (i: number) => {
+    const rail = railRef.current
+    if (!rail) return
+    const card = rail.children[i] as HTMLElement | undefined
+    card?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' })
+    setIndex(i)
+  }
+
+  const goPrev = () => {
+    const next = Math.max(0, index - 1)
+    if (desktop) setIndex(next)
+    else scrollMobileTo(next)
+  }
+
+  const goNext = () => {
+    const next = Math.min(last, index + 1)
+    if (desktop) setIndex(next)
+    else scrollMobileTo(next)
+  }
+
+  const cards = TESTIMONIALS.map((t) => <TestimonialCard key={t.name} {...t} />)
+
   return (
-    <div className="rounded-lg bg-white w-[85vw] h-auto md:w-[400px] md:h-[460px] px-6 pt-20 pb-20 ">
-      <div>
-        <Image
-          src="/heroimg.png"
-          alt="testimonialimg"
-          width={120}
-          height={120}
-          className="object-center object-cover pb-3"
-        />
+    <section className="w-full bg-primary px-4 pb-8 pt-20 md:px-16 md:pb-8 md:pt-20">
+      <div className="mx-auto max-w-[1440px]">
+        <header className="mb-10 flex flex-col gap-7 md:mb-16">
+          <p className="text-lg font-medium leading-[1.444] text-white/50">Testimonials</p>
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-8">
+            <h2 className="max-w-[836px] text-[clamp(2rem,4vw,4rem)] font-medium leading-[1.125] text-white">
+              What Drivers Are Saying About Fixinmoto
+            </h2>
+            <p className="max-w-md text-base leading-normal text-white/70">
+              Read what our satisfied customers have to say about our products and services
+            </p>
+          </div>
+        </header>
+
+        <div className="relative ml-auto min-h-[560px] w-full md:rounded-tl-[24px] bg-secondary lg:min-h-[783px] lg:w-[92%] xl:w-[1324px]">
+          <div className="px-4 pb-10 pt-10 md:px-12 md:pb-12 md:pt-14 lg:px-14 lg:pt-16">
+            {desktop ? (
+              <div className="overflow-hidden">
+                <div
+                  className="flex gap-5 transition-transform duration-500 ease-out"
+                  style={{ transform: `translateX(-${offset}px)` }}
+                >
+                  {cards}
+                </div>
+              </div>
+            ) : (
+              <div
+                ref={railRef}
+                onScroll={() => {
+                  const rail = railRef.current
+                  if (!rail) return
+                  const card = rail.children[0] as HTMLElement | undefined
+                  const step = (card?.offsetWidth ?? CARD_WIDTH) + GAP
+                  const i = Math.round(rail.scrollLeft / step)
+                  setIndex(Math.min(last, Math.max(0, i)))
+                }}
+                className="-mx-4 flex gap-5 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                style={{ scrollSnapType: 'x mandatory' }}
+              >
+                {cards}
+              </div>
+            )}
+
+            <div className="flex justify-end gap-[19px] pt-6 md:pt-8">
+              <button
+                type="button"
+                onClick={goPrev}
+                disabled={index === 0}
+                className="disabled:pointer-events-none disabled:opacity-40"
+                aria-label="Previous testimonial"
+              >
+                <Image src="/VectorLeft.png" alt="" width={36} height={26} />
+              </button>
+              <button
+                type="button"
+                onClick={goNext}
+                disabled={index >= last}
+                className="disabled:pointer-events-none disabled:opacity-40"
+                aria-label="Next testimonial"
+              >
+                <Image src="/VectorRight.png" alt="" width={36} height={26} />
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-      <p className="pb-5">
-        For years, I've trusted my car to FixinMoto, and they've never let me down. The staff is not
-        only friendly but also incredibly knowledgeable, taking the time to walk me through every
-        repair. I wholeheartedly recommend them to anyone in need of dependable auto repair
-        services.
-      </p>
-      <p>⭐⭐⭐⭐⭐</p>
-    </div>
+    </section>
   )
 }
