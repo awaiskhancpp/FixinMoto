@@ -16,13 +16,9 @@ export default function Journey() {
               <p className="text-base font-medium leading-normal text-secondary">
                 The FixinMoto Journey
               </p>
-              <h2 className="text-5xl font-bold w-[22rem] leading-[56px] text-white">
-                From{' '}
-                <span className="bg-secondary inline-block skew-x-[6deg] italic px-2">Passion</span>{' '}
-                to
-                <span className="bg-secondary inline-block skew-x-[6deg] italic px-2">
-                  Precision
-                </span>
+              <h2 className="md:text-5xl text-3xl font-bold w-[359px] text-white">
+                From <span className="bg-secondary inline-block skew-x-[-6deg] px-2 ">Passion</span>{' '}
+                to <span className="bg-secondary inline-block skew-x-[-6deg] px-2">Precision</span>
               </h2>
               <p className="max-w-xl text-sm leading-[1.4] w-[85%] text-white/50">
                 At FixinMoto, our journey began with a shared passion for cars and a drive to make
@@ -34,7 +30,7 @@ export default function Journey() {
             </div>
           </div>
           <div className="relative h-[400px] w-full sm:h-[520px] lg:h-[638px] lg:flex-1 lg:mr-[-5.2%]">
-            <div className="absolute inset-y-0 left-0 right-[8%] overflow-hidden rounded-l-[15px] lg:right-0">
+            <div className="absolute inset-y-0 left-0 right-[8%] overflow-hidden rounded-l-[15px] right-0 lg:right-0">
               <Image
                 src="/heroimg.png"
                 alt=""

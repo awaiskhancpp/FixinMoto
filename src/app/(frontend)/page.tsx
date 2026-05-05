@@ -35,6 +35,7 @@ export default async function HomePage() {
         <Testimonials />
         <Blog />
         <CoverageArea />
+        <CallToAction />
       </div>
     </>
   )

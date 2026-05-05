@@ -16,7 +16,6 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       <body className="font-sans antialiased">
         <Navbar />
         <main>{children}</main>
-        <CallToAction />
         <Footer />
       </body>
     </html>

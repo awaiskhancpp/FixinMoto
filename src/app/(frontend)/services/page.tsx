@@ -1,3 +1,4 @@
+import CallToAction from '@/components/CallToAction'
 import ServicePageCard from '@/components/ServicePageCard'
 import Achievements from '@/components/shared/Achievements'
 import PageHeader from '@/components/shared/PageHeader'
@@ -25,6 +26,7 @@ export default function ServicesPage() {
           ))}
         </div>
       </div>
+      <CallToAction />
     </>
   )
 }
