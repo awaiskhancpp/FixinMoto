@@ -3,13 +3,7 @@
 import Image from 'next/image'
 import { Calendar, User } from 'lucide-react'
 import { useRef, useState } from 'react'
-
-const SECTION = {
-  eyebrow: 'Blog',
-  title: 'Rev Up Your Ride: The Latest in Automotive News and Insights',
-  description:
-    'Stay ahead of the curve with expert analysis, in-depth reviews, and the latest trends in the automotive world.',
-} as const
+import { HeadingGrid } from './HeadingGrid'
 
 const POSTS = [
   {
@@ -94,25 +88,21 @@ export default function Blog() {
     el.scrollTo({ left, behavior: 'smooth' })
     setActiveCard(index)
   }
+  const word = ['Automotive', 'Insights']
 
   return (
-    <section className="w-full bg-[#222222] px-4 py-20 md:px-16 md:py-20">
+    <section className="w-full bg-[#222222]">
       <div className="mx-auto flex max-w-[1440px] flex-col gap-20">
-        <header className="flex flex-col gap-4">
-          <p className="text-lg font-medium leading-[1.444] text-white/50">{SECTION.eyebrow}</p>
-          <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-[110px]">
-            <h2 className="max-w-[739px] text-[clamp(2rem,4vw,3rem)] font-medium leading-[1.167] text-white">
-              {SECTION.title}
-            </h2>
-            <p className="max-w-xl flex-1 text-base leading-normal text-white/70">
-              {SECTION.description}
-            </p>
-          </div>
-        </header>
+        <HeadingGrid
+          pageTitle="Rev Up Your Ride: The Latest in Automotive News and Insights"
+          pageName="Blog"
+          pageDescription="Stay ahead of the curve with expert analysis, in-depth reviews, and the latest trends in the automotive world."
+          wordsToHighlight={word}
+        />
         <div
           ref={scrollRef}
           onScroll={handleScroll}
-          className="-mx-4 flex gap-8 overflow-x-auto px-4 pb-2 [scrollbar-width:none] md:mx-0 md:overflow-visible md:px-0 [&::-webkit-scrollbar]:hidden"
+          className="-mx-4 flex gap-8 md:px-16 px-4 pb-2 [scrollbar-width:none] md:mx-0 md:overflow-visible [&::-webkit-scrollbar]:hidden"
           style={{ scrollSnapType: 'x mandatory' }}
         >
           {POSTS.map((post) => (

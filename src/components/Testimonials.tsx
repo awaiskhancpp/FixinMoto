@@ -105,8 +105,8 @@ export default function Testimonials() {
   const word = ['Fixinmoto']
 
   return (
-    <section className="w-full overflow-x-hidden bg-primary pb-8 pt-20 md:pb-8 md:pt-20">
-      <div className="mx-auto max-w-[1440px] px-4 md:px-16">
+    <section className="w-full overflow-x-hidden bg-primary">
+      <div className="mx-auto max-w-[1440px] ">
         <HeadingGrid
           pageTitle="What Drivers Are Saying About Fixinmoto"
           pageName="Testimonials"
@@ -115,8 +115,8 @@ export default function Testimonials() {
         />
       </div>
 
-      <div className="relative mt-10 min-h-[560px] ml-auto w-[92%] rounded-tl-[24px] bg-secondary md:mt-16 lg:min-h-[783px]">
-        <div className="mx-auto max-w-[1440px] px-4 pb-10 pt-10 md:px-12 md:pb-12 md:pt-14 lg:px-14 lg:pt-16">
+      <div className="relative mt-10 min-h-[560px] ml-auto w-[92%] rounded-tl-[24px] bg-secondary lg:min-h-[783px] px-4 md:px-16">
+        <div className="mx-auto max-w-[1440px] px-4 pb-10 pt-10 md:px-12 md:pb-12 md:pt-14 lg:px-2 lg:pt-16">
           {desktop ? (
             <div className="max-w-full overflow-hidden">
               <div

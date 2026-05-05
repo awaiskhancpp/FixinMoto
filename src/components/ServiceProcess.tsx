@@ -23,7 +23,7 @@ export default function ServiceProcess() {
           <div className="grid grid-cols-12 md:px-20 md:py-10 px-4 py-4">
             <div className="lg:col-span-6 col-span-12 text-white space-y-8">
               <div>
-                <h3 className="text-red-500 text-2xl md:text-3xl lg:text-5xl  font-bold pb-3">
+                <h3 className="text-red-500 text-2xl md:text-3xl  font-bold pb-3">
                   Book Your Appointment
                 </h3>
                 <p className="text-base w-[80%]">
@@ -32,9 +32,7 @@ export default function ServiceProcess() {
                 </p>
               </div>
               <div>
-                <h3 className="text-2xl md:text-3xl lg:text-5xl font-bold pb-3">
-                  Vehicle Check-In
-                </h3>
+                <h3 className="text-2xl md:text-3xl font-bold pb-3">Vehicle Check-In</h3>
                 <p className="text-base w-[80%]">
                   Easily book your car repair appointment online. Choose your preferred time and get
                   your vehicle back in top shape—fast and hassle-free
