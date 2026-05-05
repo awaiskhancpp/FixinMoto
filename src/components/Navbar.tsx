@@ -51,7 +51,7 @@ export default function Navbar() {
             className={`${isOpen ? 'flex' : 'hidden'} md:static bg-white flex-col md:top-auto top-full gap-4 border-none absolute  md:flex md:flex-row md:bg-transparent md:w-auto text-l `}
           >
             <a
-              href="#"
+              href="/aboutus"
               className="block py-2 px-3  rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
             >
               AboutUS

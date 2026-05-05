@@ -41,7 +41,7 @@ export default function WhyChooseUs() {
             </button>
           </div>
         </div>
-        <div className="relative h-[400px] w-full shrink-0 sm:h-[520px] lg:h-[638px] lg:max-w-[50%] lg:flex-1">
+        <div className="relative h-[400px] w-full sm:h-[520px] lg:h-[638px] lg:max-w-[50%] lg:flex-1">
           <div className="absolute inset-y-0 left-0 right-[8%] overflow-hidden rounded-[15px] lg:right-0">
             <Image
               src="/heroimg.png"
