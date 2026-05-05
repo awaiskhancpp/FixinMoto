@@ -30,7 +30,7 @@ interface BlogCard {
 
 function BlogCard({ title, date, author }: BlogCard) {
   return (
-    <article className="flex min-w-[min(100vw-2rem,calc((100%-64px)/3))] shrink-0 snap-center flex-col gap-6 rounded-[17px] bg-[#edf2fd] pb-[18px] md:min-w-0 md:flex-1">
+    <article className="flex w-[85vw] snap-center flex-col gap-6 rounded-[17px] bg-[#edf2fd] pb-[18px] md:min-w-0 md:flex-1">
       <div className="relative aspect-[387/300] w-full overflow-hidden rounded-t-lg md:h-[300px] md:aspect-auto">
         <Image
           src="/heroimg.png"
@@ -102,7 +102,7 @@ export default function Blog() {
         <div
           ref={scrollRef}
           onScroll={handleScroll}
-          className="-mx-4 flex gap-8 overflow-x-auto pb-2 px-4 md:px-16 [scrollbar-width:none] md:mx-0 md:overflow-visible md:px-0  [&::-webkit-scrollbar]:hidden"
+          className="flex gap-4 overflow-x-auto pb-2 px-4 md:px-16 [scrollbar-width:none] md:mx-0 md:overflow-visible [&::-webkit-scrollbar]:hidden"
           style={{ scrollSnapType: 'x mandatory' }}
         >
           {POSTS.map((post) => (
