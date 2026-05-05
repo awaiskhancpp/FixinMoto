@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { Star } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
+import { HeadingGrid } from './HeadingGrid'
 
 const TESTIMONIALS = [
   {
@@ -37,6 +38,7 @@ function StarRating() {
     </div>
   )
 }
+
 interface TestimonialCardProps {
   name: string
   image: string
@@ -47,7 +49,7 @@ function TestimonialCard(props: TestimonialCardProps) {
   const { name, image, quote } = props
   return (
     <article
-      className="flex w-[min(493px,calc(100vw-3rem))] shrink-0 snap-center flex-col gap-2.5 rounded-[15px] bg-[#F8F8F6] px-[46px] py-[67px] md:w-[493px]"
+      className="flex w-[85%] max-w-[493px] shrink-0 snap-center flex-col gap-2.5 rounded-[15px] bg-[#F8F8F6] px-6 py-12 sm:px-[46px] sm:py-[67px] md:w-[493px] md:max-w-[493px]"
       style={{ minHeight: 528 }}
     >
       <div className="relative size-[116px] shrink-0 overflow-hidden rounded-md">
@@ -96,72 +98,71 @@ export default function Testimonials() {
     else scrollMobileTo(next)
   }
 
-  const cards = TESTIMONIALS.map((t) => <TestimonialCard key={t.name} {...t} />)
+  const cards = TESTIMONIALS.map((t) => (
+    <TestimonialCard key={t.name} name={t.name} image={t.image} quote={t.quote} />
+  ))
+
+  const word = ['Fixinmoto']
 
   return (
-    <section className="w-full bg-primary px-4 pb-8 pt-20 md:px-16 md:pb-8 md:pt-20">
-      <div className="mx-auto max-w-[1440px]">
-        <header className="mb-10 flex flex-col gap-7 md:mb-16">
-          <p className="text-lg font-medium leading-[1.444] text-white/50">Testimonials</p>
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-8">
-            <h2 className="max-w-[836px] text-[clamp(2rem,4vw,4rem)] font-medium leading-[1.125] text-white">
-              What Drivers Are Saying About Fixinmoto
-            </h2>
-            <p className="max-w-md text-base leading-normal text-white/70">
-              Read what our satisfied customers have to say about our products and services
-            </p>
-          </div>
-        </header>
+    <section className="w-full overflow-x-hidden bg-primary pb-8 pt-20 md:pb-8 md:pt-20">
+      <div className="mx-auto max-w-[1440px] px-4 md:px-16">
+        <HeadingGrid
+          pageTitle="What Drivers Are Saying About Fixinmoto"
+          pageName="Testimonials"
+          pageDescription="Read what our satisfied customers have to say about our products and services"
+          wordsToHighlight={word}
+        />
+      </div>
 
-        <div className="relative ml-auto min-h-[560px] w-full md:rounded-tl-[24px] bg-secondary lg:min-h-[783px] lg:w-[92%] xl:w-[1324px]">
-          <div className="px-4 pb-10 pt-10 md:px-12 md:pb-12 md:pt-14 lg:px-14 lg:pt-16">
-            {desktop ? (
-              <div className="overflow-hidden">
-                <div
-                  className="flex gap-5 transition-transform duration-500 ease-out"
-                  style={{ transform: `translateX(-${offset}px)` }}
-                >
-                  {cards}
-                </div>
-              </div>
-            ) : (
+      <div className="relative mt-10 min-h-[560px] ml-auto w-[92%] rounded-tl-[24px] bg-secondary md:mt-16 lg:min-h-[783px]">
+        <div className="mx-auto max-w-[1440px] px-4 pb-10 pt-10 md:px-12 md:pb-12 md:pt-14 lg:px-14 lg:pt-16">
+          {desktop ? (
+            <div className="max-w-full overflow-hidden">
               <div
-                ref={railRef}
-                onScroll={() => {
-                  const rail = railRef.current
-                  if (!rail) return
-                  const card = rail.children[0] as HTMLElement | undefined
-                  const step = (card?.offsetWidth ?? CARD_WIDTH) + GAP
-                  const i = Math.round(rail.scrollLeft / step)
-                  setIndex(Math.min(last, Math.max(0, i)))
-                }}
-                className="-mx-4 flex gap-5 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-                style={{ scrollSnapType: 'x mandatory' }}
+                className="flex gap-5 transition-transform duration-500 ease-out"
+                style={{ transform: `translateX(-${offset}px)` }}
               >
                 {cards}
               </div>
-            )}
-
-            <div className="flex justify-end gap-[19px] pt-6 md:pt-8">
-              <button
-                type="button"
-                onClick={goPrev}
-                disabled={index === 0}
-                className="disabled:pointer-events-none disabled:opacity-40"
-                aria-label="Previous testimonial"
-              >
-                <Image src="/VectorLeft.png" alt="" width={36} height={26} />
-              </button>
-              <button
-                type="button"
-                onClick={goNext}
-                disabled={index >= last}
-                className="disabled:pointer-events-none disabled:opacity-40"
-                aria-label="Next testimonial"
-              >
-                <Image src="/VectorRight.png" alt="" width={36} height={26} />
-              </button>
             </div>
+          ) : (
+            <div
+              ref={railRef}
+              onScroll={() => {
+                const rail = railRef.current
+                if (!rail) return
+                const card = rail.children[0] as HTMLElement | undefined
+                const step = (card?.offsetWidth ?? CARD_WIDTH) + GAP
+                const i = Math.round(rail.scrollLeft / step)
+                setIndex(Math.min(last, Math.max(0, i)))
+              }}
+              className="flex max-w-full gap-5 overflow-x-auto pb-2"
+              style={{ scrollSnapType: 'x mandatory' }}
+            >
+              {cards}
+            </div>
+          )}
+
+          <div className="flex justify-end gap-[19px] pt-6 md:pt-8">
+            <button
+              type="button"
+              onClick={goPrev}
+              disabled={index === 0}
+              className="disabled:pointer-events-none disabled:opacity-40"
+              aria-label="Previous testimonial"
+            >
+              <Image src="/VectorLeft.png" alt="" width={36} height={26} />
+            </button>
+            <button
+              type="button"
+              onClick={goNext}
+              disabled={index >= last}
+              className="disabled:pointer-events-none disabled:opacity-40"
+              aria-label="Next testimonial"
+            >
+              <Image src="/VectorRight.png" alt="" width={36} height={26} />
+            </button>
           </div>
         </div>
       </div>
