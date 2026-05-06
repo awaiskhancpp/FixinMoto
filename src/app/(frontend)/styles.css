@@ -5,4 +5,14 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --color-primary: #292929;
   --color-secondary: #db323e;
+  
+}
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+input[type="date"],
+input[type="time"] {
+  appearance: none;
 }
