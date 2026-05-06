@@ -24,6 +24,18 @@ const TESTIMONIALS = [
     quote:
       'I encountered an urgent problem with my vehicle and was fortunate to secure a same-day appointment at FixinMotopair. The staff swiftly identified the issue and got my car running again in no time. Their quick and efficient service was greatly appreciated.',
   },
+  {
+    name: 'Eleanor Pena',
+    image: '/person/person-3.webp',
+    quote:
+      'I encountered an urgent problem with my vehicle and was fortunate to secure a same-day appointment at FixinMotopair. The staff swiftly identified the issue and got my car running again in no time. Their quick and efficient service was greatly appreciated.',
+  },
+  {
+    name: 'Eleanor Pena',
+    image: '/person/person-3.webp',
+    quote:
+      'I encountered an urgent problem with my vehicle and was fortunate to secure a same-day appointment at FixinMotopair. The staff swiftly identified the issue and got my car running again in no time. Their quick and efficient service was greatly appreciated.',
+  },
 ]
 
 const CARD_WIDTH = 493
@@ -48,7 +60,7 @@ interface TestimonialCardProps {
 function TestimonialCard(props: TestimonialCardProps) {
   const { name, image, quote } = props
   return (
-    <article
+    <div
       className="flex w-[85%] max-w-[493px] shrink-0 snap-center flex-col gap-2.5 rounded-[15px] bg-[#F8F8F6] px-6 py-12 sm:px-[46px] sm:py-[67px] md:w-[493px] md:max-w-[493px]"
       style={{ minHeight: 528 }}
     >
@@ -58,7 +70,7 @@ function TestimonialCard(props: TestimonialCardProps) {
       <p className="text-base font-medium leading-normal text-black/50">{quote}</p>
       <h3 className="text-2xl font-medium leading-[1.333] text-primary">{name}</h3>
       <StarRating />
-    </article>
+    </div>
   )
 }
 
@@ -75,7 +87,7 @@ export default function Testimonials() {
     return () => media.removeEventListener('change', start)
   }, [])
 
-  const last = TESTIMONIALS.length - 1
+  const last = TESTIMONIALS.length - 2
   const offset = index * (CARD_WIDTH + GAP)
 
   const scrollMobileTo = (i: number) => {
@@ -115,8 +127,8 @@ export default function Testimonials() {
         />
       </div>
 
-      <div className="relative mt-10 min-h-[560px] ml-auto w-[92%] rounded-tl-[24px] bg-secondary lg:min-h-[783px] px-4 md:px-16">
-        <div className="mx-auto max-w-[1440px] px-4 pb-10 pt-10 md:px-12 md:pb-12 md:pt-14 lg:px-2 lg:pt-16">
+      <div className="relative mt-10 rounded-tl-[24px] bg-secondary pl-4 md:pl-16">
+        <div className="mx-auto ml-auto max-w-[1440px] pb-10 pt-10  md:pb-12 md:pt-14 lg:pt-16">
           {desktop ? (
             <div className="max-w-full overflow-hidden">
               <div
