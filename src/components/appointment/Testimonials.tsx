@@ -28,31 +28,51 @@ export default function Testimonials() {
   return (
     <>
       <section className="bg-primary  md:py-10 md:px-20 px-4 py-4">
-        <div className="flex flex-col justify-center items-center text-white">
-          <div className="">
-            <p className="text-slate-400 flex justify-center items-center">Testimonials</p>
-            <h2 className="font-bold text-2xl md:text-3xl lg:text-5xl">
-              <span className="text-secondary">Real</span> Reviews from Fixinmoto{' '}
-              <span className="text-secondary">Customers</span>
-            </h2>
-          </div>
-          <div className="">
-            <p className="text-slate-400">
-              Find out why Fixinmoto is the go-to choice for car repairs and service!
-            </p>
-          </div>
-        </div>
-        <div className="flex md:flex-row flex-col justify-center items-center gap-3 pt-5">
-          {TESTIMONIALS.map((t, i) => (
-            <div key={i} onClick={() => setActiveCard(i)}>
-              <TestimonialCard
-                name={t.name}
-                image={t.image}
-                quote={t.quote}
-                clicked={activeCard === i}
-              />
+        <div className="mx-auto max-w-[1440px]">
+          <div className="flex flex-col justify-center items-center text-white">
+            <div className="">
+              <p className="text-slate-400 md:flex md:justify-center md:items-center">
+                Testimonials
+              </p>
+              <h2 className="font-bold text-2xl md:text-3xl lg:text-5xl">
+                <span className="text-secondary">Real</span> Reviews from Fixinmoto{' '}
+                <span className="text-secondary">Customers</span>
+              </h2>
             </div>
-          ))}
+            <div className="">
+              <p className="text-slate-400">
+                Find out why Fixinmoto is the go-to choice for car repairs and service!
+              </p>
+            </div>
+          </div>
+          <div className="flex  overflow-x-auto snap-x snap-mandatory pt-5 sm:hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {TESTIMONIALS.map((t, i) => (
+              <div
+                key={i}
+                className="w-[85vw] shrink-0 snap-center"
+                onClick={() => setActiveCard(i)}
+              >
+                <TestimonialCard
+                  name={t.name}
+                  image={t.image}
+                  quote={t.quote}
+                  clicked={activeCard === i}
+                />
+              </div>
+            ))}
+          </div>
+          <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 justify-center items-center gap-6 pt-5">
+            {TESTIMONIALS.map((t, i) => (
+              <div key={i} onClick={() => setActiveCard(i)}>
+                <TestimonialCard
+                  name={t.name}
+                  image={t.image}
+                  quote={t.quote}
+                  clicked={activeCard === i}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     </>
@@ -79,7 +99,7 @@ const TestimonialCard = ({ name, image, quote, clicked }: TestimonialCardProps) 
           />
         ))}
       </div>
-      <p className="text-base font-medium leading-normal text-black/50">{quote}</p>
+      <p className="text-base font-medium leading-normal text-black/50 flex-1">{quote}</p>
       <h3 className="text-2xl font-medium leading-[1.333] text-primary">{name}</h3>
 
       <div className="relative size-[116px] overflow-hidden rounded-md">

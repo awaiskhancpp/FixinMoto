@@ -8,7 +8,7 @@ const CarInfo = [
     content: "Fast & Reliable Towing: We're Here When You Need Us",
   },
   {
-    iconImg: '/appointmentForm/carwrench.png',
+    iconImg: '/appointmentForm/towtruck.png',
     serviceTitle: 'Emergency Roadside Assistance',
     content: '24/7 Roadside Help: Jump Starts, Tire Changes & More',
   },

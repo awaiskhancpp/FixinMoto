@@ -7,12 +7,3 @@
   --color-secondary: #db323e;
   
 }
-input[type="date"]::-webkit-calendar-picker-indicator,
-input[type="time"]::-webkit-calendar-picker-indicator {
-  display: none;
-}
-
-input[type="date"],
-input[type="time"] {
-  appearance: none;
-}

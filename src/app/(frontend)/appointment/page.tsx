@@ -1,4 +1,5 @@
 import AppointmentForm from '@/components/appointment/AppointmentForm'
+import Faq from '@/components/appointment/Faq'
 import Testimonials from '@/components/appointment/Testimonials'
 import Image from 'next/image'
 export default function Appointment() {
@@ -30,6 +31,7 @@ export default function Appointment() {
         </div>
         <AppointmentForm />
         <Testimonials />
+        <Faq />
       </section>
     </>
   )
