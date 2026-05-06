@@ -10,7 +10,7 @@ export default function PageHeader({ imageSrc, title, wordsToHighlight }: Header
 
   return (
     <>
-      <section className="relative flex min-h-[480px] w-full flex-col justify-center items-center md:min-h-screen">
+      <section className="relative flex min-h-[480px] w-full flex-col justify-center items-center ">
         <Image src={imageSrc} alt="..." fill priority className="object-cover object-center" />
         <div className="absolute inset-0 bg-black/60" aria-hidden />
         <div className="relative z-10 flex w-full flex-col justify-center items-center px-6 py-20 md:px-16 md:py-20">

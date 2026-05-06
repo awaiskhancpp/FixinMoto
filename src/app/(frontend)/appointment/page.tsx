@@ -6,7 +6,7 @@ export default function Appointment() {
   return (
     <>
       <section>
-        <div className="relative flex min-h-[480px] w-full flex-col justify-center items-center md:min-h-screen">
+        <div className="relative flex min-h-[480px] w-full flex-col justify-center items-center">
           <Image
             src="/appointmentHeader.jpg"
             alt="appointment"
