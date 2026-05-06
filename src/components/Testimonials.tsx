@@ -105,7 +105,7 @@ export default function Testimonials() {
   const word = ['Fixinmoto']
 
   return (
-    <section className="w-full overflow-x-hidden bg-primary">
+    <section className="w-full overflow-x-hidden bg-primary md:px-20 md:py-10 px-4 py-4">
       <div className="mx-auto max-w-[1440px] ">
         <HeadingGrid
           pageTitle="What Drivers Are Saying About Fixinmoto"

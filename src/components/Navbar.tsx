@@ -17,126 +17,128 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed z-[900] flex items-center justify-around w-full pt-6 pb-3 ${scrolled ? ' bg-white text-black' : 'bg-transparent text-white'}`}
+        className={`fixed px-6 md:px-20 z-[900] w-full ${scrolled ? ' bg-white text-black' : 'bg-transparent text-white'}`}
       >
-        <div className="flex items-center">
-          <button
-            data-collapse-toggle="navbar-default"
-            type="button"
-            className={`inline-flex p-2 ${scrolled ? 'invert' : ''} w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary`}
-            aria-controls="navbar-default"
-            aria-expanded="false"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            <span className="sr-only">Open main menu</span>
-            <svg
-              className="w-6 h-6"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
+        <div className="mx-auto w-full max-w-[1440px] grid grid-cols-3 items-center pt-6 pb-3">
+          <div className="flex items-center">
+            <button
+              data-collapse-toggle="navbar-default"
+              type="button"
+              className={`inline-flex p-2 ${scrolled ? 'invert' : ''} w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary`}
+              aria-controls="navbar-default"
+              aria-expanded="false"
+              onClick={() => setIsOpen(!isOpen)}
             >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeWidth="2"
-                d="M5 7h14M5 12h14M5 17h14"
-                className="text-white border-white"
-              />
-            </svg>
-          </button>
-          <div
-            className={`${isOpen ? 'flex' : 'hidden'} md:static bg-white flex-col md:top-auto top-full gap-4 border-none absolute  md:flex md:flex-row md:bg-transparent md:w-auto text-l `}
-          >
-            <a
-              href="/aboutus"
-              className="block py-2 px-3  rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
-            >
-              AboutUS
-            </a>
-            <a
-              href="/appointment"
-              className="block py-2 px-3 rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
-            >
-              Appointment
-            </a>
-            <div className="relative">
-              <button
-                onClick={() => setIsPageClicked(!isPageClicked)}
-                className="py-2 px-3 rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent flex justify-center items-center"
+              <span className="sr-only">Open main menu</span>
+              <svg
+                className="w-6 h-6"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
               >
-                Pages
-                <svg
-                  className="w-4 h-4 ms-1.5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="m19 9-7 7-7-7"
-                  />
-                </svg>
-              </button>
-              <div
-                id="dropdownNavbar"
-                className={`absolute z-10 ${isPageClicked ? 'block' : 'hidden'} top-full bg-white text-black rounded-base shadow-lg w-44`}
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeWidth="2"
+                  d="M5 7h14M5 12h14M5 17h14"
+                  className="text-white border-white"
+                />
+              </svg>
+            </button>
+            <div
+              className={`${isOpen ? 'flex' : 'hidden'} md:static bg-white flex-col md:top-auto top-full gap-4 border-none absolute  md:flex md:flex-row md:bg-transparent md:w-auto text-l `}
+            >
+              <a
+                href="/aboutus"
+                className="block py-2 px-3  rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
               >
-                <ul
-                  className="p-2 text-sm text-body font-medium"
-                  aria-labelledby="dropdownNvbarButton"
+                AboutUS
+              </a>
+              <a
+                href="/appointment"
+                className="block py-2 px-3 rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
+              >
+                Appointment
+              </a>
+              <div className="relative">
+                <button
+                  onClick={() => setIsPageClicked(!isPageClicked)}
+                  className="py-2 px-3 rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent flex justify-center items-center"
                 >
-                  <li>
-                    <a
-                      href="#"
-                      className="inline-flex items-center w-full p-2 hover:bg-gray-300 hover:text-heading rounded"
-                    >
-                      Dashboard
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="inline-flex items-center w-full p-2 hover:bg-gray-300 hover:text-heading rounded"
-                    >
-                      Settings
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/services"
-                      className="inline-flex items-center w-full p-2 hover:bg-gray-300 hover:text-heading rounded"
-                    >
-                      Services
-                    </a>
-                  </li>
-                </ul>
+                  Pages
+                  <svg
+                    className="w-4 h-4 ms-1.5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m19 9-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+                <div
+                  id="dropdownNavbar"
+                  className={`absolute z-10 ${isPageClicked ? 'block' : 'hidden'} top-full bg-white text-black rounded-base shadow-lg w-44`}
+                >
+                  <ul
+                    className="p-2 text-sm text-body font-medium"
+                    aria-labelledby="dropdownNvbarButton"
+                  >
+                    <li>
+                      <a
+                        href="#"
+                        className="inline-flex items-center w-full p-2 hover:bg-gray-300 hover:text-heading rounded"
+                      >
+                        Dashboard
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        className="inline-flex items-center w-full p-2 hover:bg-gray-300 hover:text-heading rounded"
+                      >
+                        Settings
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="/services"
+                        className="inline-flex items-center w-full p-2 hover:bg-gray-300 hover:text-heading rounded"
+                      >
+                        Services
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div>
-          <a href="/">
-            {' '}
-            <Image
-              src={'/logonavbar.png'}
-              alt="navbarlogo"
-              width={140}
-              height={42}
-              className={`${scrolled ? 'invert' : ' '} object-cover object-center`}
-            />
-          </a>
-        </div>
-        <div>
-          <button className="rounded-lg bg-secondary w-25 h-12 text-white">Login</button>
+          <div className="flex items-center justify-center">
+            <a href="/">
+              {' '}
+              <Image
+                src={'/logonavbar.png'}
+                alt="navbarlogo"
+                width={140}
+                height={42}
+                className={`${scrolled ? 'invert' : ' '} object-cover object-center`}
+              />
+            </a>
+          </div>
+          <div className="flex justify-end items-center">
+            <button className="rounded-lg bg-secondary w-25 h-12 text-white">Login</button>
+          </div>
         </div>
       </nav>
     </>

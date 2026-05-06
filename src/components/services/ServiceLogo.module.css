@@ -1,0 +1,19 @@
+@keyframes logoMarquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.track {
+  display: flex;
+  width: max-content;
+  animation: logoMarquee 30s linear infinite;
+  align-items: center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+  }
+}

@@ -30,7 +30,7 @@ interface BlogCard {
 
 function BlogCard({ title, date, author }: BlogCard) {
   return (
-    <article className="flex w-[85vw] snap-center flex-col gap-6 rounded-[17px] bg-[#edf2fd] pb-[18px] md:min-w-0 md:flex-1">
+    <article className="flex w-full snap-center flex-col rounded-[17px] bg-[#edf2fd] pb-[18px] md:min-w-0 md:flex-1">
       <div className="relative aspect-[387/300] w-full overflow-hidden rounded-t-lg md:h-[300px] md:aspect-auto">
         <Image
           src="/heroimg.png"
@@ -41,7 +41,7 @@ function BlogCard({ title, date, author }: BlogCard) {
         />
       </div>
 
-      <div className="flex flex-col gap-4 px-[14px]">
+      <div className="flex flex-col gap-4 px-[14px] pt-4">
         <div className="flex flex-row flex-wrap items-center gap-4">
           <span className="rounded-lg bg-secondary px-2 py-1 text-xs font-medium leading-[1.3] text-white">
             Category
@@ -52,14 +52,14 @@ function BlogCard({ title, date, author }: BlogCard) {
         <h3 className="text-lg font-medium leading-[1.444] text-black">{title}</h3>
       </div>
 
-      <div className="flex flex-row items-center justify-center gap-12 px-[14px] text-black/50 opacity-50">
-        <div className="flex flex-1 items-center justify-center gap-2 pl-[14px]">
+      <div className="flex flex-row items-center px-[14px] text-black/50 opacity-50">
+        <div className="flex flex-1 items-center justify-start gap-2 ">
           <Calendar className="size-4 shrink-0" strokeWidth={1.5} aria-hidden />
           <time className="text-xs font-normal leading-[1.333]" dateTime={date}>
             {date}
           </time>
         </div>
-        <div className="flex flex-1 items-center justify-center gap-2 pr-[14px]">
+        <div className="flex flex-1 items-center justify-end gap-2 ">
           <User className="size-4 shrink-0" strokeWidth={1.5} aria-hidden />
           <span className="text-xs font-normal leading-[1.333]">{author}</span>
         </div>
@@ -91,7 +91,7 @@ export default function Blog() {
   const word = ['Automotive', 'Insights']
 
   return (
-    <section className="w-full bg-[#222222]">
+    <section className="w-full bg-[#222222] md:px-20 md:py-10 px-4 py-4">
       <div className="mx-auto flex max-w-[1440px] flex-col gap-20">
         <HeadingGrid
           pageTitle="Rev Up Your Ride: The Latest in Automotive News and Insights"
@@ -102,7 +102,7 @@ export default function Blog() {
         <div
           ref={scrollRef}
           onScroll={handleScroll}
-          className="flex gap-4 overflow-x-auto pb-2 px-4 md:px-16 [scrollbar-width:none] md:mx-0 md:overflow-visible [&::-webkit-scrollbar]:hidden"
+          className="flex gap-4 overflow-x-auto [scrollbar-width:none] md:mx-0  [&::-webkit-scrollbar]:hidden"
           style={{ scrollSnapType: 'x mandatory' }}
         >
           {POSTS.map((post) => (

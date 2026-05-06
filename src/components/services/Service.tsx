@@ -3,6 +3,7 @@ import Card from '../Card'
 import Image from 'next/image'
 import { useState, useEffect, useRef } from 'react'
 import { HeadingGrid } from '../HeadingGrid'
+import marqueeStyle from './ServiceLogo.module.css'
 
 interface Card {
   serviceNumber: number
@@ -13,7 +14,7 @@ interface Card {
 const CARDS = [
   {
     cardNo: 1,
-    mainImg: '/engineRepairMain.png',
+    mainImg: '/homepage/engine-repair.png',
     logoImg: '/servicelogo1.png',
     title: 'Engine Repair & Maintenance',
   },
@@ -37,21 +38,12 @@ const logos = [
   { src: '/logoCarousel/Logo3.png', alt: 'logo3' },
 ]
 export default function Service() {
-  const [currentIndex, setCurrentIndex] = useState(0)
-
-  const [logoIndex, setLogoIndex] = useState(0)
   const [activeCard, setActiveCard] = useState(0)
   const scrollRef = useRef<HTMLDivElement>(null)
   const touchStartX = useRef<number>(0)
   const touchStartScrollLeft = useRef<number>(0)
   let word = ['Comprehensive', 'Solutions']
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % logos.length)
-    }, 2000)
-    return () => clearInterval(interval)
-  }, [])
   const handleScroll = () => {
     const el = scrollRef.current
     if (!el) return
@@ -85,7 +77,7 @@ export default function Service() {
   }
   return (
     <>
-      <section className="w-full bg-[#222222] text-white relative">
+      <section className="w-full bg-black text-white relative md:px-20 md:py-10 px-4 py-4">
         <div className="mx-auto max-w-[1440px]">
           <HeadingGrid
             pageDescription="From routine maintenance to advanced diagnostics, we’ve got all your automotive needs
@@ -94,9 +86,9 @@ export default function Service() {
             pageName="Our Services"
             wordsToHighlight={word}
           />
-          <div className="pt-10 md:px-20 md:py-10 px-4 py-4">
+          <div className="">
             <div
-              className="flex gap-4 overflow-x-auto snap-x snap-mandatory md:px-4 md:pb-4 sm:hidden"
+              className="flex gap-4 overflow-x-auto snap-x snap-mandatory md:hidden"
               ref={scrollRef}
               onScroll={handleScroll}
               onTouchStart={onTouchStart}
@@ -105,7 +97,7 @@ export default function Service() {
               style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
             >
               {CARDS.map((card, i) => (
-                <a href="/services" key={i}>
+                <a href="/services" key={i} className="w-full shrink-0">
                   <Card
                     title={card.title}
                     mainImg={card.mainImg}
@@ -126,9 +118,9 @@ export default function Service() {
                 />
               ))}
             </div>
-            <div className="hidden md:grid md:grid-cols-12 md:gap-x-3 md:gap-4 md:space-y-4">
+            <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-4">
               {CARDS.map((card, i) => (
-                <a href="/services" key={i} className="sm:col-span-6 lg:col-span-3 col-span-12">
+                <a href="/services" key={i} className="">
                   <Card
                     title={card.title}
                     mainImg={card.mainImg}
@@ -141,26 +133,23 @@ export default function Service() {
           </div>
         </div>
       </section>
-      <section className="w-full bg-[#222222]  text-white pb-2">
+      <section className="w-full bg-black  text-white md:px-20 md:py-10 px-4 py-4">
         <div className="mx-auto max-w-[1440px]">
-          <div className="flex w-full pl-4 md:pl-20 justify-center items-center">
-            <div className="text-2xl w-[70%] ">
+          <div className="w-full grid grid-cols-12 items-center">
+            <div className="md:col-span-4 col-span-12 text-2xl ">
               Quality Car Repair You Can <br />
               Count On !
             </div>
-            <div className="overflow-hidden w-full">
-              <div
-                className="flex transition-transform duration-500 ease-in-out"
-                style={{ transform: `translateX(-${currentIndex * 10}%)` }}
-              >
+            <div className="overflow-hidden md:col-span-8 col-span-12 w-full">
+              <div className={`${marqueeStyle.track} gap-[50px]`}>
                 {[...logos, ...logos].map((l, i) => (
-                  <div key={i} className="flex justify-center ">
+                  <div key={i} className="flex shrink-0 justify-center">
                     <Image
                       src={l.src}
                       alt={l.alt}
                       width={110}
                       height={50}
-                      className="object-contain object-fit px-6 "
+                      className="object-contain px-6"
                     />
                   </div>
                 ))}

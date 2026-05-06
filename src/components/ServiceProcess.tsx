@@ -12,7 +12,7 @@ export default function ServiceProcess() {
           <button className="py-4 bg-secondary rounded-lg px-8 mt-3">View all Promotions</button>
         </div>
       </section>
-      <section className="w-full bg-black ">
+      <section className="w-full bg-black md:px-20 md:py-10 px-4 py-4">
         <div className="mx-auto max-w-[1440px]">
           <HeadingGrid
             pageDescription=" A smooth and transparent process for all your vehicle needs."
@@ -20,7 +20,7 @@ export default function ServiceProcess() {
             pageName="Service Process"
             wordsToHighlight={word}
           />
-          <div className="grid grid-cols-12 md:px-20 md:py-10 px-4 py-4">
+          <div className="grid grid-cols-12">
             <div className="lg:col-span-6 col-span-12 text-white space-y-8">
               <div>
                 <h3 className="text-red-500 text-2xl md:text-3xl  font-bold pb-3">

@@ -8,6 +8,7 @@ export default function Map() {
         center={[51.505, -0.09]}
         zoom={13}
         zoomControl={false}
+        scrollWheelZoom={false}
         style={{ height: '400px', width: '100%' }}
       >
         <TileLayer
