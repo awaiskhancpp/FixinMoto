@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { HeadingGrid } from './HeadingGrid'
 
 const STEPS = [
@@ -34,10 +34,16 @@ const STEPS = [
     image: '/serviceProcess/driveAway.png',
   },
 ]
+const INTERVAL_MS = 5000
 
 export default function ServiceProcess() {
   const [active, setActive] = useState(0)
   const word = ['FixinMoto']
+  useEffect(() => {
+    const t = setInterval(() => setActive((i) => (i + 1) % STEPS.length), INTERVAL_MS)
+
+    return () => clearInterval(t)
+  }, [])
 
   return (
     <>
@@ -57,8 +63,8 @@ export default function ServiceProcess() {
         </div>
       </section>
 
-      <section className="w-full bg-[#202020] px-4 py-16 md:px-20 md:py-[112px]">
-        <div className="mx-auto flex max-w-[1440px] flex-col gap-20">
+      <section className="w-full bg-[#202020] px-4 py-6 md:px-20 md:pb-20 md:pt-10">
+        <div className="mx-auto flex max-w-[1440px] flex-col gap-10">
           <HeadingGrid
             pageDescription="A smooth and transparent process for all your vehicle needs."
             pageTitle="What to Expect with FixinMoto"
@@ -67,7 +73,7 @@ export default function ServiceProcess() {
           />
 
           <div className="flex flex-col-reverse items-stretch gap-8 lg:flex-row lg:items-center">
-            <div className="flex min-w-0 flex-1 flex-col gap-10">
+            <div className="flex min-w-0 flex-1 flex-col gap-7">
               {STEPS.map((step, i) => {
                 const isActive = i === active
                 return (
@@ -75,7 +81,7 @@ export default function ServiceProcess() {
                     key={step.title}
                     type="button"
                     onClick={() => setActive(i)}
-                    className={`flex py-3 flex-col gap-4 border-l-2 py-0 pl-8 text-left transition-colors ${
+                    className={`flex py-3 flex-col gap-4 border-l-2 pl-8 text-left transition-colors ${
                       isActive ? 'border-secondary' : 'border-transparent'
                     }`}
                   >
@@ -94,7 +100,7 @@ export default function ServiceProcess() {
               })}
             </div>
 
-            <div className="relative h-[260px] sm:h-[360px] lg:h-[640px] w-full flex-1 ">
+            <div className="relative h-[260px] sm:h-[360px] lg:h-[640px] w-full lg:flex-1 ">
               <Image
                 src={STEPS[active].image}
                 alt=""

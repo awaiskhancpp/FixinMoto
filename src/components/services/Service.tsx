@@ -133,14 +133,14 @@ export default function Service() {
           </div>
         </div>
       </section>
-      <section className="w-full bg-black  text-white md:px-20 md:py-10 px-4 py-4">
+      <section className="w-full bg-black  text-white md:px-20 md:py-10 px-4 py-6">
         <div className="mx-auto max-w-[1440px]">
           <div className="w-full grid grid-cols-12 items-center">
             <div className="md:col-span-4 col-span-12 text-2xl ">
               Quality Car Repair You Can <br />
               Count On !
             </div>
-            <div className="overflow-hidden md:col-span-8 col-span-12 w-full">
+            <div className="overflow-hidden md:col-span-8 mt-2 col-span-12 w-full">
               <div className={`${marqueeStyle.track} gap-[50px]`}>
                 {[...logos, ...logos, ...logos].map((l, i) => (
                   <div key={i} className="flex shrink-0 justify-center">

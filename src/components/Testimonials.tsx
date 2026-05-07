@@ -2,8 +2,14 @@
 
 import Image from 'next/image'
 import { Star } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { HeadingGrid } from './HeadingGrid'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Swiper as SwiperType } from 'swiper'
+import { Navigation, Keyboard, Mousewheel, Pagination } from 'swiper/modules'
+
+import 'swiper/css'
+import 'swiper/css/navigation'
 
 const TESTIMONIALS = [
   {
@@ -20,6 +26,12 @@ const TESTIMONIALS = [
   },
   {
     name: 'Eleanor Pena',
+    image: '/person/person-3.webp',
+    quote:
+      'I encountered an urgent problem with my vehicle and was fortunate to secure a same-day appointment at FixinMotopair. The staff swiftly identified the issue and got my car running again in no time. Their quick and efficient service was greatly appreciated.',
+  },
+  {
+    name: 'Saeed Khan',
     image: '/person/person-3.webp',
     quote:
       'I encountered an urgent problem with my vehicle and was fortunate to secure a same-day appointment at FixinMotopair. The staff swiftly identified the issue and got my car running again in no time. Their quick and efficient service was greatly appreciated.',
@@ -49,12 +61,12 @@ interface TestimonialCardProps {
 function TestimonialCard(props: TestimonialCardProps) {
   const { name, image, quote } = props
   return (
-    <div className="flex w-[90vw] md:w-[493px]  shrink-0 snap-center md:py-10 py-6 px-5 flex-col gap-2 rounded-[15px] bg-[#F8F8F6] md:px-8 ">
+    <div className="flex w-full h-[400px] shrink-0 snap-center md:py-10 py-6 px-5 flex-col gap-2 rounded-[15px] bg-[#F8F8F6] md:px-8 ">
       <div className="w-full shrink-0 overflow-hidden rounded-md pb-1">
         <Image
           src={image}
           alt=""
-          className="object-cover rounded-md aspect-1/1 object-top "
+          className="object-cover rounded-md aspect-1/1 object-top"
           width={64}
           height={64}
         />
@@ -70,11 +82,7 @@ export default function Testimonials() {
   const [index, setIndex] = useState(0)
   const total = TESTIMONIALS.length
   const word = ['Fixinmoto']
-
-  const goPrev = () => setIndex((prev) => (prev - 1 + total) % total)
-  const goNext = () => setIndex((prev) => (prev + 1) % total)
-
-  const offset = index * (CARD_WIDTH + GAP)
+  const swiperRef = useRef<SwiperType | null>(null)
 
   return (
     <section className="w-full bg-primary px-4 md:px-20">
@@ -89,25 +97,50 @@ export default function Testimonials() {
         </div>
         <div className="ml-auto ">
           <div className="pb-6 pt-10 md:pb-10 md:pt-10 bg-secondary rounded-tl-[24px] overflow-x-hidden">
-            <div
-              className="flex gap-5 transition-transform duration-500 ease-out md:pl-10 pl-4"
-              style={{ transform: `translateX(-${offset}px)` }}
-            >
-              {TESTIMONIALS.map((t, i) => (
-                <TestimonialCard key={i} name={t.name} image={t.image} quote={t.quote} />
-              ))}
+            <div className="flex gap-5 transition-transform duration-500 ease-out md:pl-10 pl-4">
+              <Swiper
+                pagination={true}
+                mousewheel={true}
+                keyboard={true}
+                breakpoints={{
+                  0: {
+                    slidesPerView: 1,
+                  },
+                  768: {
+                    slidesPerView: 2,
+                  },
+                  1024: {
+                    slidesPerView: 3,
+                  },
+                }}
+                onSwiper={(swiper) => {
+                  swiperRef.current = swiper
+                }}
+                spaceBetween={10}
+                loop={true}
+                modules={[Pagination, Mousewheel, Keyboard]}
+                className="mySwiper"
+              >
+                {TESTIMONIALS.map((t, i) => (
+                  <>
+                    <SwiperSlide>
+                      <TestimonialCard key={i} name={t.name} image={t.image} quote={t.quote} />
+                    </SwiperSlide>
+                  </>
+                ))}
+              </Swiper>
             </div>
             <div className="flex justify-end gap-[19px] pt-6 mr-4 md:pt-8">
               <button
                 type="button"
-                onClick={goPrev}
+                onClick={() => swiperRef.current?.slidePrev()}
                 className="disabled:pointer-events-none disabled:opacity-40"
               >
                 <Image src="/VectorLeft.png" alt="" width={26} height={16} />
               </button>
               <button
                 type="button"
-                onClick={goNext}
+                onClick={() => swiperRef.current?.slideNext()}
                 className="disabled:pointer-events-none disabled:opacity-40"
               >
                 <Image src="/VectorRight.png" alt="" width={26} height={16} />
