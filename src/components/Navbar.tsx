@@ -49,31 +49,24 @@ export default function Navbar() {
                 {n.label}
               </a>
             ))}
-            <div className="relative">
-              <button
-                onClick={() => setIsPageClicked(!isPageClicked)}
-                className="flex items-center gap-1 py-2 hover:text-secondary"
-              >
+            <div className="relative group hidden md:block">
+              <button className="flex items-center gap-1 py-2 hover:text-secondary">
                 Pages
-                {isPageClicked ? <ChevronUp /> : <ChevronDown />}
+                <ChevronDown />
               </button>
-              {isPageClicked && (
-                <div className="absolute top-full left-0 bg-white text-black rounded-lg shadow-lg w-44 z-10">
-                  <ul className="p-2 text-sm font-medium">
-                    <li>
-                      {PAGE_LINKS.map((p, i) => (
-                        <a
-                          href={p.href}
-                          key={i}
-                          className="inline-flex w-full p-2 hover:bg-gray-100 rounded"
-                        >
-                          {p.label}
-                        </a>
-                      ))}
-                    </li>
-                  </ul>
-                </div>
-              )}
+              <div className="absolute top-full left-0 bg-white text-black rounded-lg shadow-lg w-44 z-10 hidden group-hover:block">
+                <ul className="p-2 text-sm font-medium">
+                  {PAGE_LINKS.map((p, i) => (
+                    <a
+                      key={i}
+                      href={p.href}
+                      className="inline-flex w-full p-2 hover:bg-gray-100 rounded"
+                    >
+                      {p.label}
+                    </a>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -104,39 +97,38 @@ export default function Navbar() {
         </div>
       </div>
 
-      {isOpen && (
-        <div className="fixed inset-0 top-0 z-[-1] bg-white text-black flex flex-col gap-4 px-4 pt-24 md:hidden">
-          {NAV_LINKS.map((n, i) => (
-            <a href={n.href} key={i} className="text-lg py-3 border-b border-gray-100">
-              {n.label}
-            </a>
-          ))}
+      <div
+        className={`fixed inset-0 top-0 z-[-1] bg-white text-black flex flex-col gap-4 px-4 pt-24 md:hidden transition-transform duration-300 ease-out ${
+          isOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        {NAV_LINKS.map((n, i) => (
+          <a href={n.href} key={i} className="text-lg py-3 border-b border-gray-100">
+            {n.label}
+          </a>
+        ))}
 
-          <div>
-            <button
-              onClick={() => setIsPageClicked(!isPageClicked)}
-              className="flex items-center justify-between w-full text-lg py-3 border-b border-gray-100"
-            >
-              Pages
-              {isPageClicked ? <ChevronUp /> : <ChevronDown />}
-            </button>
-            {isPageClicked && (
-              <div className="flex flex-col">
-                <a href="#" className="text-lg py-6 border-b border-gray-100">
-                  Dashboard
-                </a>
-                <a href="/services" className="text-lg py-6 border-b border-gray-100">
-                  Services
-                </a>
-              </div>
-            )}
-          </div>
-
-          <button className="mt-4 rounded-lg bg-secondary px-6 h-12 text-white w-full">
-            Login
+        <div>
+          <button
+            onClick={() => setIsPageClicked(!isPageClicked)}
+            className="flex items-center justify-between w-full text-lg py-3 border-b border-gray-100"
+          >
+            Pages
+            {isPageClicked ? <ChevronUp /> : <ChevronDown />}
           </button>
+          {isPageClicked && (
+            <div className="flex flex-col">
+              {PAGE_LINKS.map((p, i) => (
+                <a href={p.href} key={i} className="text-lg py-3 border-b border-gray-100">
+                  {p.label}
+                </a>
+              ))}
+            </div>
+          )}
         </div>
-      )}
+
+        <button className="mt-4 rounded-lg bg-secondary px-6 h-12 text-white w-full">Login</button>
+      </div>
     </nav>
   )
 }

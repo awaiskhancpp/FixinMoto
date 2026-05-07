@@ -4,41 +4,57 @@ import Image from 'next/image'
 const CarInfo = [
   {
     iconImg: '/appointmentForm/carhood.png',
+    imgOnClick: '/appointmentForm/carhoodwhite.png',
     serviceTitle: 'Towing Services',
     content: "Fast & Reliable Towing: We're Here When You Need Us",
   },
   {
     iconImg: '/appointmentForm/towtruck.png',
+    imgOnClick: '/appointmentForm/towtruckwhite.png',
     serviceTitle: 'Emergency Roadside Assistance',
     content: '24/7 Roadside Help: Jump Starts, Tire Changes & More',
   },
   {
-    iconImg: '/appointmentForm/towtruck.png',
+    iconImg: '/appointmentForm/carwrench.png',
+    imgOnClick: '/appointmentForm/carwrenchwhite.png',
     serviceTitle: 'Fleet Maintenance Services',
     content: 'Keep Your Fleet Running: Professional Maintenance for Vehicles',
   },
 ]
 const ButtonName = [
-  { name: 'Oil Change', onclick: {}, isRed: true },
-  { name: 'Brake Repair', onclick: {}, isRed: false },
-  { name: 'Tire Services', onclick: {}, isRed: false },
-  { name: 'Battery Check/Replacement', onclick: {}, isRed: true },
-  { name: 'Engine Diagnostic', onclick: {}, isRed: false },
-  { name: 'Transmission Service', onclick: {}, isRed: false },
-  { name: 'AC/Heating Repair', onclick: {}, isRed: false },
-  { name: 'Suspension/Steering Repair', onclick: {}, isRed: false },
-  { name: 'Exhaust Repair', onclick: {}, isRed: false },
-  { name: 'General Maintenance', onclick: {}, isRed: false },
-  { name: 'Car Wash and Detailing', onclick: {}, isRed: true },
-  { name: 'Windshield Repair', onclick: {}, isRed: false },
+  { name: 'Oil Change', onclick: {} },
+  { name: 'Brake Repair', onclick: {} },
+  { name: 'Tire Services', onclick: {} },
+  { name: 'Battery Check/Replacement', onclick: {} },
+  { name: 'Engine Diagnostic', onclick: {} },
+  { name: 'Transmission Service', onclick: {} },
+  { name: 'AC/Heating Repair', onclick: {} },
+  { name: 'Suspension/Steering Repair', onclick: {} },
+  { name: 'Exhaust Repair', onclick: {} },
+  { name: 'General Maintenance', onclick: {} },
+  { name: 'Car Wash and Detailing', onclick: {} },
+  { name: 'Windshield Repair', onclick: {} },
 ]
 
 export default function AppointmentForm() {
   const [activeCard, setActiveCard] = useState<Number | null>(null)
+  const [selectedButtons, setSelectedButtons] = useState<Set<number>>(new Set())
+
+  const toggleButton = (i: number) => {
+    setSelectedButtons((prev) => {
+      const newSet = new Set(prev)
+      if (newSet.has(i)) {
+        newSet.delete(i)
+      } else {
+        newSet.add(i)
+      }
+      return newSet
+    })
+  }
   return (
     <>
       <section className="bg-black text-white md:px-20 md:py-10 px-4 py-4">
-        <div className="mx-auto max-w-[1440px]">
+        <div className="mx-auto max-w-6xl">
           <div>
             <h2 className="font-medium">Personal Information</h2>
             <div className="grid md:grid-cols-2 gap-3 pt-3 grid-cols-1 ">
@@ -207,6 +223,7 @@ export default function AppointmentForm() {
                 <div key={i} onClick={() => setActiveCard(i)}>
                   <Card
                     iconImg={c.iconImg}
+                    imgOnClick={c.imgOnClick}
                     serviceTitle={c.serviceTitle}
                     content={c.content}
                     clicked={activeCard === i}
@@ -218,8 +235,10 @@ export default function AppointmentForm() {
               {ButtonName.map((b, i) => (
                 <button
                   key={i}
-                  onClick={() => (b.isRed = true)}
-                  className={`${b.isRed ? 'bg-secondary' : 'border broder-white'} rounded-3xl px-3 py-2 `}
+                  onClick={() => toggleButton(i)}
+                  className={`rounded-3xl px-3 py-2 ${
+                    selectedButtons.has(i) ? 'bg-secondary' : 'border border-white'
+                  }`}
                 >
                   {b.name}
                 </button>
@@ -234,23 +253,19 @@ export default function AppointmentForm() {
 }
 interface CardProps {
   iconImg: string
+  imgOnClick: string | undefined
   serviceTitle: string
   content: string
   clicked: boolean
 }
 
-const Card = ({ iconImg, serviceTitle, content, clicked }: CardProps) => {
+const Card = ({ iconImg, imgOnClick, serviceTitle, content, clicked }: CardProps) => {
+  const imgSrc = clicked ? imgOnClick : iconImg
   return (
     <div
       className={`flex flex-row border py-2 border-secondary rounded-[15px] px-2 ${clicked ? 'bg-secondary' : ''}`}
     >
-      <Image
-        src={iconImg}
-        alt="..."
-        width={64}
-        height={64}
-        className={`${clicked ? 'invert' : ''} object-fit`}
-      />
+      <Image src={imgSrc || '/'} alt="..." width={64} height={64} className=" object-fit" />
       <div className="flex flex-col pl-2">
         <h3 className="font-medium">{serviceTitle}</h3>
         <p className="text-white/50">{content}</p>

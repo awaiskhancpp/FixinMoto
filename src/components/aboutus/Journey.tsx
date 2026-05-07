@@ -13,14 +13,15 @@ export default function Journey() {
         <div className="mx-auto flex max-w-[1440px] flex-col items-center gap-10 lg:flex-row lg:gap-8">
           <div className="flex w-full flex-col gap-4 lg:max-w-none lg:flex-1">
             <div className="flex flex-col gap-2">
-              <p className="text-base font-medium leading-normal text-secondary">
+              <p className="text-base font-medium leading-normal text-secondary pb-2">
                 The FixinMoto Journey
               </p>
               <h2 className="md:text-5xl text-3xl font-bold w-[359px] text-white">
-                From <span className="bg-secondary inline-block skew-x-[-6deg] px-2 ">Passion</span>{' '}
+                From{' '}
+                <span className="bg-secondary inline-block skew-x-[-6deg] px-2 mb-1">Passion</span>{' '}
                 to <span className="bg-secondary inline-block skew-x-[-6deg] px-2">Precision</span>
               </h2>
-              <p className="max-w-xl text-sm leading-[1.4] w-[85%] text-white/50">
+              <p className="max-w-xl text-lg leading-[1.4] w-[85%] text-white/50 pt-2">
                 At FixinMoto, our journey began with a shared passion for cars and a drive to make
                 automotive care easier, more accessible, and more reliable. What started as a small
                 group of enthusiasts who were tired of the typical repair shop experience has grown

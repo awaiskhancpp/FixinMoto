@@ -61,7 +61,7 @@ export default function Testimonials() {
               </div>
             ))}
           </div>
-          <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 justify-center items-center gap-6 pt-5">
+          <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 justify-center items-center gap-4 pt-5">
             {TESTIMONIALS.map((t, i) => (
               <div key={i} onClick={() => setActiveCard(i)}>
                 <TestimonialCard
@@ -87,14 +87,14 @@ interface TestimonialCardProps {
 const TestimonialCard = ({ name, image, quote, clicked }: TestimonialCardProps) => {
   return (
     <div
-      className={`flex  snap-center overflow-x-hidden flex-col gap-2.5 rounded-[15px] ${clicked ? 'bg-secondary' : 'bg-[#F8F8F6]'}  px-6 py-12 sm:px-[5px] sm:py-[40px]`}
+      className={`flex group snap-center overflow-x-hidden flex-col gap-2.5 rounded-[15px] hover:bg-secondary bg-[#F8F8F6] px-6  sm:py-[40px]`}
       style={{ minHeight: 528 }}
     >
       <div className="flex ">
         {Array.from({ length: 5 }).map((s, i) => (
           <Star
             key={i}
-            className={`size-5 ${clicked ? ' fill-white' : 'fill-secondary text-secondary'} `}
+            className={`size-5  group-hover:fill-white group-hover:text-white fill-secondary text-secondary`}
             strokeWidth={0}
           />
         ))}
