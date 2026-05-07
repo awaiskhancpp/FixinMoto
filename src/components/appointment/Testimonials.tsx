@@ -86,8 +86,8 @@ interface TestimonialCardProps {
 }
 const TestimonialCard = ({ name, image, quote, clicked }: TestimonialCardProps) => {
   return (
-    <article
-      className={`flex w-[85%] max-w-[388px] snap-center overflow-x-hidden flex-col gap-2.5 rounded-[15px] ${clicked ? 'bg-secondary' : 'bg-[#F8F8F6]'}  px-6 py-12 sm:px-[46px] sm:py-[67px] md:w-[388px] md:max-w-[388px]`}
+    <div
+      className={`flex  snap-center overflow-x-hidden flex-col gap-2.5 rounded-[15px] ${clicked ? 'bg-secondary' : 'bg-[#F8F8F6]'}  px-6 py-12 sm:px-[5px] sm:py-[40px]`}
       style={{ minHeight: 528 }}
     >
       <div className="flex ">
@@ -105,6 +105,6 @@ const TestimonialCard = ({ name, image, quote, clicked }: TestimonialCardProps) 
       <div className="relative size-[116px] overflow-hidden rounded-md">
         <Image src={image} alt="" fill className="object-cover" sizes="116px" />
       </div>
-    </article>
+    </div>
   )
 }

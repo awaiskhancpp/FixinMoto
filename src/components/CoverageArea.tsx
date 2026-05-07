@@ -6,7 +6,7 @@ import Map from './Map'
 export default function CoverageArea() {
   const word = ['Near', 'You']
   return (
-    <section className="w-full bg-primary pb-10 md:space-y-7 space-y-4 ">
+    <section className="w-full bg-primary md:space-y-7 space-y-4">
       <div className="md:px-20 md:py-10 px-4 py-4">
         <div className="mx-auto max-w-[1440px] ">
           <HeadingGrid
@@ -17,10 +17,12 @@ export default function CoverageArea() {
           />
         </div>
       </div>
-      <div className="relative h-[300px] flex md:items-center ">
+      <div className="relative h-[400px] w-full  ">
         <Map />
-        <div className="absolute inset-0 z-[500] pl-5 pt-10 md:pl-20">
-          <LocationForm />
+        <div className="absolute inset-0 z-[500] flex items-center justify-center md:px-20 md:py-10 px-6 py-6">
+          <div className="w-full md:mx-auto max-w-[1440px] ">
+            <LocationForm />
+          </div>
         </div>
       </div>
     </section>

@@ -93,9 +93,9 @@ export default function WhyChooseFixinMoto() {
             <h2 className="text-white font-semibold text-3xl ">Why Choose Fixin Moto?</h2>
             <h5 className="text-[#DB323E]">Your Trusted Partner for Quality Automotive Care</h5>
           </div>
-          <div className="pt-6 ">
+          <div className="pt-6">
             <div
-              className="flex gap-1 overflow-x-auto snap-x snap-mandatory md:px-4 md:pb-4 sm:hidden "
+              className="flex gap-2 overflow-x-auto snap-x snap-mandatory md:px-4 md:pb-4 sm:hidden "
               ref={scrollRef}
               onScroll={handleScroll}
               onTouchStart={onTouchStart}
@@ -104,7 +104,7 @@ export default function WhyChooseFixinMoto() {
               style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
             >
               {CARDS.map((card, i) => (
-                <a href="#" key={i}>
+                <a href="#" className="snap-center shrink-0 w-[85vw]">
                   <Card title={card.title} logoImg={card.logoImg} details={card.detail} />
                 </a>
               ))}
@@ -141,7 +141,7 @@ interface CardProps {
 function Card({ logoImg, title, details }: CardProps) {
   return (
     <>
-      <div className="border bg-primary flex flex-col w-[90vw] h-100 md:w-70 rounded-[15px] overflow-hidden">
+      <div className="border bg-primary flex flex-col h-100 rounded-[15px] overflow-hidden">
         <div className="text-white px-4 pt-10 flex flex-col gap-3">
           <Image
             src={logoImg}

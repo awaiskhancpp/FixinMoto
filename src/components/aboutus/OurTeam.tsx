@@ -34,11 +34,11 @@ export default function OurTeam() {
 
   return (
     <>
-      <section className="bg-primary">
+      <section className="bg-primary md:py-10 md:px-20 px-4 py-20 ">
         <div className="mx-auto max-w-[1440px]">
-          <div className="flex-flex-col text-white md:py-10 md:px-20 px-4 py-4">
+          <div className="flex-flex-col text-white mb-10">
             <div className="space-y-3">
-              <p className="text-secondary">Driven by Passion, United by Excellence</p>
+              <p className="text-secondary">Driven by Passion, United by Excellensce</p>
               <h2 className="font-bold text-2xl md:text-3xl lg:text-5xl">
                 Meet Our Team: Experts Who Care
               </h2>
@@ -52,9 +52,9 @@ export default function OurTeam() {
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto px-4 py-4 md:px-20 md:py-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="grid grid-cols-1 sm:grid-cols-2 mt-10 lg:grid-cols-4 gap-3 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {TESTIMONIALS.map((p, i) => (
-              <div key={i}>
+              <div key={i} className="w-full h-full">
                 <TeamMemberCard
                   name={p.name}
                   profession={p.profession}
@@ -84,10 +84,10 @@ const TeamMemberCard = ({ name, profession, image, quote }: MemberCardProps) => 
     { src: '/social/linkdin.png', alt: 'linkedin' },
   ]
   return (
-    <div className="flex flex-col w-[75vw] md:w-[276px]">
-      <div className="relative">
-        <Image src={image} alt="personImage" width={250} height={196} className="rounded-[15px]" />
-        <div className="flex justify-center absolute -bottom-4 -left-6 right-0 gap-2">
+    <div className="flex flex-col">
+      <div className="relative w-full h-[396px]">
+        <Image src={image} alt="personImage" fill className="rounded-[15px] S" />
+        <div className="flex justify-center absolute -bottom-4 left-0 right-0 gap-2">
           {socials.map((s) => (
             <button
               key={s.alt}
@@ -101,7 +101,7 @@ const TeamMemberCard = ({ name, profession, image, quote }: MemberCardProps) => 
       <div className="pt-6 flex flex-col gap-1 w-full">
         <h3 className="text-white text-lg font-bold">{name}</h3>
         <p className="text-white/60 text-sm">{profession}</p>
-        <p className="text-white/40 text-xs leading-relaxed pt-1">{quote}</p>
+        <p className="text-white/40 text-xs leading-relaxed pt-1 line-clamp-3">{quote}</p>
       </div>
     </div>
   )
