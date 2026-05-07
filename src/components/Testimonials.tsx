@@ -76,44 +76,84 @@ export default function Testimonials() {
   const offset = index * (CARD_WIDTH + GAP)
 
   return (
-    <section className="w-full overflow-x-hidden bg-primary ">
-      <div className="mx-auto max-w-[1440px] px-4 py-4 md:px-20 py-10">
-        <HeadingGrid
-          pageTitle="What Drivers Are Saying About Fixinmoto"
-          pageName="Testimonials"
-          pageDescription="Read what our satisfied customers have to say about our products and services"
-          wordsToHighlight={word}
-        />
-      </div>
-
-      <div className="mt-10 ml-30  md:pl-10">
-        <div className="ml-auto max-w-[1440px] pb-6 pt-10 md:pb-10 md:pt-10 bg-secondary md:rounded-tl-[24px] overflow-hidden">
-          <div
-            className="flex gap-5 transition-transform duration-500 ease-out pl-5"
-            style={{ transform: `translateX(-${offset}px)` }}
-          >
-            {[...TESTIMONIALS, ...TESTIMONIALS].map((t, i) => (
-              <TestimonialCard key={i} name={t.name} image={t.image} quote={t.quote} />
-            ))}
-          </div>
-          <div className="flex justify-end gap-[19px] pt-6 mr-4 md:pt-8">
-            <button
-              type="button"
-              onClick={goPrev}
-              className="disabled:pointer-events-none disabled:opacity-40"
+    <section className="w-full bg-primary px-4 md:px-20">
+      <div className="mx-auto max-w-[1440px]">
+        <div className="">
+          <HeadingGrid
+            pageTitle="What Drivers Are Saying About Fixinmoto"
+            pageName="Testimonials"
+            pageDescription="Read what our satisfied customers have to say about our products and services"
+            wordsToHighlight={word}
+          />
+        </div>
+        <div>
+          <div className="ml-auto pb-6 pt-10 md:pb-10 md:pt-10 bg-secondary md:rounded-tl-[24px] overflow-hidden">
+            <div
+              className="flex gap-5 transition-transform duration-500 ease-out md:pl-10 pl-4"
+              style={{ transform: `translateX(-${offset}px)` }}
             >
-              <Image src="/VectorLeft.png" alt="" width={26} height={16} />
-            </button>
-            <button
-              type="button"
-              onClick={goNext}
-              className="disabled:pointer-events-none disabled:opacity-40"
-            >
-              <Image src="/VectorRight.png" alt="" width={26} height={16} />
-            </button>
+              {TESTIMONIALS.map((t, i) => (
+                <TestimonialCard key={i} name={t.name} image={t.image} quote={t.quote} />
+              ))}
+            </div>
+            <div className="flex justify-end gap-[19px] pt-6 mr-4 md:pt-8">
+              <button
+                type="button"
+                onClick={goPrev}
+                className="disabled:pointer-events-none disabled:opacity-40"
+              >
+                <Image src="/VectorLeft.png" alt="" width={26} height={16} />
+              </button>
+              <button
+                type="button"
+                onClick={goNext}
+                className="disabled:pointer-events-none disabled:opacity-40"
+              >
+                <Image src="/VectorRight.png" alt="" width={26} height={16} />
+              </button>
+            </div>
           </div>
         </div>
       </div>
+      {/* <div className="mx-auto max-w-[1440px]">
+        <div className="px-20 py-10">
+          <HeadingGrid
+            pageTitle="What Drivers Are Saying About Fixinmoto"
+            pageName="Testimonials"
+            pageDescription="Read what our satisfied customers have to say about our products and services"
+            wordsToHighlight={word}
+          />
+        </div>
+
+        <div className="mt-10 mx-auto md:pl-10">
+          <div className="ml-auto pb-6 pt-10 md:pb-10 md:pt-10 bg-secondary md:rounded-tl-[24px] overflow-hidden">
+            <div
+              className="flex gap-5 transition-transform duration-500 ease-out md:pl-10 pl-4"
+              style={{ transform: `translateX(-${offset}px)` }}
+            >
+              {TESTIMONIALS.map((t, i) => (
+                <TestimonialCard key={i} name={t.name} image={t.image} quote={t.quote} />
+              ))}
+            </div>
+            <div className="flex justify-end gap-[19px] pt-6 mr-4 md:pt-8">
+              <button
+                type="button"
+                onClick={goPrev}
+                className="disabled:pointer-events-none disabled:opacity-40"
+              >
+                <Image src="/VectorLeft.png" alt="" width={26} height={16} />
+              </button>
+              <button
+                type="button"
+                onClick={goNext}
+                className="disabled:pointer-events-none disabled:opacity-40"
+              >
+                <Image src="/VectorRight.png" alt="" width={26} height={16} />
+              </button>
+            </div>
+          </div>
+        </div> */}
+      {/* </div> */}
     </section>
   )
 }

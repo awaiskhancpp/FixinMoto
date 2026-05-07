@@ -88,7 +88,7 @@ export default function Service() {
           />
           <div className="">
             <div
-              className="flex gap-4 overflow-x-auto snap-x snap-mandatory md:hidden"
+              className="flex gap-3 overflow-x-hidden snap-x snap-mandatory md:hidden"
               ref={scrollRef}
               onScroll={handleScroll}
               onTouchStart={onTouchStart}
@@ -97,7 +97,7 @@ export default function Service() {
               style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
             >
               {CARDS.map((card, i) => (
-                <a href="/services" key={i} className="w-full shrink-0">
+                <a href="/services" key={i} className="w-[90vw] shrink-0">
                   <Card
                     title={card.title}
                     mainImg={card.mainImg}
@@ -142,7 +142,7 @@ export default function Service() {
             </div>
             <div className="overflow-hidden md:col-span-8 col-span-12 w-full">
               <div className={`${marqueeStyle.track} gap-[50px]`}>
-                {[...logos, ...logos].map((l, i) => (
+                {[...logos, ...logos, ...logos].map((l, i) => (
                   <div key={i} className="flex shrink-0 justify-center">
                     <Image
                       src={l.src}

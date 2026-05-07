@@ -57,7 +57,7 @@ export default function ServiceProcess() {
         </div>
       </section>
 
-      <section className="w-full bg-[#202020] px-4 py-16 md:px-16 md:py-[112px]">
+      <section className="w-full bg-[#202020] px-4 py-16 md:px-20 md:py-[112px]">
         <div className="mx-auto flex max-w-[1440px] flex-col gap-20">
           <HeadingGrid
             pageDescription="A smooth and transparent process for all your vehicle needs."
