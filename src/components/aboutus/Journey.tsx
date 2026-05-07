@@ -33,7 +33,7 @@ export default function Journey() {
           <div className="relative h-[400px] w-full sm:h-[520px] lg:h-[638px] lg:flex-1 lg:mr-[-5.2%]">
             <div className="absolute inset-y-0 left-0 right-[8%] overflow-hidden rounded-l-[15px] right-0 lg:right-0">
               <Image
-                src="/heroimg.png"
+                src="/passionToPrecisionImg1.jpg"
                 alt=""
                 fill
                 className="object-cover"
@@ -41,7 +41,13 @@ export default function Journey() {
               />
             </div>
             <div className="absolute -bottom-2 -left-4 z-10 h-[200px] w-[200px] overflow-hidden rounded-[15px] sm:h-[220px] sm:w-[220px] lg:-bottom-2 lg:left-[-4.7rem] lg:h-[244px] lg:w-[244px]">
-              <Image src="/heroimg.png" alt="" fill className="object-cover" sizes="244px" />
+              <Image
+                src="/fromPassionToPrecision2.jpg"
+                alt=""
+                fill
+                className="object-cover"
+                sizes="244px"
+              />
             </div>
           </div>
         </div>

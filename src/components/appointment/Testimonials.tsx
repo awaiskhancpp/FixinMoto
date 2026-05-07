@@ -87,8 +87,7 @@ interface TestimonialCardProps {
 const TestimonialCard = ({ name, image, quote, clicked }: TestimonialCardProps) => {
   return (
     <div
-      className={`flex group snap-center overflow-x-hidden flex-col gap-2.5 rounded-[15px] hover:bg-secondary bg-[#F8F8F6] px-6  sm:py-[40px]`}
-      style={{ minHeight: 528 }}
+      className={`flex group snap-center h-[460] overflow-x-hidden flex-col gap-2.5 rounded-[15px] hover:bg-secondary bg-[#F8F8F6] px-6  sm:py-[40px]`}
     >
       <div className="flex ">
         {Array.from({ length: 5 }).map((s, i) => (
@@ -99,11 +98,18 @@ const TestimonialCard = ({ name, image, quote, clicked }: TestimonialCardProps) 
           />
         ))}
       </div>
-      <p className="text-base font-medium leading-normal text-black/50 flex-1">{quote}</p>
+      <p className="text-base font-medium leading-normal text-black/50 flex-1 ">{quote}</p>
       <h3 className="text-2xl font-medium leading-[1.333] text-primary">{name}</h3>
 
-      <div className="relative size-[116px] overflow-hidden rounded-md">
-        <Image src={image} alt="" fill className="object-cover" sizes="116px" />
+      <div className="relative  overflow-hidden rounded-md">
+        <Image
+          src={image}
+          alt=""
+          width={64}
+          height={64}
+          className="object-cover aspect-[1/1] object-top"
+          sizes="116px"
+        />
       </div>
     </div>
   )

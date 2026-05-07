@@ -6,7 +6,7 @@ import { useState, useRef } from 'react'
 import { HeadingGrid } from './HeadingGrid'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Swiper as SwiperType } from 'swiper'
-import { Navigation, Keyboard, Mousewheel, Pagination } from 'swiper/modules'
+import { Keyboard, Pagination } from 'swiper/modules'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -100,7 +100,6 @@ export default function Testimonials() {
             <div className="flex gap-5 transition-transform duration-500 ease-out md:pl-10 pl-4">
               <Swiper
                 pagination={true}
-                mousewheel={true}
                 keyboard={true}
                 breakpoints={{
                   0: {
@@ -118,7 +117,7 @@ export default function Testimonials() {
                 }}
                 spaceBetween={10}
                 loop={true}
-                modules={[Pagination, Mousewheel, Keyboard]}
+                modules={[Pagination, Keyboard]}
                 className="mySwiper"
               >
                 {TESTIMONIALS.map((t, i) => (

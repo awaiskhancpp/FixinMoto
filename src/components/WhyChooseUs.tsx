@@ -33,17 +33,22 @@ export default function WhyChooseUS() {
           </button>
         </div>
         <div className="relative w-full h-[400px] md:h-[500px] lg:h-[580px] rounded-xl ">
-          <Image src="/heroimg.png" alt="middleimg" fill className="object-cover rounded-xl" />
+          <Image
+            src="/passionToPrecisionImg1.jpg"
+            alt="middleimg"
+            fill
+            className="object-cover rounded-xl"
+          />
           <div className="absolute -top-3 -right-3 md:-top-5 md:-right-10 bg-secondary w-38 h-20 flex flex-col items-center justify-center rounded-lg z-10">
             <h3 className="text-2xl text-white font-bold">+15</h3>
             <p className="text-red-200 text-xs">Years of experience</p>
           </div>
           <Image
-            src="/heroimg.png"
+            src="/fromPassionToPrecision2.jpg"
             alt="lowerimg"
             width={244}
             height={244}
-            className="border rounded-lg absolute h-25 w-50 -bottom-2 -left-3 md:h-40 md:w-60  md:-bottom-4 md:-left-10 md:z-1"
+            className="border object-cover rounded-lg absolute h-25 w-50 -bottom-2 -left-3 md:h-40 md:w-60  md:-bottom-4 md:-left-10 md:z-1"
           />
         </div>
       </div>
