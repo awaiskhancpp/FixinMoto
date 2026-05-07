@@ -26,7 +26,8 @@ const TESTIMONIALS = [
   },
 ]
 
-const CARD_WIDTH = 493
+const CARD_WIDTH =
+  typeof window !== 'undefined' && window.innerWidth < 768 ? window.innerWidth - 32 : 493
 const GAP = 20
 
 function StarRating() {
@@ -48,7 +49,7 @@ interface TestimonialCardProps {
 function TestimonialCard(props: TestimonialCardProps) {
   const { name, image, quote } = props
   return (
-    <div className="flex w-[493px] shrink-0 snap-center md:py-10 py-6 px-5 flex-col gap-2 rounded-[15px] bg-[#F8F8F6] md:px-8 ">
+    <div className="flex w-[90vw] md:w-[493px]  shrink-0 snap-center md:py-10 py-6 px-5 flex-col gap-2 rounded-[15px] bg-[#F8F8F6] md:px-8 ">
       <div className="w-full shrink-0 overflow-hidden rounded-md pb-1">
         <Image
           src={image}
@@ -86,8 +87,8 @@ export default function Testimonials() {
             wordsToHighlight={word}
           />
         </div>
-        <div>
-          <div className="ml-auto pb-6 pt-10 md:pb-10 md:pt-10 bg-secondary md:rounded-tl-[24px] overflow-hidden">
+        <div className="ml-auto ">
+          <div className="pb-6 pt-10 md:pb-10 md:pt-10 bg-secondary rounded-tl-[24px] overflow-x-hidden">
             <div
               className="flex gap-5 transition-transform duration-500 ease-out md:pl-10 pl-4"
               style={{ transform: `translateX(-${offset}px)` }}
