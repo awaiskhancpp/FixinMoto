@@ -62,7 +62,7 @@ export default function Footer() {
           <div className="grid-cols-1">
             <h3 className="font-medium pt-6">Subscribe to Our Newsletter</h3>
             <div className="space-y-5 mt-3">
-              <p className="text-white/80">
+              <p className="text-white/50">
                 Sign up for our newsletter to receive exclusive promotions, news, and tips straight
                 to your inbox.
               </p>
