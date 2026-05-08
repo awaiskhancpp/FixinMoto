@@ -3,63 +3,75 @@ import { MapPin, Phone, Mail, Globe } from 'lucide-react'
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-primary">
-      <div className="mx-auto grid max-w-[1440px] grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 py-4 px-4 lg:px-20 text-white">
-        <div className="lg:col-span-3 pt-4">
+    <footer className="w-full bg-primary py-4 px-4 md:px-20 gap-y-0">
+      <div className="mx-auto grid max-w-[1440px] grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-14 text-white">
+        <div className="lg:col-span-3 pt-4 order-2 lg:order-1">
           <Image src="/logonavbar.png" width={140} height={42} alt="footerlogo" />
           <div className="py-4 space-y-2 mt-3">
             <div className="flex">
               <MapPin className="text-red-500 shrink-0 w-4 h-4 mt-0.5 mr-1" />
-              <p>2464 Royal Ln. Mesa, New Jersey 45463</p>
+              <p className="text-white/50">2464 Royal Ln. Mesa, New Jersey 45463</p>
             </div>
             <div className="flex">
               <Phone className="text-red-500 shrink-0 w-4 h-4 mt-0.5 mr-1" />
-              <p>(480) 555-0103</p>
+              <p className="text-white/50">(480) 555-0103</p>
             </div>
             <div className="flex ">
               <Mail className="text-red-500 shrink-0 w-4 h-4 mt-0.5 mr-1" />
-              <p>hello@FixinMoto.com</p>
+              <p className="text-white/50">hello@FixinMoto.com</p>
             </div>
             <div className="flex">
               <Globe className="text-red-500 shrink-0 w-4 h-4 mt-0.5 mr-1" />
-              <p>www.FixinMoto.com</p>
+              <p className="text-white/50">www.FixinMoto.com</p>
             </div>
           </div>
         </div>
-        <div className="lg:col-span-3 py-5">
-          <h3 className="font-medium ">Opening Hours</h3>
+        <div className="lg:col-span-3 py-5 order-3 lg:order-2">
+          <h3 className="text-2xl font-medium">Opening Hours</h3>
           <div className="space-y-2 mt-7">
-            <p>Mon-Fri : 08.00 - 20.00</p>
-            <p>Sat-Sun: 10.00 - 16.00</p>
+            <p className="text-white/50">Mon-Fri : 08.00 - 20.00</p>
+            <p className="text-white/50">Sat-Sun: 10.00 - 16.00</p>
           </div>
         </div>
-        <div className="lg:col-span-3 ">
+        <div className="lg:col-span-3  order-4 lg:order-3">
           <div className="grid">
-            <h3 className="font-medium mt-6">Quick Links</h3>
+            <h3 className="text-2xl font-medium md:mt-5 pb-2">Quick Links</h3>
             <div className="space-y-2 mt-4 grid">
-              <a href="#">About us</a>
-              <a href="#">Why with us</a>
-              <a href="#">Out Services</a>
-              <a href="#">Appointment</a>
-              <a href="#">Blog</a>
-              <a href="#">FAQ</a>
+              <a href="#" className="text-white/50">
+                About us
+              </a>
+              <a href="#" className="text-white/50">
+                Why with us
+              </a>
+              <a href="#" className="text-white/50">
+                Out Services
+              </a>
+              <a href="#" className="text-white/50">
+                Appointment
+              </a>
+              <a href="#" className="text-white/50">
+                Blog
+              </a>
+              <a href="#" className="text-white/50">
+                FAQ
+              </a>
             </div>
           </div>
         </div>
-        <div className="lg:col-span-3">
+        <div className="lg:col-span-3 order-1 lg:order-4">
           <div className="grid-cols-1">
             <h3 className="font-medium pt-6">Subscribe to Our Newsletter</h3>
             <div className="space-y-5 mt-3">
-              <p>
+              <p className="text-white/80">
                 Sign up for our newsletter to receive exclusive promotions, news, and tips straight
                 to your inbox.
               </p>
               <input
                 type="text"
                 placeholder=" Email Address"
-                className="w-full border-[0.5px] pt-2 pr-1.5 pb-2 pl-1rem border-white rounded-lg"
+                className="w-full border border-white/50 rounded-lg px-3 py-2.5 bg-transparent text-white/50 placeholder:text-white/50"
               />
-              <button className="bg-red-500 p-2 rounded-lg px-3 pr-3 flex justify-center items-center">
+              <button className="bg-secondary rounded-lg px-8 py-[15px] text-white text-sm font-medium shadow-[0px_4px_12px_rgba(34,34,34,0.1)] flex items-center gap-2">
                 Submit
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -82,8 +94,8 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="border-t border-gray-700" />
-      <div className="text-center text-gray-400 text-small py-4">
+      <div className="border-t border-white/50 mt-10" />
+      <div className="text-center text-white/50 text-sm py-8">
         Copyright © 2024 FixinMoto. All rights reserved.
       </div>
     </footer>
