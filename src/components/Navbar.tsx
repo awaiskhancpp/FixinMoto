@@ -10,6 +10,7 @@ export default function Navbar() {
   const PAGE_LINKS = [
     { label: 'Dashboard', href: '#' },
     { label: 'Services', href: '/services' },
+    { label: 'Our Team', href: '/ourteam' },
   ]
   const NAV_LINKS = [
     { label: 'About Us', href: '/aboutus' },

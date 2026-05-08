@@ -81,16 +81,16 @@ export default function OurTeam() {
     setSelected((prev) => (prev === i ? null : i))
   }
   return (
-    <section className="bg-primary md:px-20 md:py-10">
+    <section className="bg-primary px-6 py-5 md:px-20 md:py-10">
       <div className="mx-auto max-w-[1440px]">
         <div className="space-y-3">
-          <h2 className="text-5xl text-white">Meet Our Team</h2>
+          <h2 className=" text-4xl md:text-5xl text-white">Meet Our Team</h2>
           <p className="text-white/50">
             Get to know the skilled individuals behind FixinMoto who combine expertise, passion, and
             a commitment to quality service for every customer.
           </p>
         </div>
-        <div className="mt-15 space-x-10">
+        <div className="mt-15 space-x-2 lg:space-x-10">
           {ButtonLabels.map((b, i) => (
             <button
               key={i}
@@ -101,7 +101,7 @@ export default function OurTeam() {
             </button>
           ))}
         </div>
-        <div className="mt-15 grid grid-cols-3 gap-9">
+        <div className="mt-15 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-9">
           {MEMBERS.map((m, i) => (
             <OurTeamCard
               key={i}
