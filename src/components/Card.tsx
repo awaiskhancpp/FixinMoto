@@ -11,7 +11,7 @@ export default function Card({ cardNo, mainImg, logoImg, title }: CARD) {
     <>
       <div className="relative w-full h-[400px] rounded-[15px] overflow-hidden">
         <Image src={mainImg} alt="cardimg" fill className="object-cover object-center " />
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-600 to-[#292929] p-10">
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-600 to-[#292929]/20 p-10">
           <div>{cardNo}</div>
           <div className="mt-50">
             <Image

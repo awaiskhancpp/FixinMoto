@@ -21,6 +21,11 @@ const POSTS = [
     date: 'December 7, 2024',
     author: 'Alex Johnson',
   },
+  {
+    title: 'Not Under the Hood: Exploring the Latest in Automotive ',
+    date: 'December 8, 2024',
+    author: 'Awais Johnson',
+  },
 ]
 interface BlogCard {
   title: string

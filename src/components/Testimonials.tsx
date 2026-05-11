@@ -32,7 +32,7 @@ const TESTIMONIALS = [
   },
   {
     name: 'Saeed Khan',
-    image: '/person/person-3.webp',
+    image: '/person/person-4.webp',
     quote:
       'I encountered an urgent problem with my vehicle and was fortunate to secure a same-day appointment at FixinMotopair. The staff swiftly identified the issue and got my car running again in no time. Their quick and efficient service was greatly appreciated.',
   },

@@ -2,7 +2,7 @@ import { CircleCheck } from 'lucide-react'
 import Image from 'next/image'
 export default function WhyChooseUS() {
   return (
-    <section className="w-full bg-primary px-4 py-6 md:px-20 md:py-10">
+    <section className="w-full bg-primary px-4 py-8 md:px-20 md:py-20">
       <div className="mx-auto max-w-[1440px] md:flex">
         <div className="text-white/50 mr-8 pb-2 w-full flex flex-col justify-center">
           <p className="pb-2">Why Choose Us</p>

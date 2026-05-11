@@ -14,7 +14,7 @@ interface Card {
 const CARDS = [
   {
     cardNo: 1,
-    mainImg: '/homepage/engine-repair.png',
+    mainImg: '/engineRepairMain.png',
     logoImg: '/servicelogo1.png',
     title: 'Engine Repair & Maintenance',
   },
