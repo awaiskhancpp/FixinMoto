@@ -1,5 +1,5 @@
 import PageHeader from '@/components/shared/PageHeader'
-import OurTeam from '@/components/OurTeam'
+import OurTeam from '@/components/ourTeam/OurTeam'
 import TrustedPartners from '@/components/ourTeam/TrustedPartners'
 import PromoCTA from '@/components/ourTeam/PromoCTA'
 export default function () {

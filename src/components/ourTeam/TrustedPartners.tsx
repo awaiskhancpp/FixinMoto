@@ -21,7 +21,7 @@ export default function TrustedPartners() {
       <div className="mx-auto max-w-[1440px]">
         <div className="grid w-full grid-cols-12 items-center">
           <p className="col-span-12 mb-2 text-secondary">Trusted by Drivers Everywhere</p>
-          <div className="col-span-12 mb-2 text-3xl font-bold">
+          <div className="col-span-12 mb-2 text-2xl md:text-3xl font-bold">
             Quality Car Repair You Can Count On
           </div>
           <div className="col-span-12 mt-4 w-full overflow-hidden">
@@ -31,11 +31,6 @@ export default function TrustedPartners() {
               spaceBetween={50}
               loop
               speed={6000}
-              autoplay={{
-                delay: 1,
-                disableOnInteraction: false,
-                pauseOnMouseEnter: true,
-              }}
               wrapperClass="trusted-partners-wrapper"
               className="trusted-partners-swiper"
             >

@@ -1,13 +1,8 @@
 'use client'
 
-import dynamic from 'next/dynamic'
+import Map from './MapClient'
 import { HeadingGrid } from './HeadingGrid'
 import { LocationForm } from './LocationForm'
-
-const Map = dynamic(() => import('./Map'), {
-  ssr: false,
-  loading: () => <div className="h-full min-h-[400px] w-full bg-[#3a3a3a]" aria-hidden />,
-})
 
 export default function CoverageArea() {
   const word = ['Near', 'You']

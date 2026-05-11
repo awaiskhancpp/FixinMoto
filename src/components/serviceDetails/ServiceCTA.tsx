@@ -1,5 +1,5 @@
 import Image from 'next/image'
-export default function PromoCTA() {
+export default function ServiceCTA() {
   return (
     <section className=" bg-black ">
       <div className="md:hidden flex flex-col gap-6 px-4 py-10">
@@ -16,13 +16,8 @@ export default function PromoCTA() {
           </p>
         </div>
       </div>
-      <div className="mx-auto hidden  max-w-[1440px] min-h-[300px] relative md:flex items-center overflow-hidden">
-        <div
-          className="w-[45%] absolute z-0 inset-y-0 left-0 bg-red-500 "
-          style={{
-            clipPath: 'polygon(0 0, 65% 0, 100% 100%, 0 100%)',
-          }}
-        ></div>
+      <div className="mx-auto hidden  max-w-[1440px] min-h-[300px] relative md:flex items-center bg-black overflow-hidden">
+        <div className="bg-secondary absolute w-[30%] h-[8vh] bottom-0 left-0"></div>
         <div
           className="absolute left-[6%] top-1/2 -translate-y-1/2 z-20 
   w-[35%] h-[220px] lg:h-[260px]"

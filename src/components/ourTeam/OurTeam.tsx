@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { OurTeamCard } from './OurTeamCard'
+import { OurTeamCard } from '../OurTeamCard'
 const ButtonLabels = [
   'All',
   'Brake Repair',
@@ -12,15 +12,23 @@ const ButtonLabels = [
 const MEMBERS = [
   {
     name: 'Albert Flores',
-    profession: 'Lead Technician',
+    profession: 'Brake Repair',
     image: '/person/person-1.webp',
+    instagram: '#',
+    facebook: '#',
+    twitter: '#',
+    linkdin: '#',
     quote:
       'With over 15 years of experience in automotive repair, John is the master behind many of our most complex projects.',
   },
   {
     name: 'Robert Fox',
-    profession: 'Customer Service Manager',
+    profession: 'Transmission Repair',
     image: '/person/person-2.webp',
+    instagram: '#',
+    facebook: '#',
+    twitter: '#',
+    linkdin: '#',
     quote:
       'Sarah ensures that every customer interaction is smooth and positive. With a background in customer relations and a genuine love for cars',
   },
@@ -28,48 +36,76 @@ const MEMBERS = [
     name: 'Emily Davis',
     profession: 'Quality Control Specialist',
     image: '/person/person-3.webp',
+    instagram: '#',
+    facebook: '#',
+    twitter: '#',
+    linkdin: '#',
     quote:
       'Emily ensures that every vehicle that leaves our shop is in top condition. With a keen eye for detail, she oversees our quality control process.',
   },
   {
     name: 'Albert Flores',
-    profession: 'Lead Technician',
+    profession: 'Suspension Repair',
     image: '/person/person-1.webp',
+    instagram: '#',
+    facebook: '#',
+    twitter: '#',
+    linkdin: '#',
     quote:
       'With over 15 years of experience in automotive repair, John is the master behind many of our most complex projects.',
   },
   {
     name: 'Robert Fox',
-    profession: 'Customer Service Manager',
+    profession: 'Brake Repair',
     image: '/person/person-2.webp',
+    instagram: '#',
+    facebook: '#',
+    twitter: '#',
+    linkdin: '#',
     quote:
       'Sarah ensures that every customer interaction is smooth and positive. With a background in customer relations and a genuine love for cars',
   },
   {
     name: 'Emily Davis',
-    profession: 'Quality Control Specialist',
+    profession: 'Transmission Repair',
     image: '/person/person-3.webp',
+    instagram: '#',
+    facebook: '#',
+    twitter: '#',
+    linkdin: '#',
     quote:
       'Emily ensures that every vehicle that leaves our shop is in top condition. With a keen eye for detail, she oversees our quality control process.',
   },
   {
     name: 'Albert Flores',
-    profession: 'Lead Technician',
+    profession: 'Suspension Repair',
     image: '/person/person-1.webp',
+    instagram: '#',
+    facebook: '#',
+    twitter: '#',
+    linkdin: '#',
     quote:
       'With over 15 years of experience in automotive repair, John is the master behind many of our most complex projects.',
   },
   {
     name: 'Robert Fox',
-    profession: 'Customer Service Manager',
+    profession: 'Oil Change',
     image: '/person/person-2.webp',
+    instagram: '#',
+    facebook: '#',
+    twitter: '#',
+    linkdin: '#',
     quote:
       'Sarah ensures that every customer interaction is smooth and positive. With a background in customer relations and a genuine love for cars',
   },
   {
     name: 'Emily Davis',
-    profession: 'Quality Control Specialist',
+    profession: 'Tune-Ups',
     image: '/person/person-3.webp',
+    instagram: '#',
+    facebook: '#',
+    twitter: '#',
+    linkdin: '#',
     quote:
       'Emily ensures that every vehicle that leaves our shop is in top condition. With a keen eye for detail, she oversees our quality control process.',
   },
@@ -90,7 +126,7 @@ export default function OurTeam() {
             a commitment to quality service for every customer.
           </p>
         </div>
-        <div className="mt-15 space-x-2 lg:space-x-10">
+        <div className="mt-15 mb-2 space-x-2 lg:space-x-6">
           {ButtonLabels.map((b, i) => (
             <button
               key={i}
@@ -101,12 +137,19 @@ export default function OurTeam() {
             </button>
           ))}
         </div>
-        <div className="mt-15 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-9">
-          {MEMBERS.map((m, i) => (
+        <div className="mt-15 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          {(selected === null || selected === 0
+            ? MEMBERS
+            : MEMBERS.filter((m) => m.profession === ButtonLabels[selected])
+          ).map((m, i) => (
             <OurTeamCard
               key={i}
               name={m.name}
               profession={m.profession}
+              instagram={m.instagram}
+              facebook={m.facebook}
+              linkdin={m.linkdin}
+              twitter={m.twitter}
               image={m.image}
               quote={m.quote}
             />

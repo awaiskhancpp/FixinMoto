@@ -7,6 +7,10 @@ export default function OurTeam() {
       name: 'Albert Flores',
       profession: 'Lead Technician',
       image: '/person/person-1.webp',
+      facebook: '#',
+      twitter: '#',
+      linkdin: '#',
+      instagram: '#',
       quote:
         'With over 15 years of experience in automotive repair, John is the master behind many of our most complex projects.',
     },
@@ -14,6 +18,10 @@ export default function OurTeam() {
       name: 'Robert Fox',
       profession: 'Customer Service Manager',
       image: '/person/person-2.webp',
+      facebook: '#',
+      twitter: '#',
+      linkdin: '#',
+      instagram: '#',
       quote:
         'Sarah ensures that every customer interaction is smooth and positive. With a background in customer relations and a genuine love for cars',
     },
@@ -21,6 +29,10 @@ export default function OurTeam() {
       name: 'Emily Davis',
       profession: 'Quality Control Specialist',
       image: '/person/person-3.webp',
+      facebook: '#',
+      twitter: '#',
+      linkdin: '#',
+      instagram: '#',
       quote:
         'Emily ensures that every vehicle that leaves our shop is in top condition. With a keen eye for detail, she oversees our quality control process.',
     },
@@ -28,6 +40,10 @@ export default function OurTeam() {
       name: 'Emily Davis',
       profession: 'Quality Control Specialist',
       image: '/person/person-3.webp',
+      facebook: '#',
+      twitter: '#',
+      linkdin: '#',
+      instagram: '#',
       quote:
         'David oversees the daily operations at FixinMoto, making sure everything runs smoothly from the front desk to the garage.',
     },
@@ -58,6 +74,10 @@ export default function OurTeam() {
               <div key={i} className="w-full h-full">
                 <OurTeamCard
                   name={p.name}
+                  instagram={p.instagram}
+                  facebook={p.facebook}
+                  twitter={p.twitter}
+                  linkdin={p.linkdin}
                   profession={p.profession}
                   image={p.image}
                   quote={p.quote}
@@ -70,40 +90,3 @@ export default function OurTeam() {
     </>
   )
 }
-// interface MemberCardProps {
-//   name: string
-//   profession: string
-//   image: string
-//   quote: string
-// }
-
-// const TeamMemberCard = ({ name, profession, image, quote }: MemberCardProps) => {
-//   const socials = [
-//     { src: '/social/twitter.png', alt: 'twitter' },
-//     { src: '/social/insta.png', alt: 'instagram' },
-//     { src: '/social/facebook.png', alt: 'facebook' },
-//     { src: '/social/linkdin.png', alt: 'linkedin' },
-//   ]
-//   return (
-//     <div className="flex flex-col">
-//       <div className="relative w-full h-[396px]">
-//         <Image src={image} alt="personImage" fill className="rounded-[15px] S" />
-//         <div className="flex justify-center absolute -bottom-4 left-0 right-0 gap-2">
-//           {socials.map((s) => (
-//             <button
-//               key={s.alt}
-//               className="bg-secondary rounded-md p-2 flex items-center justify-center"
-//             >
-//               <Image src={s.src} alt={s.alt} width={18} height={18} />
-//             </button>
-//           ))}
-//         </div>
-//       </div>
-//       <div className="pt-6 flex flex-col gap-1 w-full">
-//         <h3 className="text-white text-lg font-bold">{name}</h3>
-//         <p className="text-white/60 text-sm">{profession}</p>
-//         <p className="text-white/40 text-xs leading-relaxed pt-1 line-clamp-3">{quote}</p>
-//       </div>
-//     </div>
-//   )
-// }

@@ -8,7 +8,10 @@ interface ServicePageCard {
 
 export default function ServicePageCard({ title, description, imageSrc }: ServicePageCard) {
   return (
-    <article className="flex h-full flex-col items-center rounded-[15px] bg-primary px-6 py-16 text-center text-white">
+    <a
+      href={`/services/${title}`}
+      className="flex h-full flex-col items-center rounded-[15px] bg-primary px-6 py-16 text-center text-white"
+    >
       <div className="flex h-[118px] w-[118px] shrink-0 items-center justify-center">
         <Image src={imageSrc} alt="" width={118} height={118} className="object-contain" />
       </div>
@@ -24,6 +27,6 @@ export default function ServicePageCard({ title, description, imageSrc }: Servic
           Book Now
         </button>
       </div>
-    </article>
+    </a>
   )
 }

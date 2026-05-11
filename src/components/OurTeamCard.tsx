@@ -4,14 +4,27 @@ interface MemberCardProps {
   profession: string
   image: string
   quote: string
+  instagram: string
+  twitter: string
+  linkdin: string
+  facebook: string
 }
 
-export const OurTeamCard = ({ name, profession, image, quote }: MemberCardProps) => {
+export const OurTeamCard = ({
+  name,
+  profession,
+  image,
+  quote,
+  instagram,
+  twitter,
+  linkdin,
+  facebook,
+}: MemberCardProps) => {
   const socials = [
-    { src: '/social/twitter.png', alt: 'twitter' },
-    { src: '/social/insta.png', alt: 'instagram' },
-    { src: '/social/facebook.png', alt: 'facebook' },
-    { src: '/social/linkdin.png', alt: 'linkedin' },
+    { src: '/social/twitter.png', alt: 'twitter', to: twitter },
+    { src: '/social/insta.png', alt: 'instagram', to: instagram },
+    { src: '/social/facebook.png', alt: 'facebook', to: facebook },
+    { src: '/social/linkdin.png', alt: 'linkedin', to: linkdin },
   ]
   return (
     <div className="flex flex-col">
@@ -19,12 +32,13 @@ export const OurTeamCard = ({ name, profession, image, quote }: MemberCardProps)
         <Image src={image} alt="personImage" fill className="rounded-[15px] S" />
         <div className="flex justify-center absolute -bottom-4 left-0 right-0 gap-2">
           {socials.map((s) => (
-            <button
+            <a
+              href={s.to}
               key={s.alt}
               className="bg-secondary rounded-md p-2 flex items-center justify-center"
             >
               <Image src={s.src} alt={s.alt} width={18} height={18} />
-            </button>
+            </a>
           ))}
         </div>
       </div>
