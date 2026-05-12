@@ -259,7 +259,7 @@ interface CardProps {
   clicked: boolean
 }
 
-const Card = ({ iconImg, imgOnClick, serviceTitle, content, clicked }: CardProps) => {
+export const Card = ({ iconImg, imgOnClick, serviceTitle, content, clicked }: CardProps) => {
   const imgSrc = clicked ? imgOnClick : iconImg
   return (
     <div

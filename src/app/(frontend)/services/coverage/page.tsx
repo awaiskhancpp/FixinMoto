@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import ServiceCoverageForm from '@/components/ServiceCoverageForm'
 export default function Coverage() {
   return (
     <div>
@@ -25,6 +26,7 @@ export default function Coverage() {
           </div>
         </div>
       </div>
+      <ServiceCoverageForm />
     </div>
   )
 }
