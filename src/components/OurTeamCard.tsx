@@ -29,7 +29,7 @@ export const OurTeamCard = ({
   return (
     <div className="flex flex-col">
       <div className="relative w-full h-[396px]">
-        <Image src={image} alt="personImage" fill className="rounded-[15px] S" />
+        <Image src={image} alt="personImage" fill className="rounded-[15px]" />
         <div className="flex justify-center absolute -bottom-4 left-0 right-0 gap-2">
           {socials.map((s) => (
             <a

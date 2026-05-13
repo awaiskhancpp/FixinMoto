@@ -20,7 +20,7 @@ export default function ContactUs() {
           className="object-cover object-center"
         />
         <div className="absolute inset-0 bg-black/60" aria-hidden />
-        <div className="relative z-10 flex w-full flex-col justify-center items-center px-6 py-20 md:px-16 md:py-20 ">
+        <div className="relative z-10 flex w-full flex-col justify-center items-center px-4 py-4 md:px-10 lg:px-15 xl:px-20 md:py-10 ">
           <div className="mx-auto w-full max-w-[1440px]">
             <h1 className="text-4xl font-semibold leading-[1.125] text-white md:text-5xl lg:text-6xl xl:text-[64px] xl:leading-[1.125]">
               Get in Touch with Us
@@ -32,7 +32,7 @@ export default function ContactUs() {
           </div>
         </div>
       </div>
-      <div className="px-6 md:px-20 py-10">
+      <div className="px-4 py-10 md:px-10 lg:px-15 xl:px-20">
         <div className="mx-auto max-w-[1440px] grid grid-cols-1 md:grid-cols-12  text-white gap-5">
           <div className="md:col-span-7 flex flex-col gap-5">
             <div>

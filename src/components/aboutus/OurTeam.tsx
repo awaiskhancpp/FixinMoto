@@ -1,7 +1,13 @@
-import Image from 'next/image'
+'use client'
 import { OurTeamCard } from '../OurTeamCard'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { useRef, useState } from 'react'
+import 'swiper/css'
 
 export default function OurTeam() {
+  const [activeCard, setActiveCard] = useState(0)
+  const swiperRef = useRef<any>(null)
+
   const TESTIMONIALS = [
     {
       name: 'Albert Flores',
@@ -49,9 +55,15 @@ export default function OurTeam() {
     },
   ]
 
+  const scrollToCard = (index: number) => {
+    if (swiperRef.current) {
+      swiperRef.current.slideTo(index)
+    }
+  }
+
   return (
     <>
-      <section className="bg-primary md:py-10 md:px-20 px-4 py-20 ">
+      <section className="bg-primary px-4 py-10 md:px-10 lg:px-15 xl:px-20 md:py-10">
         <div className="mx-auto max-w-[1440px]">
           <div className="flex-flex-col text-white mb-10">
             <div className="space-y-3">
@@ -65,11 +77,63 @@ export default function OurTeam() {
                 delivering the best automotive care. With years of experience, a commitment to
                 ongoing training, and a dedication to customer satisfaction, our experts work
                 together to ensure your vehicle receives the highest quality service. Get to know
-                the faces behind FixinMoto and see why we’re your trusted automotive partner.
+                the faces behind FixinMoto and see why we're your trusted automotive partner.
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 mt-10 lg:grid-cols-4 gap-3 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+
+          <div className="xl:hidden mt-10">
+            <Swiper
+              breakpoints={{
+                0: {
+                  slidesPerView: 1,
+                  spaceBetween: 12,
+                },
+                640: {
+                  slidesPerView: 2,
+                  spaceBetween: 12,
+                },
+                1024: {
+                  slidesPerView: 3,
+                  spaceBetween: 12,
+                },
+              }}
+              onSwiper={(swiper) => {
+                swiperRef.current = swiper
+              }}
+              onSlideChange={(swiper) => setActiveCard(swiper.activeIndex)}
+              className="w-full"
+            >
+              {TESTIMONIALS.map((p, i) => (
+                <SwiperSlide key={i}>
+                  <OurTeamCard
+                    name={p.name}
+                    instagram={p.instagram}
+                    facebook={p.facebook}
+                    twitter={p.twitter}
+                    linkdin={p.linkdin}
+                    profession={p.profession}
+                    image={p.image}
+                    quote={p.quote}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+
+          <div className="flex justify-center gap-2 mt-4 xl:hidden">
+            {TESTIMONIALS.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => scrollToCard(i)}
+                aria-label={`Go to card ${i + 1}`}
+                className="w-2 h-2 rounded-full transition-colors duration-300"
+                style={{ background: i === activeCard ? '#ef4444' : '#6b7280' }}
+              />
+            ))}
+          </div>
+
+          <div className="hidden xl:grid grid-cols-4 gap-3 mt-10">
             {TESTIMONIALS.map((p, i) => (
               <div key={i} className="w-full h-full">
                 <OurTeamCard

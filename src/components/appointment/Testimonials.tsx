@@ -27,7 +27,7 @@ export default function Testimonials() {
   const [activeCard, setActiveCard] = useState<Number | null>(null)
   return (
     <>
-      <section className="bg-primary  md:py-10 md:px-20 px-4 py-4">
+      <section className="bg-primary px-4 py-4 md:px-10 lg:px-15 xl:px-20 md:py-10">
         <div className="mx-auto max-w-[1440px]">
           <div className="flex flex-col justify-center items-center text-white">
             <div className="">
@@ -87,7 +87,7 @@ interface TestimonialCardProps {
 const TestimonialCard = ({ name, image, quote, clicked }: TestimonialCardProps) => {
   return (
     <div
-      className={`flex group snap-center h-[460] overflow-x-hidden flex-col gap-2.5 rounded-[15px] hover:bg-secondary bg-[#F8F8F6] px-6  sm:py-[40px]`}
+      className={`flex group snap-center h-[460] overflow-x-hidden flex-col gap-2.5 rounded-[15px] transition-colors duration-300 hover:bg-secondary bg-[#F8F8F6] px-6  sm:py-[40px]`}
     >
       <div className="flex ">
         {Array.from({ length: 5 }).map((s, i) => (

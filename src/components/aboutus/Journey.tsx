@@ -9,7 +9,7 @@ const bullets = [
 export default function Journey() {
   return (
     <>
-      <section className="w-full bg-primary py-28 px-4 md:px-16">
+      <section className="w-full bg-primary px-4 py-10 md:px-10 lg:px-15 xl:px-20 lg:py-20">
         <div className="mx-auto flex max-w-[1440px] flex-col items-center gap-10 lg:flex-row lg:gap-8">
           <div className="flex w-full flex-col gap-4 lg:max-w-none lg:flex-1">
             <div className="flex flex-col gap-2">

@@ -8,12 +8,20 @@ export default function Achievements() {
   return (
     <>
       <div className="bg-secondary text-white">
-        <div className="mx-auto flex max-w-[1440px] flex-wrap justify-center px-6 py-10 md:px-16 md:py-10">
-          <div className="flex w-full max-w-[1110px] flex-row flex-wrap justify-center gap-4 md:flex-nowrap md:gap-4">
+        <div className="mx-auto flex max-w-[1440px] flex-wrap justify-center px-4 py-10 md:px-10 lg:px-15 xl:px-20 md:py-10">
+          <div className="flex w-full max-w-[1110px] flex-row flex-wrap justify-center gap-0 md:gap-4 md:flex-nowrap">
             {achievements.map((item, i) => (
               <div
                 key={item.label}
-                className={`flex min-w-[140px] flex-1 flex-col items-center gap-4 py-2 text-center md:min-w-0 ${i > 0 ? 'md:border-l md:border-white md:pl-4' : ''}`}
+                className={`flex min-w-[calc(50%-0px)] md:min-w-0 flex-1 flex-col items-center gap-4 py-2 px-2 text-center ${
+                  i === 0
+                    ? 'border-r border-b md:border-r-0 md:border-b-0'
+                    : i === 1
+                      ? 'border-b md:border-b-0'
+                      : i === 2
+                        ? 'border-r md:border-r-0'
+                        : 'md:border-b-0'
+                } border-white ${i > 0 ? 'md:border-l md:pl-4' : ''}`}
               >
                 <span className="text-4xl font-semibold leading-[1.125] md:text-5xl lg:text-6xl xl:text-[64px] xl:leading-[1.125]">
                   {item.head}

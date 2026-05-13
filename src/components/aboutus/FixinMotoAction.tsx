@@ -14,7 +14,7 @@ export default function FixinMotoAction() {
     }
   }
   return (
-    <div className="w-full h-[90vh] relative">
+    <div className="w-full h-screen md:h-[90vh] relative">
       <video
         src="/inActionVideo.mp4"
         className="w-full h-full object-cover"

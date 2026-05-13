@@ -1,6 +1,9 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css'
+
 interface Card {
   serviceNumber: number
   serviceName: string
@@ -46,6 +49,13 @@ export default function WhyChooseFixinMoto() {
   const scrollRef = useRef<HTMLDivElement>(null)
   const touchStartX = useRef<number>(0)
   const touchStartScrollLeft = useRef<number>(0)
+  const swiperRef = useRef<any>(null)
+
+  const scrollToCard = (index: number) => {
+    if (swiperRef.current) {
+      swiperRef.current.slideTo(index)
+    }
+  }
   let word = ['Comprehensive', 'Solutions']
 
   useEffect(() => {
@@ -54,75 +64,58 @@ export default function WhyChooseFixinMoto() {
     }, 2000)
     return () => clearInterval(interval)
   }, [])
-  const handleScroll = () => {
-    const el = scrollRef.current
-    if (!el) return
-    const index = Math.round(el.scrollLeft / el.clientWidth)
-    setActiveCard(index)
-  }
-  const onTouchStart = (e: React.TouchEvent) => {
-    const el = scrollRef.current
-    if (!el) return
-    touchStartX.current = e.touches[0].clientX
-    touchStartScrollLeft.current = el.scrollLeft
-  }
-  const onTouchMove = (e: React.TouchEvent) => {
-    const el = scrollRef.current
-    if (!el) return
-    const deltaX = e.touches[0].clientX - touchStartX.current
-    el.scrollLeft = touchStartScrollLeft.current - deltaX
-  }
-  const onTouchEnd = () => {
-    const el = scrollRef.current
-    if (!el) return
-    const index = Math.round(el.scrollLeft / el.clientWidth)
-    el.scrollTo({ left: index * el.clientWidth, behavior: 'smooth' })
-    setActiveCard(index)
-  }
-  const scrollToCard = (index: number) => {
-    const el = scrollRef.current
-    if (!el) return
-    el.scrollTo({ left: index * el.clientWidth, behavior: 'smooth' })
-    setActiveCard(index)
-  }
+
   return (
     <>
-      <section className="bg-black md:px-20 md:py-10 px-4 py-4 ">
+      <section className="bg-black px-4 py-4 md:px-10 lg:px-15 xl:px-20 md:py-10">
         <div className="mx-auto max-w-[1440px]">
-          <div className=" ">
-            <h2 className="text-white font-semibold text-3xl ">Why Choose Fixin Moto?</h2>
+          <div className="">
+            <h2 className="text-white font-semibold text-3xl">Why Choose Fixin Moto?</h2>
             <h5 className="text-[#DB323E]">Your Trusted Partner for Quality Automotive Care</h5>
           </div>
           <div className="pt-6">
-            <div
-              className="flex gap-2 overflow-x-auto snap-x snap-mandatory md:px-4 md:pb-4 sm:hidden "
-              ref={scrollRef}
-              onScroll={handleScroll}
-              onTouchStart={onTouchStart}
-              onTouchMove={onTouchMove}
-              onTouchEnd={onTouchEnd}
-              style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
-            >
-              {CARDS.map((card, i) => (
-                <a href="#" className="snap-center shrink-0 w-[85vw]">
-                  <Card title={card.title} logoImg={card.logoImg} details={card.detail} />
-                </a>
-              ))}
+            <div className="xl:hidden">
+              <Swiper
+                spaceBetween={16}
+                breakpoints={{
+                  0: {
+                    slidesPerView: 1,
+                  },
+                  768: {
+                    slidesPerView: 2,
+                  },
+                  1024: {
+                    slidesPerView: 3,
+                  },
+                }}
+                onSwiper={(swiper) => {
+                  swiperRef.current = swiper
+                }}
+                onSlideChange={(swiper) => setActiveCard(swiper.activeIndex)}
+                className="w-full"
+              >
+                {CARDS.map((card, i) => (
+                  <SwiperSlide key={i}>
+                    <Card title={card.title} logoImg={card.logoImg} details={card.detail} />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             </div>
-            <div className="flex justify-center gap-2 mt-3">
+
+            <div className="flex justify-center gap-2 mt-4 xl:hidden">
               {CARDS.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => scrollToCard(i)}
-                  aria-label={`Go to card ${i + 1}`}
-                  className="w-2 h-2 rounded-full transition-colors duration-300 md:hidden"
+                  className="w-2 h-2 rounded-full transition-colors duration-300"
                   style={{ background: i === activeCard ? '#ef4444' : '#6b7280' }}
                 />
               ))}
             </div>
-            <div className="hidden md:grid md:grid-cols-12 md:gap-x-3 md:gap-4 md:space-y-4 ">
+
+            <div className="hidden xl:grid md:grid-cols-12 md:gap-4 md:space-y-4">
               {CARDS.map((card, i) => (
-                <a href="#" key={i} className="sm:col-span-6 lg:col-span-3 col-span-12">
+                <a href="#" key={i} className="md:col-span-6 lg:col-span-4 xl:col-span-3">
                   <Card title={card.title} logoImg={card.logoImg} details={card.detail} />
                 </a>
               ))}

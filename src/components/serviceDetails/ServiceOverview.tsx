@@ -13,7 +13,7 @@ const INCLUDED = [
 ]
 export default function ServiceOverview() {
   return (
-    <section className="px-6 py-6 md:px-20 md:py-10 ">
+    <section className="px-4 py-4 md:px-10 lg:px-15 xl:px-20 md:py-10 ">
       <div className="text-white max-w-[1440px] mx-auto flex flex-col gap-4">
         <p className="text-white/70 text-md">Service Overview</p>
         <h2 className="lg:text-6xl text-4xl font-bold">Oil Change & Fluid Services</h2>

@@ -5,7 +5,7 @@ import { Calendar, User } from 'lucide-react'
 import { useState, useRef } from 'react'
 import { HeadingGrid } from './HeadingGrid'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Pagination } from 'swiper/modules'
+import { SwiperRef } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/pagination'
 
@@ -40,7 +40,7 @@ interface BlogCard {
 
 function BlogCard({ title, date, author }: BlogCard) {
   return (
-    <article className="flex flex-col rounded-[17px] bg-[#edf2fd] pb-[18px] h-full">
+    <article className="flex flex-col rounded-[17px] bg-[#edf2fd] pb-[18px]">
       <div className="relative aspect-[387/300] w-full overflow-hidden rounded-t-lg">
         <Image
           src="/heroimg.png"
@@ -59,18 +59,20 @@ function BlogCard({ title, date, author }: BlogCard) {
           <span className="text-xs font-medium leading-[1.333] text-black/80">5 min read</span>
         </div>
 
-        <h3 className="text-lg font-medium leading-[1.444] text-black flex-1">{title}</h3>
+        <h3 className="text-lg font-medium leading-[1.444] text-black flex-1 line-clamp-2 h-14">
+          {title}
+        </h3>
       </div>
 
       <div className="flex flex-row items-center px-[14px] text-black/50 opacity-50">
         <div className="flex flex-1 items-center justify-start gap-2">
-          <Calendar className="size-4 shrink-0" strokeWidth={1.5} aria-hidden />
+          <Calendar className="size-4 shrink-0" strokeWidth={1.5} />
           <time className="text-xs font-normal leading-[1.333]" dateTime={date}>
             {date}
           </time>
         </div>
         <div className="flex flex-1 items-center justify-end gap-2">
-          <User className="size-4 shrink-0" strokeWidth={1.5} aria-hidden />
+          <User className="size-4 shrink-0" strokeWidth={1.5} />
           <span className="text-xs font-normal leading-[1.333]">{author}</span>
         </div>
       </div>
@@ -79,26 +81,9 @@ function BlogCard({ title, date, author }: BlogCard) {
 }
 
 export default function Blog() {
-  const scrollRef = useRef<HTMLDivElement>(null)
+  const swiperRef = useRef<any>(null)
   const [activeCard, setActiveCard] = useState(0)
   const word = ['Automotive', 'Insights']
-
-  const handleScroll = () => {
-    const el = scrollRef.current
-    if (!el) return
-    const w = el.children[0]?.getBoundingClientRect().width ?? el.clientWidth
-    const gap = 16
-    setActiveCard(Math.round(el.scrollLeft / (w + gap)))
-  }
-
-  const scrollToCard = (index: number) => {
-    const el = scrollRef.current
-    if (!el) return
-    const card = el.children[index] as HTMLElement
-    const left = card.offsetLeft
-    el.scrollTo({ left, behavior: 'smooth' })
-    setActiveCard(index)
-  }
 
   return (
     <section className="w-full bg-[#222222] px-4 md:px-10 lg:px-15 xl:px-20 pb-6">
@@ -109,27 +94,53 @@ export default function Blog() {
           pageDescription="Stay ahead of the curve with expert analysis, in-depth reviews, and the latest trends in the automotive world."
           wordsToHighlight={word}
         />
-
-        <div
-          ref={scrollRef}
-          onScroll={handleScroll}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:overflow-x-visible"
-        >
-          {POSTS.map((post, i) => (
-            <BlogCard key={i} title={post.title} author={post.author} date={post.date} />
-          ))}
+        <div className="xl:hidden lg:h-[480px]">
+          <Swiper
+            breakpoints={{
+              0: {
+                slidesPerView: 1,
+                spaceBetween: 12,
+              },
+              768: {
+                slidesPerView: 2,
+                spaceBetween: 12,
+              },
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 12,
+              },
+            }}
+            className="w-full h-full"
+            onSlideChange={(swiper) => setActiveCard(swiper.activeIndex)}
+            onSwiper={(swiper) => {
+              swiperRef.current = swiper
+            }}
+          >
+            {POSTS.map((post, i) => (
+              <SwiperSlide key={i}>
+                <BlogCard title={post.title} author={post.author} date={post.date} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
-
-        <div className="flex justify-center gap-2 md:hidden">
+        <div className="flex justify-center gap-2 xl:hidden mt-4">
           {POSTS.map((_, i) => (
             <button
               key={i}
               type="button"
-              onClick={() => scrollToCard(i)}
-              aria-label={`Go to article ${i + 1}`}
+              onClick={() => {
+                if (swiperRef.current) {
+                  swiperRef.current.slideTo(i)
+                }
+              }}
               className="size-2 rounded-full transition-colors"
               style={{ background: i === activeCard ? '#ffffff' : '#6b7280' }}
             />
+          ))}
+        </div>
+        <div className="hidden xl:grid xl:grid-cols-4 gap-4 overflow-x-auto ">
+          {POSTS.map((post, i) => (
+            <BlogCard key={i} title={post.title} author={post.author} date={post.date} />
           ))}
         </div>
       </div>

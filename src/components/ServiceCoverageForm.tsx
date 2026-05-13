@@ -27,7 +27,7 @@ export default function ServiceCoverageForm() {
   return (
     <div className="relative w-full ">
       <Map />
-      <div className="absolute inset-0 z-[500] flex items-center justify-center md:px-20 md:py-10 px-6 py-6">
+      <div className="absolute inset-0 z-[500] flex items-center justify-center px-4 py-6 md:px-10 lg:px-15 xl:px-20 md:py-10">
         <div className="w-full md:mx-auto max-w-[1440px] ">
           <div className="bg-black md:w-[500px] md:h-[600px] h-auto rounded-xl flex flex-col justify-center items-start space-y-4 py-6">
             <h3 className="text-white">We’ve Got You Covered</h3>

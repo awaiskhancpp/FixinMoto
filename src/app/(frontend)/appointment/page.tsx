@@ -15,7 +15,7 @@ export default function Appointment() {
             className="object-cover object-center"
           />
           <div className="absolute inset-0 bg-black/60" aria-hidden />
-          <div className="relative z-10 flex w-full flex-col justify-center items-center px-6 py-20 md:px-16 md:py-20">
+          <div className="relative z-10 flex w-full flex-col justify-center items-center px-4 py-4 md:px-10 lg:px-15 xl:px-20 md:py-10">
             <div className="mx-auto w-full max-w-[1200px]">
               <h1 className="mx-auto  text-4xl font-semibold justify-center text-center leading-[1.125] text-white md:text-5xl lg:text-7xl xl:text-[64px] xl:leading-[1.125]">
                 <span className="text-secondary">Schedule</span> Your Auto Repair{' '}

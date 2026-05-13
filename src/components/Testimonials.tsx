@@ -120,11 +120,9 @@ export default function Testimonials() {
                 className="mySwiper"
               >
                 {TESTIMONIALS.map((t, i) => (
-                  <>
-                    <SwiperSlide>
-                      <TestimonialCard key={i} name={t.name} image={t.image} quote={t.quote} />
-                    </SwiperSlide>
-                  </>
+                  <SwiperSlide key={i}>
+                    <TestimonialCard name={t.name} image={t.image} quote={t.quote} />
+                  </SwiperSlide>
                 ))}
               </Swiper>
             </div>

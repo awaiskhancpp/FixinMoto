@@ -44,9 +44,8 @@ const logos = [
 ]
 export default function Service() {
   const [activeCard, setActiveCard] = useState(0)
-  const scrollRef = useRef<HTMLDivElement>(null)
 
-  const swiperRef = useRef<SwiperRef>(null)
+  const swiperRef = useRef<any>(null)
   let word = ['Comprehensive', 'Solutions']
 
   return (
@@ -61,17 +60,29 @@ export default function Service() {
             wordsToHighlight={word}
           />
           <div className="">
-            <div className="md:hidden">
+            <div className="xl:hidden">
               <Swiper
                 spaceBetween={16}
-                slidesPerView={1}
+                breakpoints={{
+                  0: {
+                    slidesPerView: 1,
+                  },
+                  768: {
+                    slidesPerView: 2,
+                  },
+                  1024: {
+                    slidesPerView: 3,
+                  },
+                }}
                 className="w-full"
+                onSwiper={(swiper) => {
+                  swiperRef.current = swiper
+                }}
                 onSlideChange={(swiper) => setActiveCard(swiper.activeIndex)}
-                ref={swiperRef}
               >
                 {CARDS.map((card, i) => (
                   <SwiperSlide key={i}>
-                    <a href="/services" className="w-[90vw] shrink-0">
+                    <a href="/services" className="">
                       <Card
                         title={card.title}
                         mainImg={card.mainImg}
@@ -83,22 +94,21 @@ export default function Service() {
                 ))}
               </Swiper>
             </div>
-            <div className="flex justify-center gap-2 mt-3 md:hidden">
+            <div className="flex justify-center gap-2 mt-3 xl:hidden">
               {CARDS.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => {
                     if (swiperRef.current) {
-                      swiperRef.current.swiper.slideTo(i)
+                      swiperRef.current.slideTo(i)
                     }
                   }}
-                  aria-label={`Go to card ${i + 1}`}
                   className="w-2 h-2 rounded-full transition-colors duration-300"
                   style={{ background: i === activeCard ? '#ef4444' : '#6b7280' }}
                 />
               ))}
             </div>
-            <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4 gap-4">
+            <div className="hidden xl:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {CARDS.map((card, i) => (
                 <a href="/services" key={i} className="">
                   <Card
@@ -113,7 +123,7 @@ export default function Service() {
           </div>
         </div>
       </section>
-      <section className="w-full bg-black text-white md:px-10 lg:px-20 md:py-10  py-6">
+      <section className="w-full bg-black text-white px-4 md:px-10 lg:px-15 xl:px-20 py-4 md:py-10">
         <div className="mx-auto max-w-[1440px]">
           <div className="w-full grid grid-cols-12 items-center">
             <div className="md:col-span-4 px-4 md:px-0 col-span-12 text-2xl ">

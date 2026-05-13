@@ -55,7 +55,7 @@ const SERVICES = [
 ]
 export default function ServicePackage() {
   return (
-    <div className="px-6 py-6 md:px-20 md:py-10">
+    <div className="px-4 py-4 md:px-10 lg:px-15 xl:px-20 md:py-10">
       <div className="mx-auto max-w-[1440px] ">
         <h2 className="text-white font-bold md:text-3xl text-2xl mb-6">
           Drive Confidently with Fixinmoto’s Service Packages
