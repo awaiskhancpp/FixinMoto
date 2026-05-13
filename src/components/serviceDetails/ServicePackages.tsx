@@ -62,7 +62,7 @@ export default function ServicePackage() {
         </h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 mt-3 gap-5">
           {SERVICES.map((s, i) => (
-            <div key={i} className="w-auto h-auto md:h-[226px]">
+            <div key={i} className="">
               <ServiceCard price={s.price} name={s.name} desc={s.desc} pros={s.pros} />
             </div>
           ))}

@@ -11,7 +11,7 @@ export default function ServiceCard({ price, name, desc, pros }: ServiceCardProp
   const [onHover, setOnHover] = useState(false)
   return (
     <div
-      className="w-full h-full rounded-[15px] hover:bg-secondary border border-secondary overflow-hidden text-white"
+      className="w-full h-full rounded-[15px] transition-colors duration-300 hover:bg-secondary border border-secondary overflow-hidden text-white"
       onMouseEnter={() => setOnHover(true)}
       onMouseLeave={() => setOnHover(false)}
     >
@@ -19,7 +19,7 @@ export default function ServiceCard({ price, name, desc, pros }: ServiceCardProp
         <h2 className="font-bold text-3xl">${price}</h2>
         <h3 className="font-bold text-2xl">{name}</h3>
         <h5 className="text-white/70">{desc}</h5>
-        <div className="mt-2 grid grid-cols-2 gap-1 ">
+        <div className="mt-2 grid grid-cols-2 gap-1">
           {pros.map((p, i) => (
             <div key={i} className="flex items-center gap-2">
               <Image

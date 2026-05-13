@@ -218,9 +218,13 @@ export default function AppointmentForm() {
           </div>
           <div className="pt-3">
             <h2 className="font-medium">Service Details</h2>
-            <div className="grid md:grid-cols-3 grid-cols-1 gap-2 pt-2 ">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-2 pt-2 ">
               {CarInfo.map((c, i) => (
-                <div key={i} onClick={() => setActiveCard(i)}>
+                <div
+                  key={i}
+                  onClick={() => setActiveCard(i)}
+                  className={`border border-secondary rounded-[15px] ${activeCard === i ? 'bg-secondary' : ''}`}
+                >
                   <Card
                     iconImg={c.iconImg}
                     imgOnClick={c.imgOnClick}
@@ -262,10 +266,8 @@ interface CardProps {
 export const Card = ({ iconImg, imgOnClick, serviceTitle, content, clicked }: CardProps) => {
   const imgSrc = clicked ? imgOnClick : iconImg
   return (
-    <div
-      className={`flex flex-row border py-2 border-secondary rounded-[15px] px-2 ${clicked ? 'bg-secondary' : ''}`}
-    >
-      <Image src={imgSrc || '/'} alt="..." width={64} height={64} className=" object-fit" />
+    <div className={`flex flex-row py-2 px-2 rounded-[15px] `}>
+      <Image src={imgSrc || '/'} alt="..." width={64} height={64} className=" object-contain" />
       <div className="flex flex-col pl-2">
         <h3 className="font-medium">{serviceTitle}</h3>
         <p className="text-white/50">{content}</p>

@@ -123,7 +123,7 @@ export default function Service() {
           </div>
         </div>
       </section>
-      <section className="w-full bg-black text-white px-4 md:px-10 lg:px-15 xl:px-20 py-4 md:py-10">
+      <section className="w-full bg-black text-white md:px-10 lg:px-15 xl:px-20 py-4 md:py-10">
         <div className="mx-auto max-w-[1440px]">
           <div className="w-full grid grid-cols-12 items-center">
             <div className="md:col-span-4 px-4 md:px-0 col-span-12 text-2xl ">

@@ -1,7 +1,9 @@
 'use client'
 import Image from 'next/image'
 import { Star } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css'
 
 const TESTIMONIALS = [
   {
@@ -25,6 +27,12 @@ const TESTIMONIALS = [
 ]
 export default function Testimonials() {
   const [activeCard, setActiveCard] = useState<Number | null>(null)
+  const swiperRef = useRef<any | null>(null)
+  const scrollToCard = (index: number) => {
+    if (swiperRef.current) {
+      swiperRef.current.slideTo(index)
+    }
+  }
   return (
     <>
       <section className="bg-primary px-4 py-4 md:px-10 lg:px-15 xl:px-20 md:py-10">
@@ -45,31 +53,46 @@ export default function Testimonials() {
               </p>
             </div>
           </div>
-          <div className="flex  overflow-x-auto snap-x snap-mandatory pt-5 sm:hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {TESTIMONIALS.map((t, i) => (
-              <div
+          <div className="lg:hidden pt-5">
+            <Swiper
+              breakpoints={{
+                0: {
+                  slidesPerView: 1,
+                  spaceBetween: 16,
+                },
+                640: {
+                  slidesPerView: 2,
+                  spaceBetween: 16,
+                },
+              }}
+              onSwiper={(swiper) => {
+                swiperRef.current = swiper
+              }}
+              onSlideChange={(swiper) => setActiveCard(swiper.activeIndex)}
+              className="w-full"
+            >
+              {TESTIMONIALS.map((t, i) => (
+                <SwiperSlide key={i}>
+                  <TestimonialCard name={t.name} image={t.image} quote={t.quote} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+
+          <div className="flex justify-center gap-2 mt-4 lg:hidden">
+            {TESTIMONIALS.map((_, i) => (
+              <button
                 key={i}
-                className="w-[85vw] shrink-0 snap-center"
-                onClick={() => setActiveCard(i)}
-              >
-                <TestimonialCard
-                  name={t.name}
-                  image={t.image}
-                  quote={t.quote}
-                  clicked={activeCard === i}
-                />
-              </div>
+                onClick={() => scrollToCard(i)}
+                className="w-2 h-2 rounded-full transition-colors"
+                style={{ background: i === activeCard ? '#ef4444' : '#6b7280' }}
+              />
             ))}
           </div>
-          <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 justify-center items-center gap-4 pt-5">
+          <div className="hidden lg:grid  lg:grid-cols-3 justify-center items-center gap-4 pt-5">
             {TESTIMONIALS.map((t, i) => (
               <div key={i} onClick={() => setActiveCard(i)}>
-                <TestimonialCard
-                  name={t.name}
-                  image={t.image}
-                  quote={t.quote}
-                  clicked={activeCard === i}
-                />
+                <TestimonialCard name={t.name} image={t.image} quote={t.quote} />
               </div>
             ))}
           </div>
@@ -82,12 +105,11 @@ interface TestimonialCardProps {
   name: string
   image: string
   quote: string
-  clicked: boolean
 }
-const TestimonialCard = ({ name, image, quote, clicked }: TestimonialCardProps) => {
+const TestimonialCard = ({ name, image, quote }: TestimonialCardProps) => {
   return (
     <div
-      className={`flex group snap-center h-[460] overflow-x-hidden flex-col gap-2.5 rounded-[15px] transition-colors duration-300 hover:bg-secondary bg-[#F8F8F6] px-6  sm:py-[40px]`}
+      className={`flex group snap-center h-[460] overflow-x-hidden flex-col gap-2.5 rounded-[15px] transition-colors duration-300 hover:bg-secondary bg-[#F8F8F6] px-6  py-[40px]`}
     >
       <div className="flex ">
         {Array.from({ length: 5 }).map((s, i) => (

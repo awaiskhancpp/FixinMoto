@@ -61,7 +61,7 @@ interface TestimonialCardProps {
 function TestimonialCard(props: TestimonialCardProps) {
   const { name, image, quote } = props
   return (
-    <div className="flex w-full h-[380px] md:h-[400px] shrink-0 snap-center md:py-4 lg:py-10 py-6 px-5 flex-col gap-2 rounded-[15px] bg-[#F8F8F6] md:px-8 ">
+    <div className="flex w-full h-full shrink-0 snap-center md:py-4 lg:py-10 py-6 px-5 flex-col gap-2 rounded-[15px] bg-[#F8F8F6] md:px-8 ">
       <div className="w-full shrink-0 overflow-hidden rounded-md pb-1">
         <Image
           src={image}
@@ -97,24 +97,26 @@ export default function Testimonials() {
         </div>
         <div className="ml-auto ">
           <div className="pb-6 pt-10 md:pb-10 md:pt-10 bg-secondary rounded-tl-[24px] overflow-x-hidden">
-            <div className="flex gap-5 transition-transform duration-500 ease-out md:pl-10 pl-4">
+            <div className="flex gap-5 transition-transform duration-500 ease-out md:pl-10 px-4 lg:h-[400px]">
               <Swiper
                 keyboard={true}
                 breakpoints={{
                   0: {
                     slidesPerView: 1,
+                    spaceBetween: 10,
                   },
                   768: {
                     slidesPerView: 2,
+                    spaceBetween: 10,
                   },
                   1024: {
                     slidesPerView: 3,
+                    spaceBetween: 10,
                   },
                 }}
                 onSwiper={(swiper) => {
                   swiperRef.current = swiper
                 }}
-                spaceBetween={10}
                 loop={true}
                 modules={[Pagination, Keyboard]}
                 className="mySwiper"
