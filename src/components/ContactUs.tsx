@@ -49,9 +49,9 @@ export default function ContactUs() {
           className="object-cover object-center"
         />
         <div className="absolute inset-0 bg-black/60" aria-hidden />
-        <div className="relative z-10 flex w-full flex-col justify-center items-center px-4 py-4 md:px-10 lg:px-15 xl:px-20 md:py-10 ">
-          <div className="mx-auto w-full max-w-[1440px]">
-            <h1 className="text-4xl font-semibold leading-[1.125] text-white md:text-5xl lg:text-6xl xl:text-[64px] xl:leading-[1.125]">
+        <div className="relative z-10 flex w-full flex-col justify-center items-center px-4 py-4 md:px-10 lg:px-15 xl:px-20 md:py-10">
+          <div className="mx-auto w-full max-w-[1200px]">
+            <h1 className="mx-auto text-4xl font-semibold leading-[1.125] text-white md:text-5xl lg:text-6xl xl:text-[64px] xl:leading-[1.125]">
               Get in Touch with Us
             </h1>
             <p className="text-white/80 mt-3">

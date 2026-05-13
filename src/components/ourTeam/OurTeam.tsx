@@ -24,7 +24,7 @@ const MEMBERS = [
   {
     name: 'Robert Fox',
     profession: 'Transmission Repair',
-    image: '/person/person-2.webp',
+    image: '/person/person-2.jpg',
     instagram: '#',
     facebook: '#',
     twitter: '#',
@@ -35,7 +35,7 @@ const MEMBERS = [
   {
     name: 'Emily Davis',
     profession: 'Quality Control Specialist',
-    image: '/person/person-3.webp',
+    image: '/person/person-3.jpg',
     instagram: '#',
     facebook: '#',
     twitter: '#',
@@ -57,7 +57,7 @@ const MEMBERS = [
   {
     name: 'Robert Fox',
     profession: 'Brake Repair',
-    image: '/person/person-2.webp',
+    image: '/person/person-2.jpg',
     instagram: '#',
     facebook: '#',
     twitter: '#',
@@ -68,7 +68,7 @@ const MEMBERS = [
   {
     name: 'Emily Davis',
     profession: 'Transmission Repair',
-    image: '/person/person-3.webp',
+    image: '/person/person-4.jpg',
     instagram: '#',
     facebook: '#',
     twitter: '#',
@@ -90,7 +90,7 @@ const MEMBERS = [
   {
     name: 'Robert Fox',
     profession: 'Oil Change',
-    image: '/person/person-2.webp',
+    image: '/person/person-2.jpg',
     instagram: '#',
     facebook: '#',
     twitter: '#',
@@ -101,7 +101,7 @@ const MEMBERS = [
   {
     name: 'Emily Davis',
     profession: 'Tune-Ups',
-    image: '/person/person-3.webp',
+    image: '/person/person-3.jpg',
     instagram: '#',
     facebook: '#',
     twitter: '#',

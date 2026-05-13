@@ -20,28 +20,23 @@ const TESTIMONIALS = [
   },
   {
     name: 'Robert Fox',
-    image: '/person/person-2.webp',
+    image: '/person/person-2.jpg',
     quote:
       'When I faced a sudden issue with my vehicle, FixinMoto managed to fit me in for an appointment on the same day. Their team quickly diagnosed the problem and had my car back on the road in no time. I truly appreciated their prompt and effective service.',
   },
   {
     name: 'Eleanor Pena',
-    image: '/person/person-3.webp',
+    image: '/person/person-3.jpg',
     quote:
       'I encountered an urgent problem with my vehicle and was fortunate to secure a same-day appointment at FixinMotopair. The staff swiftly identified the issue and got my car running again in no time. Their quick and efficient service was greatly appreciated.',
   },
   {
     name: 'Saeed Khan',
-    image: '/person/person-4.webp',
+    image: '/person/person-4.jpg',
     quote:
       'I encountered an urgent problem with my vehicle and was fortunate to secure a same-day appointment at FixinMotopair. The staff swiftly identified the issue and got my car running again in no time. Their quick and efficient service was greatly appreciated.',
   },
 ]
-
-const CARD_WIDTH =
-  typeof window !== 'undefined' && window.innerWidth < 768 ? window.innerWidth - 32 : 493
-const GAP = 20
-
 function StarRating() {
   return (
     <div className="flex gap-0.5" aria-hidden>

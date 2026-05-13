@@ -15,7 +15,7 @@ export default function ServicesPage() {
       />
       <Achievements />
       <div className="bg-[#222222] px-4 py-10 md:px-10 lg:px-15 xl:px-20 md:py-10 lg:py-20">
-        <div className="mx-auto grid max-w-[1312px] grid-cols-1 gap-x-[18px] gap-y-[19px] sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto grid max-w-[1312px] grid-cols-1 gap-x-[18px] gap-y-[19px] sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {SERVICES_PAGE_ITEMS.map((service, i) => (
             <ServicePageCard
               key={i}

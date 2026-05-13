@@ -23,7 +23,7 @@ export default function OurTeam() {
     {
       name: 'Robert Fox',
       profession: 'Customer Service Manager',
-      image: '/person/person-2.webp',
+      image: '/person/person-2.jpg',
       facebook: '#',
       twitter: '#',
       linkdin: '#',
@@ -34,7 +34,7 @@ export default function OurTeam() {
     {
       name: 'Emily Davis',
       profession: 'Quality Control Specialist',
-      image: '/person/person-3.webp',
+      image: '/person/person-3.jpg',
       facebook: '#',
       twitter: '#',
       linkdin: '#',
@@ -45,7 +45,7 @@ export default function OurTeam() {
     {
       name: 'Emily Davis',
       profession: 'Quality Control Specialist',
-      image: '/person/person-3.webp',
+      image: '/person/person-4.jpg',
       facebook: '#',
       twitter: '#',
       linkdin: '#',
