@@ -32,7 +32,6 @@ export default function ServicePageCard({ title, description, imageSrc }: Servic
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Form submitted:', formData)
     setOpenModal(false)
     setFormData({
       name: '',

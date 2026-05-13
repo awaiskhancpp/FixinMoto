@@ -1,7 +1,36 @@
+'use client'
 import Image from 'next/image'
 import { MapPin, Phone, Mail } from 'lucide-react'
+import { useState } from 'react'
 
 export default function ContactUs() {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    message: '',
+  })
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    setFormData({
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      message: '',
+    })
+  }
   const socials = [
     { src: '/social/twitter.png', alt: 'twitter' },
     { src: '/social/insta.png', alt: 'instagram' },
@@ -46,29 +75,47 @@ export default function ContactUs() {
               <input
                 type="text"
                 placeholder="First Name"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleInputChange}
                 className="text-white/50 border border-white/50 px-3 py-3 rounded-[15px] bg-transparent"
               />
               <input
                 type="text"
                 placeholder="Last Name"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleInputChange}
                 className="text-white/50 border border-white/50 px-3 py-3 rounded-[15px] bg-transparent"
               />
               <input
                 type="email"
                 placeholder="Email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
                 className="text-white/50 border border-white/50 px-3 py-3 rounded-[15px] bg-transparent"
               />
               <input
                 type="text"
                 placeholder="Phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
                 className="text-white/50 border border-white/50 px-3 py-3 rounded-[15px] bg-transparent"
               />
               <div className="col-span-1 sm:col-span-2">
                 <textarea
                   placeholder="Message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
                   className="w-full min-h-[160px] rounded-[15px] border border-white/50 bg-transparent px-3 py-3 text-white placeholder:text-white/50"
                 />
               </div>
+              <button className="bg-secondary px-4 py-4 rounded-lg" onSubmit={handleSubmit}>
+                Submit
+              </button>
             </div>
           </div>
           <div className="md:col-span-5 flex flex-col gap-4">
