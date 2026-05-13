@@ -6,6 +6,7 @@ import { HeadingGrid } from '../HeadingGrid'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination } from 'swiper/modules'
 import marqueeStyle from './ServiceLogo.module.css'
+import { SwiperRef } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/pagination'
 
@@ -44,42 +45,10 @@ const logos = [
 export default function Service() {
   const [activeCard, setActiveCard] = useState(0)
   const scrollRef = useRef<HTMLDivElement>(null)
-  const swiperRef = useRef(null)
-  const touchStartX = useRef<number>(0)
-  const touchStartScrollLeft = useRef<number>(0)
+
+  const swiperRef = useRef<SwiperRef>(null)
   let word = ['Comprehensive', 'Solutions']
 
-  const handleScroll = () => {
-    const el = scrollRef.current
-    if (!el) return
-    const index = Math.round(el.scrollLeft / el.clientWidth)
-    setActiveCard(index)
-  }
-  const onTouchStart = (e: React.TouchEvent) => {
-    const el = scrollRef.current
-    if (!el) return
-    touchStartX.current = e.touches[0].clientX
-    touchStartScrollLeft.current = el.scrollLeft
-  }
-  const onTouchMove = (e: React.TouchEvent) => {
-    const el = scrollRef.current
-    if (!el) return
-    const deltaX = e.touches[0].clientX - touchStartX.current
-    el.scrollLeft = touchStartScrollLeft.current - deltaX
-  }
-  const onTouchEnd = () => {
-    const el = scrollRef.current
-    if (!el) return
-    const index = Math.round(el.scrollLeft / el.clientWidth)
-    el.scrollTo({ left: index * el.clientWidth, behavior: 'smooth' })
-    setActiveCard(index)
-  }
-  const scrollToCard = (index: number) => {
-    const el = scrollRef.current
-    if (!el) return
-    el.scrollTo({ left: index * el.clientWidth, behavior: 'smooth' })
-    setActiveCard(index)
-  }
   return (
     <>
       <section className="w-full bg-black text-white relative px-4 md:px-10 lg:px-15 xl:px-20 py-4">
@@ -118,7 +87,11 @@ export default function Service() {
               {CARDS.map((_, i) => (
                 <button
                   key={i}
-                  onClick={() => swiperRef.current?.swiper.slideTo(i)}
+                  onClick={() => {
+                    if (swiperRef.current) {
+                      swiperRef.current.swiper.slideTo(i)
+                    }
+                  }}
                   aria-label={`Go to card ${i + 1}`}
                   className="w-2 h-2 rounded-full transition-colors duration-300"
                   style={{ background: i === activeCard ? '#ef4444' : '#6b7280' }}
