@@ -2,7 +2,7 @@ import { CircleCheck } from 'lucide-react'
 import Image from 'next/image'
 export default function WhyChooseUS() {
   return (
-    <section className="w-full bg-primary px-4 py-8 md:px-20 md:py-20">
+    <section className="w-full bg-primary px-4 md:px-10 lg:px-15 xl:px-20 md:py-10 lg:py-20">
       <div className="mx-auto max-w-[1440px] md:flex">
         <div className="text-white/50 mr-8 pb-2 w-full flex flex-col justify-center">
           <p className="pb-2">Why Choose Us</p>
@@ -28,7 +28,7 @@ export default function WhyChooseUS() {
               <p>Fast, reliable service you can trust.</p>
             </div>
           </div>
-          <button className="text-white bg-red-500 w-40 h-14 px-7 py-4 rounded-lg mt-4">
+          <button className="text-white bg-red-500 w-40 h-14 px-7 py-4 rounded-lg mt-4 mb-4">
             Learn More
           </button>
         </div>
@@ -40,7 +40,7 @@ export default function WhyChooseUS() {
             className="object-cover rounded-xl"
           />
           <div className="absolute -top-3 -right-3 md:-top-5 md:-right-10 bg-secondary w-38 h-20 flex flex-col items-center justify-center rounded-lg z-10">
-            <h3 className="text-2xl text-white font-bold">+15</h3>
+            <h3 className="text-4xl text-white font-bold">+15</h3>
             <p className="text-red-200 text-xs">Years of experience</p>
           </div>
           <Image

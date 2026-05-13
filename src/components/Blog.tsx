@@ -2,8 +2,12 @@
 
 import Image from 'next/image'
 import { Calendar, User } from 'lucide-react'
-import { useRef, useState } from 'react'
+import { useState, useRef } from 'react'
 import { HeadingGrid } from './HeadingGrid'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Pagination } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/pagination'
 
 const POSTS = [
   {
@@ -27,6 +31,7 @@ const POSTS = [
     author: 'Awais Johnson',
   },
 ]
+
 interface BlogCard {
   title: string
   date: string
@@ -35,18 +40,18 @@ interface BlogCard {
 
 function BlogCard({ title, date, author }: BlogCard) {
   return (
-    <article className="w-[85vw] shrink-0 snap-center flex-col rounded-[17px] bg-[#edf2fd] pb-[18px] md:min-w-0 md:flex-1">
-      <div className="relative aspect-[387/300] w-full overflow-hidden rounded-t-lg md:h-[300px] md:aspect-auto">
+    <article className="flex flex-col rounded-[17px] bg-[#edf2fd] pb-[18px] h-full">
+      <div className="relative aspect-[387/300] w-full overflow-hidden rounded-t-lg">
         <Image
           src="/heroimg.png"
           alt=""
           fill
           className="object-cover"
-          sizes="(max-width: 768px) 90vw, 33vw"
+          sizes="(max-width: 640px) 90vw, (max-width: 768px) 90vw, (max-width: 1024px) 45vw, 25vw"
         />
       </div>
 
-      <div className="flex flex-col gap-4 px-[14px] pt-4">
+      <div className="flex flex-col gap-4 px-[14px] pt-4 flex-1">
         <div className="flex flex-row flex-wrap items-center gap-4">
           <span className="rounded-lg bg-secondary px-2 py-1 text-xs font-medium leading-[1.3] text-white">
             Category
@@ -54,17 +59,17 @@ function BlogCard({ title, date, author }: BlogCard) {
           <span className="text-xs font-medium leading-[1.333] text-black/80">5 min read</span>
         </div>
 
-        <h3 className="text-lg font-medium leading-[1.444] text-black">{title}</h3>
+        <h3 className="text-lg font-medium leading-[1.444] text-black flex-1">{title}</h3>
       </div>
 
       <div className="flex flex-row items-center px-[14px] text-black/50 opacity-50">
-        <div className="flex flex-1 items-center justify-start gap-2 ">
+        <div className="flex flex-1 items-center justify-start gap-2">
           <Calendar className="size-4 shrink-0" strokeWidth={1.5} aria-hidden />
           <time className="text-xs font-normal leading-[1.333]" dateTime={date}>
             {date}
           </time>
         </div>
-        <div className="flex flex-1 items-center justify-end gap-2 ">
+        <div className="flex flex-1 items-center justify-end gap-2">
           <User className="size-4 shrink-0" strokeWidth={1.5} aria-hidden />
           <span className="text-xs font-normal leading-[1.333]">{author}</span>
         </div>
@@ -76,6 +81,7 @@ function BlogCard({ title, date, author }: BlogCard) {
 export default function Blog() {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [activeCard, setActiveCard] = useState(0)
+  const word = ['Automotive', 'Insights']
 
   const handleScroll = () => {
     const el = scrollRef.current
@@ -93,22 +99,21 @@ export default function Blog() {
     el.scrollTo({ left, behavior: 'smooth' })
     setActiveCard(index)
   }
-  const word = ['Automotive', 'Insights']
 
   return (
-    <section className="w-full bg-[#222222] md:px-20 md:py-10 px-4 py-4">
-      <div className="mx-auto flex max-w-[1440px] flex-col gap-20">
+    <section className="w-full bg-[#222222] px-4 md:px-10 lg:px-15 xl:px-20 pb-6">
+      <div className="mx-auto flex max-w-[1440px] flex-col gap-10">
         <HeadingGrid
           pageTitle="Rev Up Your Ride: The Latest in Automotive News and Insights"
           pageName="Blog"
           pageDescription="Stay ahead of the curve with expert analysis, in-depth reviews, and the latest trends in the automotive world."
           wordsToHighlight={word}
         />
+
         <div
           ref={scrollRef}
           onScroll={handleScroll}
-          className="flex gap-4 overflow-x-auto [scrollbar-width:none] md:mx-0  [&::-webkit-scrollbar]:hidden"
-          style={{ scrollSnapType: 'x mandatory' }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:overflow-x-visible"
         >
           {POSTS.map((post, i) => (
             <BlogCard key={i} title={post.title} author={post.author} date={post.date} />

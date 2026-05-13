@@ -9,7 +9,7 @@ export function HeadingGrid({ pageName, pageTitle, pageDescription, wordsToHighl
   let index = 0
   return (
     <div className="grid grid-cols-12 text-white md:py-10 py-4 gap-3">
-      <div className="md:col-span-8 col-span-12 md:w-150">
+      <div className="md:col-span-8 col-span-6 col-span-12 md:w-150">
         <p className="text-white/50 mb-3">{pageName}</p>
         <h2 className="font-bold text-2xl md:text-3xl lg:text-5xl">
           {pageTitleArray.map((m, i) =>
@@ -25,7 +25,7 @@ export function HeadingGrid({ pageName, pageTitle, pageDescription, wordsToHighl
           )}
         </h2>
       </div>
-      <div className="md:col-span-4 col-span-12 flex md:justify-center md:items-center md:text-start justify-start ">
+      <div className="lg:col-span-4 col-span-6 col-span-12 flex md:justify-center md:items-center md:text-start justify-start ">
         <p className="text-white/70">{pageDescription}</p>
       </div>
     </div>

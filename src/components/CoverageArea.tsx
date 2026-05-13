@@ -8,7 +8,7 @@ export default function CoverageArea() {
   const word = ['Near', 'You']
   return (
     <section className="w-full bg-primary md:space-y-7 space-y-4">
-      <div className="md:px-20 md:py-10 px-4 py-4">
+      <div className="px-4 md:px-10 lg:px-15 xl:px-20 lg:py-10  py-4">
         <div className="mx-auto max-w-[1440px] ">
           <HeadingGrid
             pageDescription="Whether you’re near or far, our expert services are just around the corner."
@@ -20,7 +20,7 @@ export default function CoverageArea() {
       </div>
       <div className="relative h-[400px] w-full  ">
         <Map />
-        <div className="absolute inset-0 z-[500] flex items-center justify-center md:px-20 md:py-10 px-6 py-6">
+        <div className="absolute inset-0 z-[500] flex items-center justify-center px-4 md:px-10 lg:px-15 xl:px-20 md:py-10 py-6">
           <div className="w-full md:mx-auto max-w-[1440px] ">
             <LocationForm />
           </div>

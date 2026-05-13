@@ -5,7 +5,7 @@ export default function CallToAction() {
     <>
       <section className="w-full relative bg-gradient-to-b from-gray-600 pt-20 to-[#292929]">
         <div className="mx-auto max-w-[1440px]">
-          <div className="relative z-10 flex flex-col items-center justify-center md:px-20 sm:py-20 px-6 py-10 sm:pl-30 text-white">
+          <div className="relative z-10 flex flex-col lg:items-center lg:justify-center px-4 md:px-10 lg:px-15 xl:px-20 py-10  text-white">
             <h2 className="lg:text-7xl text-4xl">
               Let’s Get Your Vehicle in <span className="text-secondary">Top Shape!</span>
             </h2>

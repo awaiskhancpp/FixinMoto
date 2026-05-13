@@ -1,9 +1,13 @@
 'use client'
 import Card from '../Card'
 import Image from 'next/image'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { HeadingGrid } from '../HeadingGrid'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Pagination } from 'swiper/modules'
 import marqueeStyle from './ServiceLogo.module.css'
+import 'swiper/css'
+import 'swiper/css/pagination'
 
 interface Card {
   serviceNumber: number
@@ -40,6 +44,7 @@ const logos = [
 export default function Service() {
   const [activeCard, setActiveCard] = useState(0)
   const scrollRef = useRef<HTMLDivElement>(null)
+  const swiperRef = useRef(null)
   const touchStartX = useRef<number>(0)
   const touchStartScrollLeft = useRef<number>(0)
   let word = ['Comprehensive', 'Solutions']
@@ -77,7 +82,7 @@ export default function Service() {
   }
   return (
     <>
-      <section className="w-full bg-black text-white relative md:px-20 md:py-10 px-4 py-4">
+      <section className="w-full bg-black text-white relative px-4 md:px-10 lg:px-15 xl:px-20 py-4">
         <div className="mx-auto max-w-[1440px]">
           <HeadingGrid
             pageDescription="From routine maintenance to advanced diagnostics, we’ve got all your automotive needs
@@ -87,38 +92,40 @@ export default function Service() {
             wordsToHighlight={word}
           />
           <div className="">
-            <div
-              className="flex gap-3 overflow-x-hidden snap-x snap-mandatory md:hidden"
-              ref={scrollRef}
-              onScroll={handleScroll}
-              onTouchStart={onTouchStart}
-              onTouchMove={onTouchMove}
-              onTouchEnd={onTouchEnd}
-              style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
-            >
-              {CARDS.map((card, i) => (
-                <a href="/services" key={i} className="w-[90vw] shrink-0">
-                  <Card
-                    title={card.title}
-                    mainImg={card.mainImg}
-                    logoImg={card.logoImg}
-                    cardNo={card.cardNo}
-                  />
-                </a>
-              ))}
+            <div className="md:hidden">
+              <Swiper
+                spaceBetween={16}
+                slidesPerView={1}
+                className="w-full"
+                onSlideChange={(swiper) => setActiveCard(swiper.activeIndex)}
+                ref={swiperRef}
+              >
+                {CARDS.map((card, i) => (
+                  <SwiperSlide key={i}>
+                    <a href="/services" className="w-[90vw] shrink-0">
+                      <Card
+                        title={card.title}
+                        mainImg={card.mainImg}
+                        logoImg={card.logoImg}
+                        cardNo={card.cardNo}
+                      />
+                    </a>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             </div>
-            <div className="flex justify-center gap-2 mt-3">
+            <div className="flex justify-center gap-2 mt-3 md:hidden">
               {CARDS.map((_, i) => (
                 <button
                   key={i}
-                  onClick={() => scrollToCard(i)}
+                  onClick={() => swiperRef.current?.swiper.slideTo(i)}
                   aria-label={`Go to card ${i + 1}`}
-                  className="w-2 h-2 rounded-full transition-colors duration-300 md:hidden"
+                  className="w-2 h-2 rounded-full transition-colors duration-300"
                   style={{ background: i === activeCard ? '#ef4444' : '#6b7280' }}
                 />
               ))}
             </div>
-            <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4 gap-4">
               {CARDS.map((card, i) => (
                 <a href="/services" key={i} className="">
                   <Card
@@ -133,12 +140,11 @@ export default function Service() {
           </div>
         </div>
       </section>
-      <section className="w-full bg-black  text-white md:px-20 md:py-10 px-4 py-6">
+      <section className="w-full bg-black text-white md:px-10 lg:px-20 md:py-10  py-6">
         <div className="mx-auto max-w-[1440px]">
           <div className="w-full grid grid-cols-12 items-center">
-            <div className="md:col-span-4 col-span-12 text-2xl ">
-              Quality Car Repair You Can <br />
-              Count On !
+            <div className="md:col-span-4 px-4 md:px-0 col-span-12 text-2xl ">
+              Quality Car Repair You Can Count On!
             </div>
             <div className="overflow-hidden md:col-span-8 mt-2 col-span-12 w-full">
               <div className={`${marqueeStyle.track} gap-[50px]`}>

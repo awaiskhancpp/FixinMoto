@@ -61,7 +61,7 @@ interface TestimonialCardProps {
 function TestimonialCard(props: TestimonialCardProps) {
   const { name, image, quote } = props
   return (
-    <div className="flex w-full h-[400px] shrink-0 snap-center md:py-10 py-6 px-5 flex-col gap-2 rounded-[15px] bg-[#F8F8F6] md:px-8 ">
+    <div className="flex w-full h-[380px] md:h-[400px] shrink-0 snap-center md:py-4 lg:py-10 py-6 px-5 flex-col gap-2 rounded-[15px] bg-[#F8F8F6] md:px-8 ">
       <div className="w-full shrink-0 overflow-hidden rounded-md pb-1">
         <Image
           src={image}
@@ -85,7 +85,7 @@ export default function Testimonials() {
   const swiperRef = useRef<SwiperType | null>(null)
 
   return (
-    <section className="w-full bg-primary px-4 md:px-20">
+    <section className="w-full bg-primary px-4 md:px-10 lg:px-15 xl:px-20">
       <div className="mx-auto max-w-[1440px]">
         <div className="">
           <HeadingGrid
@@ -99,7 +99,6 @@ export default function Testimonials() {
           <div className="pb-6 pt-10 md:pb-10 md:pt-10 bg-secondary rounded-tl-[24px] overflow-x-hidden">
             <div className="flex gap-5 transition-transform duration-500 ease-out md:pl-10 pl-4">
               <Swiper
-                pagination={true}
                 keyboard={true}
                 breakpoints={{
                   0: {
@@ -148,45 +147,6 @@ export default function Testimonials() {
           </div>
         </div>
       </div>
-      {/* <div className="mx-auto max-w-[1440px]">
-        <div className="px-20 py-10">
-          <HeadingGrid
-            pageTitle="What Drivers Are Saying About Fixinmoto"
-            pageName="Testimonials"
-            pageDescription="Read what our satisfied customers have to say about our products and services"
-            wordsToHighlight={word}
-          />
-        </div>
-
-        <div className="mt-10 mx-auto md:pl-10">
-          <div className="ml-auto pb-6 pt-10 md:pb-10 md:pt-10 bg-secondary md:rounded-tl-[24px] overflow-hidden">
-            <div
-              className="flex gap-5 transition-transform duration-500 ease-out md:pl-10 pl-4"
-              style={{ transform: `translateX(-${offset}px)` }}
-            >
-              {TESTIMONIALS.map((t, i) => (
-                <TestimonialCard key={i} name={t.name} image={t.image} quote={t.quote} />
-              ))}
-            </div>
-            <div className="flex justify-end gap-[19px] pt-6 mr-4 md:pt-8">
-              <button
-                type="button"
-                onClick={goPrev}
-                className="disabled:pointer-events-none disabled:opacity-40"
-              >
-                <Image src="/VectorLeft.png" alt="" width={26} height={16} />
-              </button>
-              <button
-                type="button"
-                onClick={goNext}
-                className="disabled:pointer-events-none disabled:opacity-40"
-              >
-                <Image src="/VectorRight.png" alt="" width={26} height={16} />
-              </button>
-            </div>
-          </div>
-        </div> */}
-      {/* </div> */}
     </section>
   )
 }

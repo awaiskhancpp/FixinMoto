@@ -3,11 +3,11 @@ import { MapPin, Phone, Mail, Globe } from 'lucide-react'
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-primary py-4 px-4 md:px-20 gap-y-0">
-      <div className="mx-auto grid max-w-[1440px] grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-14 text-white">
+    <footer className="w-full bg-primary py-4 px-4 md:px-10 lg:px-15 xl:px-20 gap-y-0">
+      <div className="mx-auto grid max-w-[1440px] grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-14 text-white">
         <div className="lg:col-span-3 pt-4 order-2 lg:order-1">
           <Image src="/logonavbar.png" width={140} height={42} alt="footerlogo" />
-          <div className="py-4 space-y-2 mt-3">
+          <div className="lg:py-4 space-y-2 mt-3">
             <div className="flex">
               <MapPin className="text-red-500 shrink-0 w-4 h-4 mt-0.5 mr-1" />
               <p className="text-white/50">2464 Royal Ln. Mesa, New Jersey 45463</p>
@@ -26,7 +26,7 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className="lg:col-span-3 py-5 order-3 lg:order-2">
+        <div className="lg:col-span-3 lg:py-5 order-3 lg:order-2">
           <h3 className="text-2xl font-medium">Opening Hours</h3>
           <div className="space-y-2 mt-7">
             <p className="text-white/50">Mon-Fri : 08.00 - 20.00</p>
@@ -35,7 +35,7 @@ export default function Footer() {
         </div>
         <div className="lg:col-span-3  order-4 lg:order-3">
           <div className="grid">
-            <h3 className="text-2xl font-medium md:mt-5 pb-2">Quick Links</h3>
+            <h3 className="text-2xl font-medium lg:mt-5 pb-2">Quick Links</h3>
             <div className="space-y-2 mt-4 grid">
               <a href="#" className="text-white/50">
                 About us

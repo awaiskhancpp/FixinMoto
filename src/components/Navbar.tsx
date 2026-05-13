@@ -13,7 +13,7 @@ export default function Navbar() {
     { label: 'Our Team', href: '/ourteam' },
   ]
   const NAV_LINKS = [
-    { label: 'About Us', href: '/aboutus' },
+    { label: 'AboutUs', href: '/aboutus' },
     { label: 'Appointment', href: '/appointment' },
   ]
 
@@ -31,9 +31,9 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed z-[900] w-full px-4 md:px-20 ${scrolled ? 'bg-white text-black' : isOpen ? 'bg-white text-black' : 'bg-transparent text-white'}`}
+      className={`fixed z-[900] w-full px-4 md:px-10 lg:px-15 xl:px-20 ${scrolled ? 'bg-white text-black' : isOpen ? 'bg-white text-black' : 'bg-transparent text-white'}`}
     >
-      <div className="mx-auto w-full max-w-[1440px] grid md:grid-cols-3  grid-cols-2 items-center pt-6 pb-3">
+      <div className="mx-auto w-full max-w-[1440px] grid md:grid-cols-3 grid-cols-2 items-center pt-6 pb-3">
         <div className="flex items-center">
           <a href="/" className="md:hidden">
             <Image
@@ -51,11 +51,18 @@ export default function Navbar() {
               </a>
             ))}
             <div className="relative group hidden md:block">
-              <button className="flex items-center gap-1 py-2 hover:text-secondary">
+              <button
+                onClick={() => setIsPageClicked(!isPageClicked)}
+                className="flex items-center gap-1 py-2 hover:text-secondary"
+              >
                 Pages
-                <ChevronDown />
+                {isPageClicked ? <ChevronUp /> : <ChevronDown />}
               </button>
-              <div className="absolute top-full left-0 bg-white text-black rounded-lg shadow-lg w-44 z-10 hidden group-hover:block">
+              <div
+                className={`absolute top-full left-0 bg-white text-black rounded-lg shadow-lg w-44 z-10 ${
+                  isPageClicked ? 'block' : 'hidden group-hover:block'
+                }`}
+              >
                 <ul className="p-2 text-sm font-medium">
                   {PAGE_LINKS.map((p, i) => (
                     <a

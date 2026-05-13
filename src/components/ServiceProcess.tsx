@@ -63,7 +63,7 @@ export default function ServiceProcess() {
         </div>
       </section>
 
-      <section className="w-full bg-[#202020] px-4 py-6 md:px-20 md:pb-20 md:pt-10">
+      <section className="w-full bg-[#202020] px-4 md:px-10 lg:px-15 xl:px-20 lg:py-8 xl:py-10 pb-4 md:pb-10 ">
         <div className="mx-auto flex max-w-[1440px] flex-col gap-10">
           <HeadingGrid
             pageDescription="A smooth and transparent process for all your vehicle needs."
@@ -72,7 +72,7 @@ export default function ServiceProcess() {
             wordsToHighlight={word}
           />
 
-          <div className="flex flex-col-reverse items-stretch gap-8 lg:flex-row lg:items-center">
+          <div className="flex flex-col-reverse items-stretch lg:flex-row lg:items-center">
             <div className="flex min-w-0 flex-1 flex-col gap-7">
               {STEPS.map((step, i) => {
                 const isActive = i === active
@@ -81,6 +81,7 @@ export default function ServiceProcess() {
                     key={step.title}
                     type="button"
                     onClick={() => setActive(i)}
+                    onMouseEnter={() => setActive(i)}
                     className={`flex py-3 flex-col gap-4 border-l-2 pl-8 text-left transition-colors ${
                       isActive ? 'border-secondary' : 'border-transparent'
                     }`}
