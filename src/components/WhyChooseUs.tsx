@@ -34,7 +34,7 @@ export default function WhyChooseUS() {
         </div>
         <div className="relative w-full h-[400px] md:h-[500px] lg:h-[580px] rounded-xl ">
           <Image
-            src="/passionToPrecisionImg1.jpg"
+            src="/passionToPrecisionimg1.jpg"
             alt="middleimg"
             fill
             className="object-cover rounded-xl"
@@ -44,7 +44,7 @@ export default function WhyChooseUS() {
             <p className="text-red-200 text-xs">Years of experience</p>
           </div>
           <Image
-            src="/fromPassionToPrecision2.jpg"
+            src="/passionToPrecisionImg2.jpg"
             alt="lowerimg"
             width={244}
             height={244}

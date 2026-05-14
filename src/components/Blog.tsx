@@ -12,23 +12,27 @@ import 'swiper/css/pagination'
 const POSTS = [
   {
     title: 'Revving Up: The Future of Automotive Innovation',
-    date: 'December 29, 2024',
+    date: 'December 9, 2024',
     author: 'Alex Johnson',
+    imgSrc: '/blog-img-1.jpg',
   },
   {
     title: 'Driving Change: Trends Shaping the Automotive Industry',
-    date: 'December 12, 2024',
+    date: 'December 2, 2024',
     author: 'Alex Johnson',
+    imgSrc: '/blog-img-2.jpg',
   },
   {
     title: 'Under the Hood: Exploring the Latest in Automotive ',
     date: 'December 7, 2024',
     author: 'Alex Johnson',
+    imgSrc: '/blog-img-3.jpg',
   },
   {
     title: 'Not Under the Hood: Exploring the Latest in Automotive ',
     date: 'December 8, 2024',
     author: 'Awais Johnson',
+    imgSrc: '/blog-img-4.jpg',
   },
 ]
 
@@ -36,13 +40,14 @@ interface BlogCard {
   title: string
   date: string
   author: string
+  imgSrc: string
 }
 
-function BlogCard({ title, date, author }: BlogCard) {
+function BlogCard({ title, date, author, imgSrc }: BlogCard) {
   return (
-    <article className="flex flex-col rounded-[17px] bg-[#edf2fd] pb-[18px]">
+    <article className="flex flex-col rounded-[17px] bg-[#edf2fd] pb-5">
       <div className="relative aspect-[387/300] w-full overflow-hidden rounded-t-lg">
-        <Image src="/heroimg.png" alt="" fill className="object-cover" />
+        <Image src={imgSrc} alt="" fill className="object-cover" />
       </div>
 
       <div className="flex flex-col gap-4 px-[14px] pt-4 flex-1">
@@ -53,21 +58,21 @@ function BlogCard({ title, date, author }: BlogCard) {
           <span className="text-xs font-medium leading-[1.333] text-black/80">5 min read</span>
         </div>
 
-        <h3 className="text-lg font-medium leading-[1.444] text-black flex-1 line-clamp-2 h-14">
+        <h3 className="text-lg font-medium leading-[1.444] text-black flex-1 line-clamp-2  pb-2">
           {title}
         </h3>
       </div>
 
-      <div className="flex flex-row items-center px-[14px] text-black/50 opacity-50">
+      <div className="flex flex-row items-center px-[14px] text-black/50 opacity-50 space-x-4">
         <div className="flex flex-1 items-center justify-start gap-2">
           <Calendar className="size-4 shrink-0" strokeWidth={1.5} />
-          <time className="text-xs font-normal leading-[1.333]" dateTime={date}>
+          <time className="text-xs font-normal " dateTime={date}>
             {date}
           </time>
         </div>
         <div className="flex flex-1 items-center justify-end gap-2">
           <User className="size-4 shrink-0" strokeWidth={1.5} />
-          <span className="text-xs font-normal leading-[1.333]">{author}</span>
+          <span className="text-xs font-normal ">{author}</span>
         </div>
       </div>
     </article>
@@ -112,7 +117,12 @@ export default function Blog() {
           >
             {POSTS.map((post, i) => (
               <SwiperSlide key={i}>
-                <BlogCard title={post.title} author={post.author} date={post.date} />
+                <BlogCard
+                  title={post.title}
+                  author={post.author}
+                  date={post.date}
+                  imgSrc={post.imgSrc}
+                />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -134,7 +144,13 @@ export default function Blog() {
         </div>
         <div className="hidden xl:grid xl:grid-cols-4 gap-4 overflow-x-auto ">
           {POSTS.map((post, i) => (
-            <BlogCard key={i} title={post.title} author={post.author} date={post.date} />
+            <BlogCard
+              key={i}
+              title={post.title}
+              author={post.author}
+              date={post.date}
+              imgSrc={post.imgSrc}
+            />
           ))}
         </div>
       </div>

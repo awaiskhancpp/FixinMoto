@@ -46,25 +46,25 @@ export default function ServicePageCard({ title, description, imageSrc }: Servic
     })
   }
   return (
-    <div className="flex h-full flex-col items-center rounded-[15px] bg-primary px-6 py-16 text-center text-white">
-      <div className="flex h-[118px] w-[118px] shrink-0 items-center justify-center">
+    <div className="flex h-full flex-col items-center rounded-[15px] bg-primary px-6 py-10 text-center text-white">
+      <div className="flex shrink-0 items-center justify-center">
         <Image src={imageSrc} alt="" width={118} height={118} className="object-contain" />
       </div>
       <h3 className="text-2xl font-medium leading-[1.3333333]">{title}</h3>
       <p className="flex flex-1 flex-col justify-center text-base leading-[1.625] text-white/50">
         {description}
       </p>
-      <div className="mt-auto flex w-full flex-col xl:flex-row items-center justify-end gap-2 pt-2">
+      <div className="mt-auto flex w-full flex-col xl:flex-row items-center justify-center gap-2 pt-2">
         <a
           href={`/services/${title}`}
-          className="rounded-lg bg-secondary px-8 py-[15px] text-sm font-medium  text-white"
+          className="rounded-lg bg-secondary px-11 xl:px-9 py-[15px] text-sm font-medium  text-white"
         >
           Details
         </a>
         <button
           type="button"
           onClick={() => setOpenModal(!openModal)}
-          className="rounded-lg bg-secondary px-8 py-[15px] text-sm font-medium  text-white"
+          className="rounded-lg bg-secondary px-8 xl:px-6 py-[15px] text-sm font-medium  text-white"
         >
           Book Now
         </button>
@@ -80,19 +80,19 @@ export default function ServicePageCard({ title, description, imageSrc }: Servic
             className="w-full max-w-md bg-white border border-slate-100 shadow-lg rounded-lg relative max-h-[95vh] overflow-y-auto outline-none p-4 md:p-6"
             onClick={(e) => e.stopPropagation()}
           >
-            <button
+            {/* <button
               type="button"
               onClick={() => setOpenModal(false)}
               className="flex items-center absolute top-6 right-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="size-5 cursor-pointer fill-white hover:fill-secondary"
+                className="size-4 cursor-pointer fill-white hover:fill-secondary"
                 viewBox="0 0 329.269 329"
               >
                 <path d="M194.8 164.77 323.013 36.555c8.343-8.34 8.343-21.825 0-30.164-8.34-8.34-21.825-8.34-30.164 0L164.633 134.605 36.422 6.391c-8.344-8.34-21.824-8.34-30.164 0-8.344 8.34-8.344 21.824 0 30.164l128.21 128.215L6.259 292.984c-8.344 8.34-8.344 21.825 0 30.164a21.27 21.27 0 0 0 15.082 6.25c5.46 0 10.922-2.09 15.082-6.25l128.21-128.214 128.216 128.214a21.27 21.27 0 0 0 15.082 6.25c5.46 0 10.922-2.09 15.082-6.25 8.343-8.34 8.343-21.824 0-30.164zm0 0" />
               </svg>
-            </button>
+            </button> */}
 
             <div className="bg-secondary rounded-lg py-1">
               <h2 id="modal-title" className="text-white text-xl font-semibold mb-4">
