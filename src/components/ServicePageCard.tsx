@@ -6,18 +6,20 @@ interface ServicePageCard {
   title: string
   description: string
   imageSrc: string
+  services: string[]
 }
 
-export default function ServicePageCard({ title, description, imageSrc }: ServicePageCard) {
+export default function ServicePageCard({
+  title,
+  description,
+  imageSrc,
+  services,
+}: ServicePageCard) {
   const [openModal, setOpenModal] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     contact: '',
-    address: '',
-    carMake: '',
-    carModel: '',
-    carYear: '',
     cardTitle: title,
     cardDescription: description,
   })
@@ -37,10 +39,6 @@ export default function ServicePageCard({ title, description, imageSrc }: Servic
       name: '',
       email: '',
       contact: '',
-      address: '',
-      carMake: '',
-      carModel: '',
-      carYear: '',
       cardTitle: title,
       cardDescription: description,
     })
@@ -54,10 +52,10 @@ export default function ServicePageCard({ title, description, imageSrc }: Servic
       <p className="flex flex-1 flex-col justify-center text-base leading-[1.625] text-white/50">
         {description}
       </p>
-      <div className="mt-auto flex w-full flex-col xl:flex-row items-center justify-center gap-2 pt-2">
+      <div className="mt-auto flex w-full flex-row items-center justify-center gap-2 pt-2">
         <a
           href={`/services/${title}`}
-          className="rounded-lg bg-secondary px-11 xl:px-9 py-[15px] text-sm font-medium  text-white"
+          className="rounded-lg border border-white px-11 xl:px-9 py-[15px] text-sm font-medium  text-white"
         >
           Details
         </a>
@@ -80,21 +78,7 @@ export default function ServicePageCard({ title, description, imageSrc }: Servic
             className="w-full max-w-md bg-white border border-slate-100 shadow-lg rounded-lg relative max-h-[95vh] overflow-y-auto outline-none p-4 md:p-6"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* <button
-              type="button"
-              onClick={() => setOpenModal(false)}
-              className="flex items-center absolute top-6 right-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-4 cursor-pointer fill-white hover:fill-secondary"
-                viewBox="0 0 329.269 329"
-              >
-                <path d="M194.8 164.77 323.013 36.555c8.343-8.34 8.343-21.825 0-30.164-8.34-8.34-21.825-8.34-30.164 0L164.633 134.605 36.422 6.391c-8.344-8.34-21.824-8.34-30.164 0-8.344 8.34-8.344 21.824 0 30.164l128.21 128.215L6.259 292.984c-8.344 8.34-8.344 21.825 0 30.164a21.27 21.27 0 0 0 15.082 6.25c5.46 0 10.922-2.09 15.082-6.25l128.21-128.214 128.216 128.214a21.27 21.27 0 0 0 15.082 6.25c5.46 0 10.922-2.09 15.082-6.25 8.343-8.34 8.343-21.824 0-30.164zm0 0" />
-              </svg>
-            </button> */}
-
-            <div className="bg-secondary rounded-lg py-1">
+            <div className="bg-secondary rounded-lg py-2">
               <h2 id="modal-title" className="text-white text-xl font-semibold mb-4">
                 {title}
               </h2>
@@ -140,61 +124,43 @@ export default function ServicePageCard({ title, description, imageSrc }: Servic
                   required
                 />
               </div>
-              <div className="flex items-center gap-4">
-                <label className="text-slate-700 text-sm font-medium w-20 shrink-0">Address</label>
-                <input
-                  type="text"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleInputChange}
-                  placeholder="Enter your address"
-                  className="flex-1 px-4 py-2 border border-slate-300 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-              </div>
 
               <div className="flex items-center gap-4">
-                <label className="text-slate-700 text-sm font-medium w-20 shrink-0">Car Make</label>
+                <label className="text-slate-700 text-sm font-medium w-20 shrink-0">Date</label>
+                <input
+                  type="date"
+                  className="flex-1 px-4 py-2 border border-slate-300 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div className="flex items-center gap-4">
+                <label className="text-slate-700 text-sm font-medium w-20 shrink-0">Time</label>
+                <input
+                  type="time"
+                  id="appointment"
+                  name="appointment"
+                  min="09:00"
+                  max="18:00"
+                  className="flex-1 px-4 py-2 border border-slate-300 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div className="flex items-center gap-4">
+                <label className="text-slate-700 text-sm font-medium w-20 shrink-0">Service</label>
                 <select
-                  name="carMake"
-                  value={formData.carMake}
-                  onChange={handleInputChange}
-                  className="flex-1 px-4 py-2 border border-slate-300 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
+                  name="location"
+                  id="location"
+                  className="flex-1 px-4 py-2 border border-slate-300 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-blue-500 "
                 >
-                  <option value="">Select car make</option>
-                  <option value="Toyota">Toyota</option>
-                  <option value="Honda">Honda</option>
-                  <option value="Audi">Audi</option>
-                  <option value="BMW">BMW</option>
+                  <option defaultValue={title}>{title}</option>
+                  {services.map((s, i) => (
+                    <>
+                      {s != title && (
+                        <option value={s} key={i}>
+                          {s}
+                        </option>
+                      )}
+                    </>
+                  ))}
                 </select>
-              </div>
-              <div className="flex items-center gap-4">
-                <label className="text-slate-700 text-sm font-medium w-20 shrink-0">
-                  Car Model
-                </label>
-                <input
-                  type="text"
-                  name="carModel"
-                  value={formData.carModel}
-                  onChange={handleInputChange}
-                  placeholder="Enter car model"
-                  className="flex-1 px-4 py-2 border border-slate-300 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-              </div>
-
-              <div className="flex items-center gap-4">
-                <label className="text-slate-700 text-sm font-medium w-20 shrink-0">Car Year</label>
-                <input
-                  type="number"
-                  name="carYear"
-                  value={formData.carYear}
-                  onChange={handleInputChange}
-                  placeholder="Enter car year"
-                  className="flex-1 px-4 py-2 border border-slate-300 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
               </div>
 
               <div className="flex gap-3 mt-6 pt-4 border-t">

@@ -45,7 +45,7 @@ interface BlogCard {
 
 function BlogCard({ title, date, author, imgSrc }: BlogCard) {
   return (
-    <article className="flex flex-col rounded-[17px] bg-[#edf2fd] pb-5">
+    <div className="flex flex-col rounded-[17px] bg-[#edf2fd] pb-5">
       <div className="relative aspect-[387/300] w-full overflow-hidden rounded-t-lg">
         <Image src={imgSrc} alt="" fill className="object-cover" />
       </div>
@@ -70,12 +70,12 @@ function BlogCard({ title, date, author, imgSrc }: BlogCard) {
             {date}
           </time>
         </div>
-        <div className="flex flex-1 items-center justify-end gap-2">
+        <div className="flex flex-1 items-center justify-end pt-3 gap-2">
           <User className="size-4 shrink-0" strokeWidth={1.5} />
           <span className="text-xs font-normal ">{author}</span>
         </div>
       </div>
-    </article>
+    </div>
   )
 }
 
@@ -85,7 +85,7 @@ export default function Blog() {
   const word = ['Automotive', 'Insights']
 
   return (
-    <section className="w-full bg-[#222222] px-4 md:px-10 lg:px-15 xl:px-20 pb-6">
+    <section className="w-full bg-[#222222] py-6 px-4 md:px-6 min-[1441px]:px-0 pb-6">
       <div className="mx-auto flex max-w-[1440px] flex-col gap-10">
         <HeadingGrid
           pageTitle="Rev Up Your Ride: The Latest in Automotive News and Insights"

@@ -50,7 +50,7 @@ export default function Service() {
 
   return (
     <>
-      <section className="w-full bg-black text-white relative px-4 md:px-10 lg:px-15 xl:px-20 py-4">
+      <section className="w-full bg-black text-white relative px-4 md:px-6 min-[1441px]:px-0 py-6">
         <div className="mx-auto max-w-[1440px]">
           <HeadingGrid
             pageDescription="From routine maintenance to advanced diagnostics, we’ve got all your automotive needs
@@ -123,10 +123,10 @@ export default function Service() {
           </div>
         </div>
       </section>
-      <section className="w-full bg-black text-white md:px-10 lg:px-15 xl:px-20 py-6 md:py-15">
+      <section className="w-full bg-black text-white px-4 md:px-6 min-[1441px]:px-0 py-6 md:py-15">
         <div className="mx-auto max-w-[1440px]">
           <div className="w-full grid grid-cols-12 items-center">
-            <div className="md:col-span-4 px-4 md:px-0 col-span-12 text-xl font-semibold ">
+            <div className="md:col-span-4 px-4 md:px-0 col-span-12 text-lg font-semibold ">
               Quality Car Repair You Can Count On!
             </div>
             <div className="overflow-hidden md:col-span-8 mt-3 col-span-12 w-full">

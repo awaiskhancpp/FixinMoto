@@ -2,10 +2,12 @@
 import { OurTeamCard } from '../OurTeamCard'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { useRef, useState } from 'react'
+import { Autoplay } from 'swiper/modules'
 import 'swiper/css'
 
 export default function OurTeam() {
   const [activeCard, setActiveCard] = useState(0)
+  const [visibleSlides, setVisibleSlides] = useState(1)
   const swiperRef = useRef<any>(null)
 
   const TESTIMONIALS = [
@@ -63,7 +65,7 @@ export default function OurTeam() {
 
   return (
     <>
-      <section className="bg-primary px-4 py-10 md:px-10 lg:px-15 xl:px-20 md:py-10">
+      <section className="bg-primary px-4 py-10 md:px-6 min-[1441px]:px-0 md:py-10">
         <div className="mx-auto max-w-[1440px]">
           <div className="flex-flex-col text-white mb-10">
             <div className="space-y-3">
@@ -101,7 +103,12 @@ export default function OurTeam() {
               onSwiper={(swiper) => {
                 swiperRef.current = swiper
               }}
-              onSlideChange={(swiper) => setActiveCard(swiper.activeIndex)}
+              modules={[Autoplay]}
+              autoplay={{ delay: 5000 }}
+              onSlideChange={(swiper) => {
+                setActiveCard(swiper.realIndex)
+                setVisibleSlides(swiper.params.slidesPerView as number)
+              }}
               className="w-full"
             >
               {TESTIMONIALS.map((p, i) => (
@@ -122,11 +129,12 @@ export default function OurTeam() {
           </div>
 
           <div className="flex justify-center gap-2 mt-4 xl:hidden">
-            {TESTIMONIALS.map((_, i) => (
+            {Array.from({
+              length: Math.ceil(TESTIMONIALS.length / visibleSlides),
+            }).map((_, i) => (
               <button
                 key={i}
                 onClick={() => scrollToCard(i)}
-                aria-label={`Go to card ${i + 1}`}
                 className="w-2 h-2 rounded-full transition-colors duration-300"
                 style={{ background: i === activeCard ? '#ef4444' : '#6b7280' }}
               />

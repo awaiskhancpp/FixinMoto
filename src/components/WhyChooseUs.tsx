@@ -2,9 +2,9 @@ import { CircleCheck } from 'lucide-react'
 import Image from 'next/image'
 export default function WhyChooseUS() {
   return (
-    <section className="w-full bg-primary px-4 py-6 md:px-10 lg:px-15 xl:px-20 md:py-10 lg:py-20">
-      <div className="mx-auto max-w-[1440px] md:flex">
-        <div className="text-white/50 mr-8 pb-2 w-full flex flex-col justify-center">
+    <section className="w-full overflow-x-hidden bg-primary px-4 py-12 md:px-6 min-[1441px]:px-0 md:py-10 lg:py-20">
+      <div className="mx-auto flex max-w-[1440px] flex-col gap-8 md:flex-row md:items-center md:gap-10">
+        <div className="flex min-w-0 w-full flex-col justify-center pb-2 text-white/50 md:mr-0 md:max-w-[46%]">
           <p className="pb-2">Why Choose Us</p>
           <h2 className="text-white lg:text-6xl md:text-4xl text-3xl pb-2">
             The FixinMoto <span className="text-secondary">Difference</span>
@@ -32,23 +32,23 @@ export default function WhyChooseUS() {
             Learn More
           </button>
         </div>
-        <div className="relative w-full h-[400px] md:h-[500px] lg:h-[580px] rounded-xl ">
+        <div className="relative h-[400px] w-full min-w-0 max-w-full rounded-xl md:h-[500px] md:flex-1 lg:h-[580px]">
           <Image
             src="/passionToPrecisionimg1.jpg"
             alt="middleimg"
             fill
-            className="object-cover rounded-xl"
+            className="rounded-xl object-cover"
           />
-          <div className="absolute -top-3 -right-3 md:-top-5 md:-right-10 bg-secondary w-38 h-20 flex flex-col items-center justify-center rounded-lg z-10">
-            <h3 className="text-4xl text-white font-bold">+15</h3>
-            <p className="text-red-200 text-xs">Years of experience</p>
+          <div className="absolute -top-4 -right-1 z-10 flex w-36 flex-col items-center justify-center rounded-lg bg-secondary px-3 py-3 shadow-lg md:-top-6 md:-right-2 md:w-40 md:py-4">
+            <h3 className="text-3xl font-bold text-white md:text-4xl">+15</h3>
+            <p className="text-center text-xs text-red-200">Years of experience</p>
           </div>
           <Image
             src="/passionToPrecisionImg2.jpg"
             alt="lowerimg"
             width={244}
             height={244}
-            className="border object-cover rounded-lg absolute h-25 w-50 -bottom-2 -left-3 md:h-40 md:w-60  md:-bottom-4 md:-left-10 md:z-1"
+            className="absolute -bottom-3 -left-3 z-10 h-28 w-36 max-w-[calc(100%-1.5rem)] rounded-lg border object-cover sm:h-36 sm:w-44 md:-bottom-6 md:-left-8 md:h-40 md:w-60"
           />
         </div>
       </div>

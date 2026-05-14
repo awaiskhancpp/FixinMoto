@@ -17,7 +17,7 @@ export default function TrustedPartners() {
   const loopLogos = [...logos, ...logos, ...logos]
 
   return (
-    <section className="w-full bg-black text-white px-4 py-4 md:px-10 lg:px-15 xl:px-20 md:py-10">
+    <section className="w-full bg-black text-white px-4 py-4 md:px-6 min-[1441px]:px-0 md:py-10">
       <div className="mx-auto max-w-[1440px]">
         <div className="grid w-full grid-cols-12 items-center">
           <p className="col-span-12 mb-2 text-secondary">Trusted by Drivers Everywhere</p>

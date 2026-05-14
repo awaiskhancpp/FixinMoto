@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { Autoplay, Navigation } from 'swiper/modules'
 import 'swiper/css'
 
 interface Card {
@@ -43,12 +44,8 @@ const logos = [
 ]
 
 export default function WhyChooseFixinMoto() {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [logoIndex, setLogoIndex] = useState(0)
   const [activeCard, setActiveCard] = useState(0)
-  const scrollRef = useRef<HTMLDivElement>(null)
-  const touchStartX = useRef<number>(0)
-  const touchStartScrollLeft = useRef<number>(0)
+  const [visibleCards, setVisibleCards] = useState(1)
   const swiperRef = useRef<any>(null)
 
   const scrollToCard = (index: number) => {
@@ -58,19 +55,12 @@ export default function WhyChooseFixinMoto() {
   }
   let word = ['Comprehensive', 'Solutions']
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % logos.length)
-    }, 2000)
-    return () => clearInterval(interval)
-  }, [])
-
   return (
     <>
-      <section className="bg-black px-4 py-4 md:px-10 lg:px-15 xl:px-20 md:py-10">
+      <section className="bg-black px-4 py-10 md:px-6 min-[1441px]:px-0 md:py-10">
         <div className="mx-auto max-w-[1440px]">
           <div className="">
-            <h2 className="text-white font-semibold text-3xl">Why Choose Fixin Moto?</h2>
+            <h2 className="text-white font-semibold text-3xl pb-1">Why Choose Fixin Moto?</h2>
             <h5 className="text-[#DB323E]">Your Trusted Partner for Quality Automotive Care</h5>
           </div>
           <div className="pt-6">
@@ -88,10 +78,16 @@ export default function WhyChooseFixinMoto() {
                     slidesPerView: 3,
                   },
                 }}
+                modules={[Autoplay, Navigation]}
+                navigation={true}
+                autoplay={{ delay: 5000 }}
                 onSwiper={(swiper) => {
                   swiperRef.current = swiper
                 }}
-                onSlideChange={(swiper) => setActiveCard(swiper.activeIndex)}
+                onSlideChange={(swiper) => {
+                  setActiveCard(swiper.realIndex)
+                  setVisibleCards(swiper.params.slidesPerView as number)
+                }}
                 className="w-full"
               >
                 {CARDS.map((card, i) => (
@@ -103,7 +99,7 @@ export default function WhyChooseFixinMoto() {
             </div>
 
             <div className="flex justify-center gap-2 mt-4 xl:hidden">
-              {CARDS.map((_, i) => (
+              {Array.from({ length: Math.ceil(CARDS.length / visibleCards) }).map((_, i) => (
                 <button
                   key={i}
                   onClick={() => scrollToCard(i)}
@@ -134,8 +130,8 @@ interface CardProps {
 function Card({ logoImg, title, details }: CardProps) {
   return (
     <>
-      <div className="border bg-primary flex flex-col h-100 rounded-[15px] overflow-hidden">
-        <div className="text-white px-4 pt-10 flex flex-col gap-3">
+      <div className="border bg-primary flex flex-col h-100 xl:h-90 rounded-[15px] overflow-hidden">
+        <div className="text-white px-4 md:px-6 min-[1441px]:px-0 pt-10 flex flex-col gap-3">
           <Image
             src={logoImg}
             alt="servicelogo1"
@@ -143,8 +139,10 @@ function Card({ logoImg, title, details }: CardProps) {
             height={64}
             className="object-contain bg-secondary rounded-sm"
           />
-          <h3 className="text-lg">{title}</h3>
-          <p className="text-white/50 ">{details}</p>
+          <div className="mt-10 md:mt-7">
+            <h3 className="text-lg">{title}</h3>
+            <p className="text-white/50">{details}</p>
+          </div>
         </div>
       </div>
     </>

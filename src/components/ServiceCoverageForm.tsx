@@ -27,7 +27,7 @@ export default function ServiceCoverageForm() {
   return (
     <div className="relative w-full ">
       <Map />
-      <div className="absolute inset-0 z-[500] flex items-center justify-center px-4 py-6 md:px-10 lg:px-15 xl:px-20 md:py-10">
+      <div className="absolute inset-0 z-[500] flex items-center justify-center px-4 py-6 md:px-6 min-[1441px]:px-0 md:py-10">
         <div className="w-full md:mx-auto max-w-[1440px] ">
           <div className="bg-black md:w-[500px] md:h-[600px] h-auto rounded-xl flex flex-col justify-center items-start space-y-4 py-6">
             <h3 className="text-white">We’ve Got You Covered</h3>
@@ -39,12 +39,12 @@ export default function ServiceCoverageForm() {
               <input
                 type="text"
                 placeholder="First Name"
-                className=" text-gray-500 border border-white/50 px-3 py-3 rounded-lg bg-white"
+                className=" text-gray-500 border border-white/50 px-3 py-3 rounded-lg "
               />
               <input
                 type="text"
                 placeholder="Last Name"
-                className=" text-gray-500 border border-white/50 px-3 py-3 rounded-lg bg-white"
+                className=" text-gray-500 border border-white/50 px-3 py-3 rounded-lg "
               />
             </div>
             <input
@@ -60,12 +60,12 @@ export default function ServiceCoverageForm() {
             <input
               type="text"
               placeholder="Enter Your Location"
-              className="border w-[90%] px-3 py-3 rounded-lg text-gray-500 bg-white"
+              className="border w-[90%] px-3 py-3 rounded-lg text-gray-500 "
             />
             <select
               name="places"
               id="places"
-              className="border w-[90%] px-3 py-3 rounded-lg text-gray-500 bg-white"
+              className="border w-[90%] px-3 py-3 rounded-lg text-gray-500 "
             >
               <option defaultValue="null">Select Your Area</option>
               <option value="london">London</option>

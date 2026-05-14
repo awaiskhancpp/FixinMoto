@@ -117,7 +117,7 @@ export default function OurTeam() {
     setSelected((prev) => (prev === i ? null : i))
   }
   return (
-    <section className="bg-primary px-4 py-4 md:px-10 lg:px-15 xl:px-20 md:py-10">
+    <section className="bg-primary px-4 py-4 md:px-6 min-[1441px]:px-0 md:py-10">
       <div className="mx-auto max-w-[1440px]">
         <div className="space-y-3">
           <h2 className=" text-4xl md:text-5xl text-white">Meet Our Team</h2>

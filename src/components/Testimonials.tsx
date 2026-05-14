@@ -78,7 +78,7 @@ export default function Testimonials() {
   const swiperRef = useRef<SwiperType | null>(null)
 
   return (
-    <section className="w-full bg-primary px-4 md:px-10 lg:px-15 xl:px-20">
+    <section className="w-full bg-primary py-6 px-4 md:px-6 min-[1441px]:px-0">
       <div className="mx-auto max-w-[1440px]">
         <div className="">
           <HeadingGrid
@@ -88,9 +88,9 @@ export default function Testimonials() {
             wordsToHighlight={word}
           />
         </div>
-        <div className="ml-auto ">
+        <div className="ml-auto mt-2">
           <div className="pb-6 pt-10 md:pb-10 md:pt-10 bg-secondary rounded-tl-[24px] overflow-x-hidden">
-            <div className="flex gap-5 transition-transform duration-500 ease-out md:pl-10 px-4 lg:h-[400px]">
+            <div className="flex gap-5 transition-transform duration-500 ease-out px-4 md:px-6 min-[1441px]:px-0 lg:h-[400px]">
               <Swiper
                 keyboard={true}
                 breakpoints={{
@@ -121,7 +121,7 @@ export default function Testimonials() {
                 ))}
               </Swiper>
             </div>
-            <div className="flex justify-end gap-[19px] pt-6 mr-4 md:pt-8">
+            <div className="flex justify-end gap-[19px] pt-6 pr-4 md:pr-6 min-[1441px]:pr-0 md:pt-8">
               <button
                 type="button"
                 onClick={() => swiperRef.current?.slidePrev()}

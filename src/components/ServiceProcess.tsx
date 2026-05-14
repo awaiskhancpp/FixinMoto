@@ -63,7 +63,7 @@ export default function ServiceProcess() {
         </div>
       </section>
 
-      <section className="w-full bg-[#202020] px-4 md:px-10 lg:px-15 xl:px-20 lg:py-8 xl:py-10 pb-4 md:pb-10 ">
+      <section className="w-full bg-[#202020] py-6 px-4 md:px-6 min-[1441px]:px-0 lg:py-8 xl:py-10 pb-4 md:pb-10 ">
         <div className="mx-auto flex max-w-[1440px] flex-col gap-10">
           <HeadingGrid
             pageDescription="A smooth and transparent process for all your vehicle needs."
@@ -101,7 +101,7 @@ export default function ServiceProcess() {
               })}
             </div>
 
-            <div className="relative h-[260px] sm:h-[360px] lg:h-[640px] w-full lg:flex-1 ">
+            <div className="relative h-[260px] sm:h-[360px] lg:h-[640px] w-full lg:flex-1 mb-6">
               <Image
                 src={STEPS[active].image}
                 alt=""

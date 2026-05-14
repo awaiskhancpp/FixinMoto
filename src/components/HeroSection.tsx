@@ -1,7 +1,7 @@
 import Image from 'next/image'
 export default function HeroSection() {
   return (
-    <div className="relative flex min-h-screen w-full flex-col md:justify-center justify-end py-4 px-4 md:px-10 lg:px-15 xl:px-20 md:py-10">
+    <div className="relative flex min-h-screen w-full flex-col md:justify-center justify-end py-4 px-4 md:px-6 min-[1441px]:px-0 md:py-10">
       <Image src="/herobanner.webp" alt="heroimage" fill className="object-cover object-center" />
       <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/80 to-transparent" />
 

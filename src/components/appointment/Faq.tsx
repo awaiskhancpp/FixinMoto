@@ -33,7 +33,7 @@ export default function Faq() {
     },
   ]
   return (
-    <section className="bg-black px-4 py-4 md:px-10 lg:px-15 xl:px-20 md:py-10 text-white">
+    <section className="bg-black px-4 py-10 md:px-6 min-[1441px]:px-0 md:py-10 text-white">
       <div className="mx-auto max-w-[1440px]">
         <div className="flex flex-col gap-2">
           <h2 className="lg:text-6xl font-medium md:text-4xl sm:text-2xl ">

@@ -33,7 +33,7 @@ export default function ServiceFAQ() {
     },
   ]
   return (
-    <section className="bg-black px-4 py-4 md:px-10 lg:px-15 xl:px-20 md:py-10 text-white">
+    <section className="bg-black px-4 py-4 md:px-6 min-[1441px]:px-0 md:py-10 text-white">
       <div className="mx-auto max-w-[1440px] grid lg:grid-cols-2 grid-cols-1">
         <div className="flex flex-col gap-2 items-center md:justify-center">
           <h2 className="lg:text-6xl font-medium text-4xl ">

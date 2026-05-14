@@ -23,20 +23,7 @@ const SERVICES = [
       'Multi-Point Vehicle Inspection',
     ],
   },
-  {
-    price: 149.99,
-    name: 'Premium Protection Package',
-    desc: 'Perfect for top-tier maintenance and long-term engine care.',
-    pros: [
-      'Full Synthetic Oil Change (up to 5 quarts)',
-      'Tire Rotation, Balancing, and Alignment',
-      'Complete Brake Inspection ',
-      'Fluid Flush (Coolant or Brake Fluid)',
-      'Detailed Engine Diagnostic',
-      'Cabin and Engine Air Filter Replacement',
-      'Complimentary Car Wash',
-    ],
-  },
+
   {
     price: 129.99,
     name: 'Road-Ready Package',
@@ -52,18 +39,38 @@ const SERVICES = [
       'Emergency Kit Check and Refill',
     ],
   },
+  {
+    price: 149.99,
+    name: 'Premium Protection Package',
+    desc: 'Perfect for top-tier maintenance and long-term engine care.',
+    pros: [
+      'Full Synthetic Oil Change (up to 5 quarts)',
+      'Tire Rotation, Balancing, and Alignment',
+      'Complete Brake Inspection ',
+      'Fluid Flush (Coolant or Brake Fluid)',
+      'Detailed Engine Diagnostic',
+      'Cabin and Engine Air Filter Replacement',
+      'Complimentary Car Wash',
+    ],
+  },
 ]
 export default function ServicePackage() {
   return (
-    <div className="px-4 py-4 md:px-10 lg:px-15 xl:px-20 md:py-10">
+    <div className="px-4 py-10 md:px-6 min-[1441px]:px-0 md:py-10">
       <div className="mx-auto max-w-[1440px] ">
         <h2 className="text-white font-bold md:text-3xl text-2xl mb-6">
           Drive Confidently with Fixinmoto’s Service Packages
         </h2>
-        <div className="grid grid-cols-1 lg:grid-cols-2 mt-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 mt-3 gap-5">
           {SERVICES.map((s, i) => (
-            <div key={i} className="">
-              <ServiceCard price={s.price} name={s.name} desc={s.desc} pros={s.pros} />
+            <div key={i}>
+              <ServiceCard
+                price={s.price}
+                name={s.name}
+                desc={s.desc}
+                pros={s.pros}
+                featured={i === SERVICES.length - 1}
+              />
             </div>
           ))}
         </div>

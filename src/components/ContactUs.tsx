@@ -49,7 +49,7 @@ export default function ContactUs() {
           className="object-cover object-center"
         />
         <div className="absolute inset-0 bg-black/60" aria-hidden />
-        <div className="relative z-10 flex w-full flex-col justify-center items-center px-4 py-4 md:px-10 lg:px-15 xl:px-20 md:py-10">
+        <div className="relative z-10 flex w-full flex-col justify-center items-center px-4 py-4 md:px-6 min-[1441px]:px-0 md:py-10">
           <div className="mx-auto w-full max-w-[1200px]">
             <h1 className="mx-auto text-4xl font-semibold leading-[1.125] text-white md:text-5xl lg:text-6xl xl:text-[64px] xl:leading-[1.125]">
               Get in Touch with Us
@@ -61,7 +61,7 @@ export default function ContactUs() {
           </div>
         </div>
       </div>
-      <div className="px-4 py-10 md:px-10 lg:px-15 xl:px-20">
+      <div className="px-4 py-10 md:px-6 min-[1441px]:px-0">
         <div className="mx-auto max-w-[1440px] grid grid-cols-1 md:grid-cols-12  text-white gap-5">
           <div className="md:col-span-7 flex flex-col gap-5">
             <div>
@@ -78,6 +78,7 @@ export default function ContactUs() {
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleInputChange}
+                required
                 className="text-white/50 border border-white/50 px-3 py-3 rounded-[15px] bg-transparent"
               />
               <input
@@ -86,6 +87,7 @@ export default function ContactUs() {
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleInputChange}
+                required
                 className="text-white/50 border border-white/50 px-3 py-3 rounded-[15px] bg-transparent"
               />
               <input
@@ -94,6 +96,7 @@ export default function ContactUs() {
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
+                required
                 className="text-white/50 border border-white/50 px-3 py-3 rounded-[15px] bg-transparent"
               />
               <input
@@ -101,6 +104,7 @@ export default function ContactUs() {
                 placeholder="Phone"
                 name="phone"
                 value={formData.phone}
+                required
                 onChange={handleInputChange}
                 className="text-white/50 border border-white/50 px-3 py-3 rounded-[15px] bg-transparent"
               />
@@ -113,7 +117,10 @@ export default function ContactUs() {
                   className="w-full min-h-[160px] rounded-[15px] border border-white/50 bg-transparent px-3 py-3 text-white placeholder:text-white/50"
                 />
               </div>
-              <button className="bg-secondary px-4 py-4 rounded-lg" onSubmit={handleSubmit}>
+              <button
+                className="bg-secondary md:col-start-2 px-4 py-4 rounded-lg"
+                onClick={handleSubmit}
+              >
                 Submit
               </button>
             </div>
@@ -144,7 +151,7 @@ export default function ContactUs() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-2 mt-auto pt-4">
+            <div className="flex flex-col gap-2  pt-4">
               <h3 className="text-lg font-medium">Follow Us on</h3>
               <div className="flex gap-2">
                 {socials.map((s) => (

@@ -53,7 +53,7 @@ export default function AppointmentForm() {
   }
   return (
     <>
-      <section className="bg-black text-white px-4 py-4 md:px-10 lg:px-15 xl:px-20 md:py-10">
+      <section className="bg-black text-white px-4 py-4 md:px-6 min-[1441px]:px-0 md:py-10">
         <div className="mx-auto max-w-6xl">
           <div>
             <h2 className="font-medium">Personal Information</h2>

@@ -3,7 +3,7 @@ import { MapPin, Phone, Mail, Globe } from 'lucide-react'
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-primary py-4 px-4 md:px-10 lg:px-15 xl:px-20 gap-y-0">
+    <footer className="w-full bg-primary py-4 px-4 md:px-6 min-[1441px]:px-0 gap-y-0">
       <div className="mx-auto grid max-w-[1440px] grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-14 text-white">
         <div className="lg:col-span-3 pt-4 order-2 lg:order-1">
           <Image src="/logonavbar.png" width={140} height={42} alt="footerlogo" />

@@ -31,7 +31,7 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed z-[900] w-full px-4 md:px-10 lg:px-15 xl:px-20 ${scrolled ? 'bg-white text-black' : isOpen ? 'bg-white text-black' : 'bg-transparent text-white'}`}
+      className={`fixed z-[900] w-full px-4 md:px-6 min-[1441px]:px-0 ${scrolled ? 'bg-white text-black' : isOpen ? 'bg-white text-black' : 'bg-transparent text-white'}`}
     >
       <div className="mx-auto w-full max-w-[1440px] grid md:grid-cols-3 grid-cols-2 items-center pt-6 pb-3">
         <div className="flex items-center">
@@ -79,7 +79,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        <div className="hidden md:flex justify-center items-center">
+        <div className="hidden md:flex lg:justify-center lg:items-center md:justify-end">
           <a href="/">
             <Image
               src={logoSrc}
@@ -106,7 +106,7 @@ export default function Navbar() {
       </div>
 
       <div
-        className={`fixed inset-0 top-0 z-[-1] bg-white text-black flex flex-col gap-4 px-4 pt-24 md:hidden transition-transform duration-300 ease-out ${
+        className={`fixed inset-0 top-0 z-[-1] bg-white text-black flex flex-col gap-4 px-4 pt-24 md:hidden transition-transform duration-200 ease-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
