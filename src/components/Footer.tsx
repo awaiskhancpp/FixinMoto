@@ -53,7 +53,7 @@ export default function Footer() {
                 Blog
               </a>
               <a href="/contact" className="text-white/50">
-                Contact with us
+                Contact us
               </a>
             </div>
           </div>
