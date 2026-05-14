@@ -42,13 +42,7 @@ function BlogCard({ title, date, author }: BlogCard) {
   return (
     <article className="flex flex-col rounded-[17px] bg-[#edf2fd] pb-[18px]">
       <div className="relative aspect-[387/300] w-full overflow-hidden rounded-t-lg">
-        <Image
-          src="/heroimg.png"
-          alt=""
-          fill
-          className="object-cover"
-          sizes="(max-width: 640px) 90vw, (max-width: 768px) 90vw, (max-width: 1024px) 45vw, 25vw"
-        />
+        <Image src="/heroimg.png" alt="" fill className="object-cover" />
       </div>
 
       <div className="flex flex-col gap-4 px-[14px] pt-4 flex-1">

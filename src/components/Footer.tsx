@@ -37,23 +37,23 @@ export default function Footer() {
           <div className="grid">
             <h3 className="text-2xl font-medium lg:mt-5 pb-2">Quick Links</h3>
             <div className="space-y-2 mt-4 grid">
-              <a href="#" className="text-white/50">
+              <a href="aboutus" className="text-white/50">
                 About us
               </a>
               <a href="#" className="text-white/50">
                 Why with us
               </a>
-              <a href="#" className="text-white/50">
+              <a href="/services" className="text-white/50">
                 Out Services
               </a>
-              <a href="#" className="text-white/50">
+              <a href="/appointment" className="text-white/50">
                 Appointment
               </a>
               <a href="#" className="text-white/50">
                 Blog
               </a>
-              <a href="#" className="text-white/50">
-                FAQ
+              <a href="/contact" className="text-white/50">
+                Contact with us
               </a>
             </div>
           </div>

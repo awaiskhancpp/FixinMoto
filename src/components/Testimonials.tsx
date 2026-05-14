@@ -56,8 +56,8 @@ interface TestimonialCardProps {
 function TestimonialCard(props: TestimonialCardProps) {
   const { name, image, quote } = props
   return (
-    <div className="flex w-full h-full shrink-0 snap-center md:py-4 lg:py-10 py-6 px-5 flex-col gap-2 rounded-[15px] bg-[#F8F8F6] md:px-8 ">
-      <div className="w-full shrink-0 overflow-hidden rounded-md pb-1">
+    <div className="flex w-full h-full shrink-0 snap-center md:py-4  py-6 px-5 flex-col gap-2 rounded-[15px] bg-[#F8F8F6] md:px-8 ">
+      <div className="shrink-0 overflow-hidden rounded-md pb-1">
         <Image
           src={image}
           alt=""
@@ -66,7 +66,7 @@ function TestimonialCard(props: TestimonialCardProps) {
           height={64}
         />
       </div>
-      <p className="text-base font-medium leading-normal text-black/50">{quote}</p>
+      <p className="text-base font-medium line-clamp-9 text-black/50">{quote}</p>
       <h3 className="text-2xl font-medium leading-[1.333] text-primary">{name}</h3>
       <StarRating />
     </div>
@@ -74,8 +74,6 @@ function TestimonialCard(props: TestimonialCardProps) {
 }
 
 export default function Testimonials() {
-  const [index, setIndex] = useState(0)
-  const total = TESTIMONIALS.length
   const word = ['Fixinmoto']
   const swiperRef = useRef<SwiperType | null>(null)
 
