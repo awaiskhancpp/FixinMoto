@@ -1,36 +1,53 @@
+'use client'
 import Image from 'next/image'
-import { MapPin, Phone, Mail, Globe } from 'lucide-react'
+import { MapPin, Phone, Mail, Globe, ArrowUpRight } from 'lucide-react'
+import type { Setting as FooterType } from '@/payload-types'
+import { useState } from 'react'
+interface FooterProps {
+  data: FooterType
+}
 
-export default function Footer() {
+export default function Footer({ data }: FooterProps) {
+  // /logonavbar.png    08.00 - 20.00     10.00 - 16.00
+  const [email, setEmail] = useState('')
   return (
     <footer className="w-full bg-primary py-4 px-4 md:px-6 min-[1441px]:px-0 gap-y-0">
       <div className="mx-auto grid max-w-[1440px] grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-14 text-white">
         <div className="lg:col-span-3 pt-4 order-2 lg:order-1">
-          <Image src="/logonavbar.png" width={140} height={42} alt="footerlogo" />
+          <Image
+            src={
+              typeof data.logo === 'object'
+                ? data.logo?.url || '/logonavbar.png'
+                : '/logonavbar.png'
+            }
+            width={140}
+            height={42}
+            alt="footerlogo"
+          />
           <div className="lg:py-4 space-y-2 mt-3">
             <div className="flex">
               <MapPin className="text-red-500 shrink-0 w-4 h-4 mt-0.5 mr-1" />
-              <p className="text-white/50">2464 Royal Ln. Mesa, New Jersey 45463</p>
+              <p className="text-white/50">{data.address}</p>
             </div>
             <div className="flex">
               <Phone className="text-red-500 shrink-0 w-4 h-4 mt-0.5 mr-1" />
-              <p className="text-white/50">(480) 555-0103</p>
+              <p className="text-white/50">{data.phone}</p>
             </div>
             <div className="flex ">
               <Mail className="text-red-500 shrink-0 w-4 h-4 mt-0.5 mr-1" />
-              <p className="text-white/50">hello@FixinMoto.com</p>
+              <p className="text-white/50">{data.contactEmail}</p>
             </div>
             <div className="flex">
               <Globe className="text-red-500 shrink-0 w-4 h-4 mt-0.5 mr-1" />
-              <p className="text-white/50">www.FixinMoto.com</p>
+              <p className="text-white/50">{data.website}</p>
             </div>
           </div>
         </div>
         <div className="lg:col-span-3 lg:py-5 order-3 lg:order-2">
           <h3 className="text-2xl font-medium">Opening Hours</h3>
           <div className="space-y-2 mt-7">
-            <p className="text-white/50">Mon-Fri : 08.00 - 20.00</p>
-            <p className="text-white/50">Sat-Sun: 10.00 - 16.00</p>
+            <p className="text-white/50">Mon-Fri : {data.serviceHours?.weekDays}</p>
+            <p className="text-white/50">Sat-Sun: {data.serviceHours?.weekEnds}</p>
           </div>
         </div>
         <div className="lg:col-span-3  order-4 lg:order-3">
@@ -68,27 +85,26 @@ export default function Footer() {
               </p>
               <input
                 type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder=" Email Address"
                 className="w-full border border-white/50 rounded-lg px-3 py-2.5 bg-transparent text-white/50 placeholder:text-white/50"
               />
-              <button className="bg-secondary rounded-lg px-8 py-[15px] text-white text-sm font-medium shadow-[0px_4px_12px_rgba(34,34,34,0.1)] flex items-center gap-2">
+              <button
+                onClick={async () => {
+                  fetch('/api/newsletter', {
+                    method: 'POST',
+                    headers: {
+                      'content-type': 'application/json',
+                    },
+                    body: JSON.stringify({ email }),
+                  })
+                  setEmail('')
+                }}
+                className="bg-secondary rounded-lg px-8 py-[15px] text-white text-sm font-medium shadow-[0px_4px_12px_rgba(34,34,34,0.1)] flex items-center gap-2"
+              >
                 Submit
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M 4 12 L 11 5 M 11 5 L 11 9 M 11 5 L 7 5"
-                    stroke="white"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                <ArrowUpRight className="size-5" />
               </button>
             </div>
           </div>
@@ -96,7 +112,7 @@ export default function Footer() {
       </div>
       <div className="border-t border-white/50 mt-10" />
       <div className="text-center text-white/50 text-sm py-8">
-        Copyright © 2024 FixinMoto. All rights reserved.
+        Copyright © {new Date().getFullYear()} FixinMoto. All rights reserved.
       </div>
     </footer>
   )

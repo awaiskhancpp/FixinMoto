@@ -31,7 +31,7 @@ export default function MainContent() {
     <section className="px-4 py-4 md:px-6 order-2 md:order-1 min-[1441px]:px-0 md:py-10">
       <div className="mx-auto max-w-[1440px]">
         <div className="grid grid-cols-12 gap-3">
-          <div className="col-span-12 md:col-span-8 order-2 md:order-1 flex flex-col gap-4">
+          <div className="col-span-12 md:col-span-8 order-2 md:order-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <BlogCard />
             <BlogCard />
             <BlogCard />
@@ -49,14 +49,14 @@ export default function MainContent() {
             <div>
               <RecentPosts />
             </div>
-            <div className="bg-primary mt-4 px-[15px] pb-6 rounded-lg">
+            <div className="bg-primary mt-4 px-[15px] pb-6  rounded-lg">
               <h2 className="text-white font-semibold mt-3 pt-2">Tags</h2>
-              <div className="pt-4 flex flex-wrap gap-3 text-white">
+              <div className="pt-4 flex md:overflow-hidden overflow-x-scroll  lg:flex-wrap gap-3 text-white">
                 {ButtonName.map((b, i) => (
                   <button
                     key={i}
                     onClick={() => toggleButton(i)}
-                    className={`rounded-3xl px-3 py-2 transition-all duration-200 ${
+                    className={` rounded-3xl px-3 py-2 transition-all whitespace-nowrap text-sm duration-200 ${
                       selectedButtons.has(i) ? 'bg-secondary' : 'border border-white'
                     }`}
                   >

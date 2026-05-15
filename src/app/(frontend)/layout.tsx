@@ -3,12 +3,16 @@ import './styles.css'
 import Footer from '@/components/Footer'
 import CallToAction from '@/components/CallToAction'
 import Navbar from '@/components/Navbar'
+import configPromise from '@payload-config'
+import { getPayload } from 'payload'
 export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+  description: 'Fixing Moto. Fixing Cars Since 1900',
+  title: 'Fixin Moto',
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
+  const payload = await getPayload({ config: configPromise })
+  const settings = await payload.findGlobal({ slug: 'settings' })
   const { children } = props
 
   return (
@@ -16,7 +20,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       <body className="font-sans antialiased">
         <Navbar />
         <main>{children}</main>
-        <Footer />
+        <Footer data={settings} />
       </body>
     </html>
   )

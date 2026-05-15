@@ -1,4 +1,5 @@
 import BlogDetails from '@/components/blogs/BlogDetails'
+import ContentForm from '@/components/blogs/ContentForm'
 import { Tags } from '@/components/Tags'
 import { Clock, User } from 'lucide-react'
 import Image from 'next/image'
@@ -154,6 +155,7 @@ export default function BlogDetail() {
           </div>
         </div>
         <Tags />
+        <ContentForm />
       </div>
     </section>
   )

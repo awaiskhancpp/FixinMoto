@@ -42,12 +42,12 @@ export default function Testimonials() {
               <p className="text-slate-400 md:flex md:justify-center md:items-center">
                 Testimonials
               </p>
-              <h2 className="font-bold text-2xl md:text-3xl lg:text-5xl">
+              <h2 className="font-bold text-2xl md:text-3xl lg:text-5xl mt-2">
                 <span className="text-secondary">Real</span> Reviews from Fixinmoto{' '}
                 <span className="text-secondary">Customers</span>
               </h2>
             </div>
-            <div className="">
+            <div className="mt-2 pb-2">
               <p className="text-slate-400">
                 Find out why Fixinmoto is the go-to choice for car repairs and service!
               </p>

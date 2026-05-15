@@ -19,18 +19,14 @@ export default function ServiceCard({ price, name, desc, pros, featured }: Servi
       onMouseLeave={() => setOnHover(false)}
     >
       <div className="px-6 py-2">
-        <h2
-          className={`font-bold text-3xl text-secondary ${featured ? 'text-white' : 'text-secondary'}`}
-        >
-          ${price}
-        </h2>
+        <h2 className={`font-bold text-3xl text-white`}>${price}</h2>
         <h3 className="font-bold text-2xl pt-2">{name}</h3>
         <h5 className="text-white/70 pb-1 pt-2">{desc}</h5>
         <div className="mt-2 flex flex-col gap-2 ">
           {pros.map((p, i) => (
             <div key={i} className="flex items-center gap-4">
               <Image
-                src={`${onHover || featured ? '/check_white.png' : '/check_circle.png'}`}
+                src={`${onHover ? '/check_white.png' : '/check_circle.png'}`}
                 alt="..."
                 width={18}
                 height={18}

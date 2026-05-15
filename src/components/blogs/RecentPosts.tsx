@@ -24,10 +24,10 @@ const RECENTPOSTS = [
 
 export default function RecentPosts() {
   return (
-    <div className="text-white bg-primary rounded-lg px-[15px] pb-4">
-      <h2 className="text-white font-semibold mt-3 pt-6">Recent Post</h2>
+    <div className="text-white bg-primary rounded-lg p-5 mt-4">
+      <h2 className="text-white font-semibold">Recent Post</h2>
 
-      <div className="mt-3 w-full xl:w-[80%] space-y-6 ">
+      <div className="mt-3 w-full space-y-6 ">
         {RECENTPOSTS.map((p, i) => (
           <Post key={i} title={p.title} author={p.author} date={p.date} />
         ))}
@@ -42,11 +42,11 @@ interface POST {
 }
 function Post({ title, date, author }: POST) {
   return (
-    <div className="w-full">
-      <h3 className="text-lg font-medium leading-[1.444] lg:line-clamp-2 xl:line-clamp-3 mt-3 ">
+    <div className="w-full border-b border-white/20 last:border-none pb-2">
+      <h3 className="text-lg font-medium leading-[1.444] hover:text-secondary lg:line-clamp-2 xl:line-clamp-3 mt-3 ">
         {title}
       </h3>
-      <div className="flex lg:flex-row md:flex-col flex-row gap-6 md:gap-2 opacity-50 mt-2">
+      <div className="flex lg:flex-row md:flex-col flex-row gap-6 md:gap-2 opacity-50 mt-4">
         <div className="flex gap-2 lg:w-32">
           <Clock className="size-4 " />
           <time className="text-xs font-normal">{date}</time>
