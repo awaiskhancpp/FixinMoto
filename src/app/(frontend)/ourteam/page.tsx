@@ -2,8 +2,14 @@ import PageHeader from '@/components/shared/PageHeader'
 import OurTeam from '@/components/ourTeam/OurTeam'
 import TrustedPartners from '@/components/ourTeam/TrustedPartners'
 import PromoCTA from '@/components/ourTeam/PromoCTA'
-export default function () {
+import { getPayload } from 'payload'
+import configPromise from '@payload-config'
+export default async function () {
   const words = ['Passionate', 'Service']
+  const payload = await getPayload({ config: configPromise })
+  const trustedBy = await payload.find({
+    collection: 'trustedBy',
+  })
   return (
     <>
       <PageHeader
@@ -12,7 +18,7 @@ export default function () {
         imageSrc="/ourTeamTitleImg.png"
       />
       <OurTeam />
-      <TrustedPartners />
+      <TrustedPartners trustedBy={trustedBy.docs} />
       <PromoCTA />
     </>
   )

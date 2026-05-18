@@ -12,6 +12,9 @@ export default async function Appointment() {
     collection: 'testimonial',
     limit: 3,
   })
+  const faq = await payload.find({
+    collection: 'faq',
+  })
   return (
     <>
       <section>
@@ -40,7 +43,7 @@ export default async function Appointment() {
         </div>
         <AppointmentForm />
         <Testimonials card={testimonials.docs} />
-        <Faq />
+        <Faq faqArray={faq.docs} />
       </section>
     </>
   )

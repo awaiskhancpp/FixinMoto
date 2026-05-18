@@ -28,7 +28,9 @@ export default function HeroSection({ data }: HeroProps) {
         </div>
         <p className="md:hidden mt-10 max-w-xl text-white">{data.heroTagline}</p>
         <div className="flex gap-4 pt-10  text-white">
-          <button className="h-12 w-48 rounded-lg bg-secondary px-6 py-3">Appointment Now</button>
+          <button className="h-12 w-48 rounded-lg bg-secondary px-6 py-3">
+            <a href="/appointment">Appointment Now</a>
+          </button>
           <button className="h-12 w-48 rounded-lg border border-white bg-transparent">
             <a href="/services">Our Service</a>
           </button>

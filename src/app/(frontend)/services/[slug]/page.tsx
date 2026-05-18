@@ -7,16 +7,15 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { notFound } from 'next/navigation'
 
-export default async function ServiceDetails({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}) {
+export default async function ServiceDetails({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const payload = await getPayload({ config: configPromise })
   const service = await payload.find({
     collection: 'services',
     where: { slug: { equals: slug } },
+  })
+  const faq = await payload.find({
+    collection: 'faq',
   })
   const servicePackage = await payload.find({
     collection: 'service-package',
@@ -41,7 +40,7 @@ export default async function ServiceDetails({
       />
       <ServiceOverview content={currentService.serviceDetail} />
       <ServicePackage packages={servicePackage.docs} />
-      <ServiceFAQ />
+      <ServiceFAQ faqArray={faq.docs} />
       <ServiceCTA />
     </section>
   )

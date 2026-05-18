@@ -2,7 +2,11 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import { ChevronDown, ChevronUp } from 'lucide-react'
-export default function ServiceFAQ() {
+import type { Faq } from '@/payload-types'
+interface serviceFaqProps {
+  faqArray: Faq[]
+}
+export default function ServiceFAQ({ faqArray }: serviceFaqProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(0)
 
   const FAQS = [
@@ -48,7 +52,7 @@ export default function ServiceFAQ() {
         </div>
         <div className=" pt-6">
           <div className="flex flex-col">
-            {FAQS.map((q, i) => (
+            {faqArray.map((q, i) => (
               <div key={i} className="border-b border-white/20 py-7">
                 <button
                   onClick={() => setActiveIndex(activeIndex === i ? null : i)}

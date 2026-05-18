@@ -1,4 +1,5 @@
 import { Clock, User } from 'lucide-react'
+import type { Blog } from '@/payload-types'
 const RECENTPOSTS = [
   {
     title: "The Ultimate Guide to Maintaining Your Car's Engine",
@@ -21,15 +22,22 @@ const RECENTPOSTS = [
     author: 'Alex Johnson',
   },
 ]
-
-export default function RecentPosts() {
+interface Recentsprops {
+  card: Blog[]
+}
+export default function RecentPosts({ card }: Recentsprops) {
   return (
     <div className="text-white bg-primary rounded-lg p-5 mt-4">
       <h2 className="text-white font-semibold">Recent Post</h2>
 
       <div className="mt-3 w-full space-y-6 ">
-        {RECENTPOSTS.map((p, i) => (
-          <Post key={i} title={p.title} author={p.author} date={p.date} />
+        {card.slice(0, 4).map((p, i) => (
+          <Post
+            key={i}
+            title={p.title || ''}
+            author={p.author || ''}
+            date={p.datePublished || ''}
+          />
         ))}
       </div>
     </div>

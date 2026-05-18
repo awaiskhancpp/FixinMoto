@@ -2,36 +2,13 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import { ChevronDown, ChevronUp } from 'lucide-react'
-export default function Faq() {
+import type { Faq } from '@/payload-types'
+interface FaqProps {
+  faqArray: Faq[]
+}
+export default function Faq({ faqArray }: FaqProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(0)
 
-  const FAQS = [
-    {
-      question: 'What services do you offer?',
-      answer:
-        'We provide a wide range of services, including oil changes, brake repair, engine diagnostics, and more. Check our Services Needed section for details.',
-    },
-    {
-      question: 'Do you use original parts for repairs?',
-      answer:
-        'We provide a wide range of services, including oil changes, brake repair, engine diagnostics, and more. Check our Services Needed section for details.',
-    },
-    {
-      question: 'How long does a typical service take?',
-      answer:
-        'We provide a wide range of services, including oil changes, brake repair, engine diagnostics, and more. Check our Services Needed section for details.',
-    },
-    {
-      question: 'Can I drop off my car and pick it up later?',
-      answer:
-        'We provide a wide range of services, including oil changes, brake repair, engine diagnostics, and more. Check our Services Needed section for details.',
-    },
-    {
-      question: 'What forms of payment do you accept?',
-      answer:
-        'We provide a wide range of services, including oil changes, brake repair, engine diagnostics, and more. Check our Services Needed section for details.',
-    },
-  ]
   return (
     <section className="bg-black px-4 py-10 md:px-6 min-[1441px]:px-0 md:py-10 text-white">
       <div className="mx-auto max-w-[1440px]">
@@ -55,7 +32,7 @@ export default function Faq() {
             />
           </div>
           <div className="flex flex-col">
-            {FAQS.map((q, i) => (
+            {faqArray.map((q, i) => (
               <div key={i} className="border-b border-white/20 py-7">
                 <button
                   onClick={() => setActiveIndex(activeIndex === i ? null : i)}

@@ -1,4 +1,4 @@
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { FixedToolbarFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
 
 export const Service: CollectionConfig = {
@@ -33,7 +33,7 @@ export const Service: CollectionConfig = {
       type: 'richText',
       required: true,
       editor: lexicalEditor({
-        features: ({ defaultFeatures }) => [...defaultFeatures],
+        features: ({ defaultFeatures }) => [...defaultFeatures, FixedToolbarFeature()],
       }),
     },
     {

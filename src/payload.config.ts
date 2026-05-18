@@ -1,14 +1,13 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+// import { lexicalEditor } from '@payloadcms/richtext-lexical'
 // import { slateEditor } from '@payloadcms/richtext-slate'
 import { resendAdapter } from '@payloadcms/email-resend'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
-
+import { Categories } from './collections/Categories'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
-
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Settings } from './globals/Settings'
@@ -17,6 +16,11 @@ import { Homepage } from './globals/Homepage'
 import { Testimonial } from './collections/Testimonial'
 import { Service } from './collections/Service'
 import { ServicePackage } from './collections/ServicePackage'
+import { Faq } from './collections/Faq'
+import { TrustedBy } from './collections/TrustedBy'
+import { Blog } from './collections/Blog'
+
+import { Tags } from './collections/Tags'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -28,9 +32,20 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, NewLetterSubscribers, Testimonial, Service, ServicePackage],
+  collections: [
+    Users,
+    Media,
+    NewLetterSubscribers,
+    Testimonial,
+    Service,
+    ServicePackage,
+    Faq,
+    TrustedBy,
+    Blog,
+    Categories,
+    Tags,
+  ],
   globals: [Settings, Homepage],
-  editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

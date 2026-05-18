@@ -73,6 +73,11 @@ export interface Config {
     testimonial: Testimonial;
     services: Service;
     'service-package': ServicePackage;
+    faq: Faq;
+    trustedBy: TrustedBy;
+    blog: Blog;
+    categories: Category;
+    tags: Tag;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -86,6 +91,11 @@ export interface Config {
     testimonial: TestimonialSelect<false> | TestimonialSelect<true>;
     services: ServicesSelect<false> | ServicesSelect<true>;
     'service-package': ServicePackageSelect<false> | ServicePackageSelect<true>;
+    faq: FaqSelect<false> | FaqSelect<true>;
+    trustedBy: TrustedBySelect<false> | TrustedBySelect<true>;
+    blog: BlogSelect<false> | BlogSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    tags: TagsSelect<false> | TagsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -257,6 +267,88 @@ export interface ServicePackage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq".
+ */
+export interface Faq {
+  id: number;
+  question?: string | null;
+  answer?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trustedBy".
+ */
+export interface TrustedBy {
+  id: number;
+  Logo: number | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog".
+ */
+export interface Blog {
+  id: number;
+  Category: number | Category;
+  title?: string | null;
+  datePublished?: string | null;
+  author?: string | null;
+  bannerImg: number | Media;
+  social?:
+    | {
+        logo: number | Media;
+        forwardTo: string;
+        id?: string | null;
+      }[]
+    | null;
+  cardImg?: (number | null) | Media;
+  tags?: (number | Tag)[] | null;
+  blogDetail: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  slug?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: number;
+  name: string;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags".
+ */
+export interface Tag {
+  id: number;
+  name: string;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -302,6 +394,26 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'service-package';
         value: number | ServicePackage;
+      } | null)
+    | ({
+        relationTo: 'faq';
+        value: number | Faq;
+      } | null)
+    | ({
+        relationTo: 'trustedBy';
+        value: number | TrustedBy;
+      } | null)
+    | ({
+        relationTo: 'blog';
+        value: number | Blog;
+      } | null)
+    | ({
+        relationTo: 'categories';
+        value: number | Category;
+      } | null)
+    | ({
+        relationTo: 'tags';
+        value: number | Tag;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -443,6 +555,69 @@ export interface ServicePackageSelect<T extends boolean = true> {
         prop?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq_select".
+ */
+export interface FaqSelect<T extends boolean = true> {
+  question?: T;
+  answer?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trustedBy_select".
+ */
+export interface TrustedBySelect<T extends boolean = true> {
+  Logo?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog_select".
+ */
+export interface BlogSelect<T extends boolean = true> {
+  Category?: T;
+  title?: T;
+  datePublished?: T;
+  author?: T;
+  bannerImg?: T;
+  social?:
+    | T
+    | {
+        logo?: T;
+        forwardTo?: T;
+        id?: T;
+      };
+  cardImg?: T;
+  tags?: T;
+  blogDetail?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags_select".
+ */
+export interface TagsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -23,17 +23,21 @@ export default async function HomePage() {
     collection: 'services',
     limit: 4,
   })
+  const trustedBy = await payload.find({
+    collection: 'trustedBy',
+  })
+  const blogCard = await payload.find({ collection: 'blog' })
   const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
 
   return (
     <>
       <div>
         <HeroSection data={hero} />
-        <Service card={serviceCard.docs} />
+        <Service card={serviceCard.docs} trustedBy={trustedBy.docs} />
         <WhyChooseUS />
         <ServiceProcess />
         <Testimonials data={testimonials.docs} />
-        <Blog />
+        <Blog blogCard={blogCard.docs} />
         <CoverageArea />
         <CallToAction />
       </div>

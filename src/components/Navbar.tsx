@@ -8,7 +8,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [isPageClicked, setIsPageClicked] = useState(false)
   const PAGE_LINKS = [
-    { label: 'Dashboard', href: '#' },
+    { label: 'Blogs', href: '/blogs' },
     { label: 'Services', href: '/services' },
     { label: 'Our Team', href: '/ourteam' },
   ]

@@ -3,7 +3,11 @@
 import Image from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay } from 'swiper/modules'
+import type { TrustedBy } from '@/payload-types'
 import 'swiper/css'
+interface trustedPartners {
+  trustedBy: TrustedBy[]
+}
 
 const logos = [
   { src: '/logoCarousel/Logo1.png', alt: 'logo1' },
@@ -13,8 +17,8 @@ const logos = [
   { src: '/logoCarousel/Logo5.png', alt: 'logo5' },
 ]
 
-export default function TrustedPartners() {
-  const loopLogos = [...logos, ...logos, ...logos]
+export default function TrustedPartners({ trustedBy }: trustedPartners) {
+  const loopLogos = [...trustedBy, ...trustedBy, ...trustedBy]
 
   return (
     <section className="w-full bg-black text-white px-4 py-4 md:px-6 min-[1441px]:px-0 md:py-10">
@@ -35,11 +39,11 @@ export default function TrustedPartners() {
               className="trusted-partners-swiper"
             >
               {loopLogos.map((l, i) => (
-                <SwiperSlide key={`${l.src}-${i}`} className="!flex !h-auto !w-auto items-center">
+                <SwiperSlide key={i} className="!flex !h-auto !w-auto items-center">
                   <div className="flex h-[56px] w-[140px] shrink-0 items-center justify-center px-6">
                     <Image
-                      src={l.src}
-                      alt={l.alt}
+                      src={typeof l?.Logo === 'object' ? l.Logo?.url || '' : ''}
+                      alt="..."
                       width={110}
                       height={50}
                       className="max-h-[50px] max-w-[110px] object-contain"
