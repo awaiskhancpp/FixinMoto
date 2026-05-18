@@ -45,7 +45,7 @@ interface BlogCard {
 
 function BlogCard({ title, date, author, imgSrc }: BlogCard) {
   return (
-    <div className="flex flex-col rounded-[17px] bg-[#edf2fd] pb-5">
+    <a href={`/blogs/${title}`} className="flex flex-col rounded-[17px] bg-[#edf2fd] pb-5">
       <div className="relative aspect-[387/300] w-full overflow-hidden rounded-t-lg">
         <Image src={imgSrc} alt="" fill className="object-cover" />
       </div>
@@ -75,7 +75,7 @@ function BlogCard({ title, date, author, imgSrc }: BlogCard) {
           <span className="text-xs font-normal ">{author}</span>
         </div>
       </div>
-    </div>
+    </a>
   )
 }
 

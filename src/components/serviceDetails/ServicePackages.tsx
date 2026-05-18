@@ -1,4 +1,8 @@
 import ServiceCard from './ServiceCard'
+import type { ServicePackage } from '@/payload-types'
+interface PackageProps {
+  packages: ServicePackage[]
+}
 const SERVICES = [
   {
     price: 49.99,
@@ -54,7 +58,7 @@ const SERVICES = [
     ],
   },
 ]
-export default function ServicePackage() {
+export default function ServicePackage({ packages }: PackageProps) {
   return (
     <div className="px-4 py-10 md:px-6 min-[1441px]:px-0 md:py-10">
       <div className="mx-auto max-w-[1440px] ">
@@ -62,14 +66,16 @@ export default function ServicePackage() {
           Drive Confidently with Fixinmoto’s Service Packages
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 mt-3 gap-5">
-          {SERVICES.map((s, i) => (
+          {packages.map((p, i) => (
             <div key={i}>
               <ServiceCard
-                price={s.price}
-                name={s.name}
-                desc={s.desc}
-                pros={s.pros}
-                featured={i === SERVICES.length - 1}
+                price={p.price || 0}
+                name={p.packageName || ''}
+                desc={p.description || ''}
+                pros={(p.included ?? [])
+                  .map((item) => item.prop)
+                  .filter((prop): prop is string => typeof prop === 'string')}
+                featured={i === packages.length - 1}
               />
             </div>
           ))}

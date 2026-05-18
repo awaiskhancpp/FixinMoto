@@ -2,7 +2,16 @@ import AppointmentForm from '@/components/appointment/AppointmentForm'
 import Faq from '@/components/appointment/Faq'
 import Testimonials from '@/components/appointment/Testimonials'
 import Image from 'next/image'
-export default function Appointment() {
+import { getPayload } from 'payload'
+import config from '@/payload.config'
+
+export default async function Appointment() {
+  const payloadConfig = await config
+  const payload = await getPayload({ config: payloadConfig })
+  const testimonials = await payload.find({
+    collection: 'testimonial',
+    limit: 3,
+  })
   return (
     <>
       <section>
@@ -30,7 +39,7 @@ export default function Appointment() {
           </div>
         </div>
         <AppointmentForm />
-        <Testimonials />
+        <Testimonials card={testimonials.docs} />
         <Faq />
       </section>
     </>

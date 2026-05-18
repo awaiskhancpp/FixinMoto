@@ -70,6 +70,9 @@ export interface Config {
     users: User;
     media: Media;
     'newsletter-subscribers': NewsletterSubscriber;
+    testimonial: Testimonial;
+    services: Service;
+    'service-package': ServicePackage;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,6 +83,9 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'newsletter-subscribers': NewsletterSubscribersSelect<false> | NewsletterSubscribersSelect<true>;
+    testimonial: TestimonialSelect<false> | TestimonialSelect<true>;
+    services: ServicesSelect<false> | ServicesSelect<true>;
+    'service-package': ServicePackageSelect<false> | ServicePackageSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -91,9 +97,11 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     settings: Setting;
+    homepage: Homepage;
   };
   globalsSelect: {
     settings: SettingsSelect<false> | SettingsSelect<true>;
+    homepage: HomepageSelect<false> | HomepageSelect<true>;
   };
   locale: null;
   widgets: {
@@ -179,6 +187,76 @@ export interface NewsletterSubscriber {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonial".
+ */
+export interface Testimonial {
+  id: number;
+  name: string;
+  testimonial: string;
+  rating: number;
+  clientImage?: (number | null) | Media;
+  /**
+   * Uncheck to hide this testimonial
+   */
+  published?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services".
+ */
+export interface Service {
+  id: number;
+  slug: string;
+  serviceNumber: number;
+  serviceName: string;
+  highlightedWords?:
+    | {
+        word?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  serviceDescription?: string | null;
+  serviceDetail: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  serviceIcon: number | Media;
+  backgroundImage: number | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "service-package".
+ */
+export interface ServicePackage {
+  id: number;
+  service: number | Service;
+  packageName?: string | null;
+  description?: string | null;
+  price?: number | null;
+  included: {
+    prop?: string | null;
+    id?: string | null;
+  }[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -212,6 +290,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'newsletter-subscribers';
         value: number | NewsletterSubscriber;
+      } | null)
+    | ({
+        relationTo: 'testimonial';
+        value: number | Testimonial;
+      } | null)
+    | ({
+        relationTo: 'services';
+        value: number | Service;
+      } | null)
+    | ({
+        relationTo: 'service-package';
+        value: number | ServicePackage;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -306,6 +396,58 @@ export interface NewsletterSubscribersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonial_select".
+ */
+export interface TestimonialSelect<T extends boolean = true> {
+  name?: T;
+  testimonial?: T;
+  rating?: T;
+  clientImage?: T;
+  published?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services_select".
+ */
+export interface ServicesSelect<T extends boolean = true> {
+  slug?: T;
+  serviceNumber?: T;
+  serviceName?: T;
+  highlightedWords?:
+    | T
+    | {
+        word?: T;
+        id?: T;
+      };
+  serviceDescription?: T;
+  serviceDetail?: T;
+  serviceIcon?: T;
+  backgroundImage?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "service-package_select".
+ */
+export interface ServicePackageSelect<T extends boolean = true> {
+  service?: T;
+  packageName?: T;
+  description?: T;
+  price?: T;
+  included?:
+    | T
+    | {
+        prop?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -358,7 +500,33 @@ export interface Setting {
     weekDays?: string | null;
     weekEnds?: string | null;
   };
+  socialLinks?:
+    | {
+        platform?: ('facebook' | 'instagram' | 'twitter' | 'linkedin') | null;
+        url?: string | null;
+        SocialLogo?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
   logo?: (number | null) | Media;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage".
+ */
+export interface Homepage {
+  id: number;
+  heroTitle?: string | null;
+  heroTagline?: string | null;
+  highlightedWords?:
+    | {
+        word?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  heroImage?: (number | null) | Media;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -377,7 +545,33 @@ export interface SettingsSelect<T extends boolean = true> {
         weekDays?: T;
         weekEnds?: T;
       };
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        SocialLogo?: T;
+        id?: T;
+      };
   logo?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage_select".
+ */
+export interface HomepageSelect<T extends boolean = true> {
+  heroTitle?: T;
+  heroTagline?: T;
+  highlightedWords?:
+    | T
+    | {
+        word?: T;
+        id?: T;
+      };
+  heroImage?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

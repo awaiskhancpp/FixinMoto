@@ -99,9 +99,11 @@ export default function Navbar() {
           >
             {isOpen ? <X /> : <Menu />}
           </button>
-          <button className="hidden md:block rounded-lg bg-secondary px-6 h-12 text-white">
-            Login
-          </button>
+          <a href="/contact">
+            <button className="hidden md:block rounded-lg bg-secondary px-6 h-12 text-white">
+              Contact Us
+            </button>
+          </a>
         </div>
       </div>
 
@@ -134,8 +136,11 @@ export default function Navbar() {
             </div>
           )}
         </div>
-
-        <button className="mt-4 rounded-lg bg-secondary px-6 h-12 text-white w-full">Login</button>
+        <a href="/contact">
+          <button className="mt-4 rounded-lg bg-secondary px-6 h-12 text-white w-full">
+            Contact Us
+          </button>
+        </a>
       </div>
     </nav>
   )

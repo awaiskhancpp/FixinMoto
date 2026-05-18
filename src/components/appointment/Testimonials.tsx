@@ -3,29 +3,14 @@ import Image from 'next/image'
 import { Star } from 'lucide-react'
 import { useState, useRef } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import type { Testimonial } from '@/payload-types'
 import 'swiper/css'
+interface TestimonialProps {
+  card: Testimonial[]
+}
 
-const TESTIMONIALS = [
-  {
-    name: 'Albert Flores',
-    image: '/person/person-1.webp',
-    quote:
-      "For years, I've trusted my car to FixinMoto, and they've never let me down. The staff is not only friendly but also incredibly knowledgeable, taking the time to walk me through every repair. I wholeheartedly recommend them to anyone in need of dependable auto repair services.",
-  },
-  {
-    name: 'Robert Fox',
-    image: '/person/person-2.jpg',
-    quote:
-      'When I faced a sudden issue with my vehicle, FixinMoto managed to fit me in for an appointment on the same day. Their team quickly diagnosed the problem and had my car back on the road in no time. I truly appreciated their prompt and effective service.',
-  },
-  {
-    name: 'Eleanor Pena',
-    image: '/person/person-3.jpg',
-    quote:
-      'I encountered an urgent problem with my vehicle and was fortunate to secure a same-day appointment at FixinMotopair. The staff swiftly identified the issue and got my car running again in no time. Their quick and efficient service was greatly appreciated.',
-  },
-]
-export default function Testimonials() {
+const TESTIMONIALS = ''
+export default function Testimonials({ card }: TestimonialProps) {
   const [activeCard, setActiveCard] = useState<Number | null>(null)
   const swiperRef = useRef<any | null>(null)
   const scrollToCard = (index: number) => {
@@ -71,16 +56,28 @@ export default function Testimonials() {
               onSlideChange={(swiper) => setActiveCard(swiper.activeIndex)}
               className="w-full"
             >
-              {TESTIMONIALS.map((t, i) => (
-                <SwiperSlide key={i}>
-                  <TestimonialCard name={t.name} image={t.image} quote={t.quote} />
-                </SwiperSlide>
-              ))}
+              {card.map((t, i) => {
+                const imageUrl =
+                  typeof t.clientImage === 'object' && t.clientImage !== null
+                    ? t.clientImage.url || '/'
+                    : '/'
+
+                return (
+                  <SwiperSlide key={i}>
+                    <TestimonialCard
+                      name={t.name}
+                      image={imageUrl}
+                      quote={t.testimonial}
+                      rating={t.rating}
+                    />
+                  </SwiperSlide>
+                )
+              })}
             </Swiper>
           </div>
 
           <div className="flex justify-center gap-2 mt-4 lg:hidden">
-            {TESTIMONIALS.map((_, i) => (
+            {card.map((_, i) => (
               <button
                 key={i}
                 onClick={() => scrollToCard(i)}
@@ -90,9 +87,18 @@ export default function Testimonials() {
             ))}
           </div>
           <div className="hidden lg:grid  lg:grid-cols-3 justify-center items-center gap-4 pt-5">
-            {TESTIMONIALS.map((t, i) => (
+            {card.map((t, i) => (
               <div key={i} onClick={() => setActiveCard(i)}>
-                <TestimonialCard name={t.name} image={t.image} quote={t.quote} />
+                <TestimonialCard
+                  name={t.name}
+                  image={
+                    typeof t.clientImage === 'object' && t.clientImage !== null
+                      ? t.clientImage.url || '/'
+                      : '/'
+                  }
+                  quote={t.testimonial}
+                  rating={t.rating}
+                />
               </div>
             ))}
           </div>
@@ -105,14 +111,15 @@ interface TestimonialCardProps {
   name: string
   image: string
   quote: string
+  rating: number
 }
-const TestimonialCard = ({ name, image, quote }: TestimonialCardProps) => {
+const TestimonialCard = ({ name, image, quote, rating }: TestimonialCardProps) => {
   return (
     <div
       className={`flex group snap-center h-[460] overflow-x-hidden flex-col gap-2.5 rounded-[15px] transition-colors duration-300 hover:bg-secondary bg-[#F8F8F6] px-6  py-[40px]`}
     >
       <div className="flex ">
-        {Array.from({ length: 5 }).map((s, i) => (
+        {Array.from({ length: rating }).map((_, i) => (
           <Star
             key={i}
             className={`size-5  group-hover:fill-white group-hover:text-white fill-secondary text-secondary`}

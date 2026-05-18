@@ -1,9 +1,13 @@
 'use client'
 import Image from 'next/image'
 import { MapPin, Phone, Mail } from 'lucide-react'
+import type { Setting as ContactType } from '@/payload-types'
 import { useState } from 'react'
+interface ContactProps {
+  data: ContactType
+}
 
-export default function ContactUs() {
+export default function ContactUs({ data }: ContactProps) {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -31,13 +35,6 @@ export default function ContactUs() {
       message: '',
     })
   }
-  const socials = [
-    { src: '/social/twitter.png', alt: 'twitter' },
-    { src: '/social/insta.png', alt: 'instagram' },
-    { src: '/social/facebook.png', alt: 'facebook' },
-    { src: '/social/linkdin.png', alt: 'linkedin' },
-  ]
-
   return (
     <div className="w-full bg-primary">
       <div className="relative flex min-h-[480px] w-full flex-col justify-center items-center">
@@ -137,16 +134,16 @@ export default function ContactUs() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
               <button className="flex items-center bg-secondary px-3 py-3 rounded-lg gap-2 text-white text-sm">
                 <MapPin className="shrink-0" size={18} />
-                2464 Royal Ln. Mesa, New Jersey 45463
+                {data.address}
               </button>
               <button className="flex items-center justify-center bg-secondary px-3 py-3 rounded-lg gap-2 text-white text-sm">
                 <Phone className="shrink-0" size={18} />
-                (480) 555-0103
+                {data.phone}
               </button>
               <div className="col-span-2">
                 <button className="w-full flex items-center justify-center bg-secondary px-3 py-6 rounded-lg gap-2 text-white text-sm">
                   <Mail className="shrink-0" size={18} />
-                  hello@FixinMoto.com
+                  {data.contactEmail}
                 </button>
               </div>
             </div>
@@ -154,12 +151,18 @@ export default function ContactUs() {
             <div className="flex flex-col gap-2  pt-4">
               <h3 className="text-lg font-medium">Follow Us on</h3>
               <div className="flex gap-2">
-                {socials.map((s) => (
+                {data.socialLinks?.map((s, i) => (
                   <a
-                    key={s.alt}
+                    key={i}
+                    href={s.url || ''}
                     className="bg-secondary rounded-md p-2 flex items-center justify-center cursor-pointer"
                   >
-                    <Image src={s.src} alt={s.alt} width={18} height={18} />
+                    <Image
+                      src={typeof s.SocialLogo === 'object' ? s.SocialLogo?.url || '' : ''}
+                      alt="..."
+                      width={18}
+                      height={18}
+                    />
                   </a>
                 ))}
               </div>

@@ -22,6 +22,7 @@
     "@payloadcms/email-resend": "^3.84.1",
     "@payloadcms/next": "3.84.1",
     "@payloadcms/richtext-lexical": "3.84.1",
+    "@payloadcms/storage-vercel-blob": "^3.84.1",
     "@payloadcms/ui": "3.84.1",
     "cross-env": "^7.0.3",
     "dotenv": "16.4.7",
@@ -37,7 +38,8 @@
     "react-leaflet": "^5.0.0",
     "resend": "^6.12.3",
     "sharp": "0.34.2",
-    "swiper": "^12.1.4"
+    "swiper": "^12.1.4",
+    "vercel": "^54.1.0"
   },
   "devDependencies": {
     "@playwright/test": "1.58.2",

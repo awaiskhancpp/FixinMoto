@@ -1,4 +1,8 @@
 import Image from 'next/image'
+import { RichText } from '@payloadcms/richtext-lexical/react'
+interface ServiceOverviewProps {
+  content: any
+}
 const INCLUDED = [
   'Engine Oil Change',
   'Replace Oil Filter',
@@ -11,11 +15,17 @@ const INCLUDED = [
   'Tire Check',
   'Top-up of Other Fluids',
 ]
-export default function ServiceOverview() {
+export default function ServiceOverview({ content }: ServiceOverviewProps) {
   return (
     <section className="px-4 py-4 md:px-6 min-[1441px]:px-0 md:py-10 ">
       <div className="text-white max-w-[1440px] mx-auto flex flex-col gap-4">
-        <p className="text-white/70 text-md">Service Overview</p>
+        <RichText data={content} />
+      </div>
+    </section>
+  )
+}
+{
+  /* <p className="text-white/70 text-md">Service Overview</p>
         <h2 className="lg:text-6xl text-4xl font-bold">Oil Change & Fluid Services</h2>
         <div className="relative w-full md:h-[523px] h-[350px]">
           <Image src="/oil_and_fluid.jpg" fill alt="..." className="object-cover rounded-[15px]" />
@@ -55,8 +65,5 @@ export default function ServiceOverview() {
           <div className="relative  h-[367px]">
             <Image src="/oil_and_fluid2.jpg" fill alt="..." className="rounded-[15px]" />
           </div>
-        </div>
-      </div>
-    </section>
-  )
+           </div> */
 }

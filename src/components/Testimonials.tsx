@@ -7,9 +7,13 @@ import { HeadingGrid } from './HeadingGrid'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Swiper as SwiperType } from 'swiper'
 import { Keyboard, Pagination } from 'swiper/modules'
+import type { Testimonial } from '@/payload-types'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
+interface TestimonialProps {
+  data: Testimonial[]
+}
 
 const TESTIMONIALS = [
   {
@@ -37,10 +41,10 @@ const TESTIMONIALS = [
       'I encountered an urgent problem with my vehicle and was fortunate to secure a same-day appointment at FixinMotopair. The staff swiftly identified the issue and got my car running again in no time. Their quick and efficient service was greatly appreciated.',
   },
 ]
-function StarRating() {
+function StarRating({ star }: { star: number }) {
   return (
     <div className="flex gap-0.5" aria-hidden>
-      {Array.from({ length: 5 }).map((_, i) => (
+      {Array.from({ length: star }).map((_, i) => (
         <Star key={i} className="size-4 fill-secondary text-secondary" strokeWidth={0} />
       ))}
     </div>
@@ -51,10 +55,11 @@ interface TestimonialCardProps {
   name: string
   image: string
   quote: string
+  rating: number
 }
 
 function TestimonialCard(props: TestimonialCardProps) {
-  const { name, image, quote } = props
+  const { name, image, quote, rating } = props
   return (
     <div className="flex w-full h-full shrink-0 snap-center md:py-4  py-6 px-5 flex-col gap-2 rounded-[15px] bg-[#F8F8F6] md:px-8 ">
       <div className="shrink-0 overflow-hidden rounded-md pb-1">
@@ -68,12 +73,12 @@ function TestimonialCard(props: TestimonialCardProps) {
       </div>
       <p className="text-base font-medium line-clamp-9 text-black/50">{quote}</p>
       <h3 className="text-2xl font-medium leading-[1.333] text-primary">{name}</h3>
-      <StarRating />
+      <StarRating star={rating} />
     </div>
   )
 }
 
-export default function Testimonials() {
+export default function Testimonials({ data }: TestimonialProps) {
   const word = ['Fixinmoto']
   const swiperRef = useRef<SwiperType | null>(null)
 
@@ -114,11 +119,23 @@ export default function Testimonials() {
                 modules={[Pagination, Keyboard]}
                 className="mySwiper"
               >
-                {TESTIMONIALS.map((t, i) => (
-                  <SwiperSlide key={i}>
-                    <TestimonialCard name={t.name} image={t.image} quote={t.quote} />
-                  </SwiperSlide>
-                ))}
+                {data.map((t, i) => {
+                  const imageUrl =
+                    typeof t.clientImage === 'object' && t.clientImage !== null
+                      ? t.clientImage.url || '/'
+                      : '/'
+
+                  return (
+                    <SwiperSlide key={i}>
+                      <TestimonialCard
+                        name={t.name}
+                        image={imageUrl}
+                        quote={t.testimonial}
+                        rating={t.rating}
+                      />
+                    </SwiperSlide>
+                  )
+                })}
               </Swiper>
             </div>
             <div className="flex justify-end gap-[19px] pt-6 pr-4 md:pr-6 min-[1441px]:pr-0 md:pt-8">

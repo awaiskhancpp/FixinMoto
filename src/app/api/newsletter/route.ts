@@ -1,6 +1,7 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { NextResponse } from 'next/server'
+import 'dotenv/config'
 
 export async function POST(req: Request) {
   try {

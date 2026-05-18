@@ -6,6 +6,7 @@ interface ServicePageCard {
   title: string
   description: string
   imageSrc: string
+  slug: string
   services: string[]
 }
 
@@ -14,6 +15,7 @@ export default function ServicePageCard({
   description,
   imageSrc,
   services,
+  slug,
 }: ServicePageCard) {
   const [openModal, setOpenModal] = useState(false)
   const [formData, setFormData] = useState({
@@ -54,7 +56,7 @@ export default function ServicePageCard({
       </p>
       <div className="mt-auto flex w-full flex-row items-center justify-center gap-2 pt-2">
         <a
-          href={`/services/${title}`}
+          href={`/services/${slug}`}
           className="rounded-lg border border-white px-11 xl:px-9 py-[15px] text-sm font-medium  text-white"
         >
           Details

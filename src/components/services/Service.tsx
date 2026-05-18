@@ -6,10 +6,13 @@ import { HeadingGrid } from '../HeadingGrid'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination } from 'swiper/modules'
 import marqueeStyle from './ServiceLogo.module.css'
-import { SwiperRef } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/pagination'
+import type { Service } from '@/payload-types'
 
+interface CardProps {
+  card: Service[]
+}
 interface Card {
   serviceNumber: number
   serviceName: string
@@ -42,7 +45,7 @@ const logos = [
   { src: '/logoCarousel/Logo.png', alt: 'logo2' },
   { src: '/logoCarousel/Logo3.png', alt: 'logo3' },
 ]
-export default function Service() {
+export default function Service({ card }: CardProps) {
   const [activeCard, setActiveCard] = useState(0)
 
   const swiperRef = useRef<any>(null)
@@ -80,14 +83,22 @@ export default function Service() {
                 }}
                 onSlideChange={(swiper) => setActiveCard(swiper.activeIndex)}
               >
-                {CARDS.map((card, i) => (
-                  <SwiperSlide key={i}>
+                {card.map((c) => (
+                  <SwiperSlide key={c.id}>
                     <a href="/services" className="">
                       <Card
-                        title={card.title}
-                        mainImg={card.mainImg}
-                        logoImg={card.logoImg}
-                        cardNo={card.cardNo}
+                        title={c.serviceName}
+                        mainImg={
+                          typeof c.backgroundImage === 'object' && c.backgroundImage !== null
+                            ? c.backgroundImage.url || '/'
+                            : '/'
+                        }
+                        logoImg={
+                          typeof c.serviceIcon === 'object' && c.serviceIcon !== null
+                            ? c.serviceIcon.url || '/'
+                            : '/'
+                        }
+                        cardNo={c.serviceNumber}
                       />
                     </a>
                   </SwiperSlide>
@@ -95,7 +106,7 @@ export default function Service() {
               </Swiper>
             </div>
             <div className="flex justify-center gap-2 mt-3 xl:hidden">
-              {CARDS.map((_, i) => (
+              {card.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => {
@@ -109,13 +120,21 @@ export default function Service() {
               ))}
             </div>
             <div className="hidden xl:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {CARDS.map((card, i) => (
+              {card.map((c, i) => (
                 <a href="/services" key={i} className="">
                   <Card
-                    title={card.title}
-                    mainImg={card.mainImg}
-                    logoImg={card.logoImg}
-                    cardNo={card.cardNo}
+                    title={c.serviceName}
+                    mainImg={
+                      typeof c.backgroundImage === 'object' && c.backgroundImage !== null
+                        ? c.backgroundImage.url || '/'
+                        : '/'
+                    }
+                    logoImg={
+                      typeof c.serviceIcon === 'object' && c.serviceIcon !== null
+                        ? c.serviceIcon.url || '/'
+                        : '/'
+                    }
+                    cardNo={c.serviceNumber}
                   />
                 </a>
               ))}

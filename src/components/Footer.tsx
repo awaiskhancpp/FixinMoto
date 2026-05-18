@@ -8,7 +8,6 @@ interface FooterProps {
 }
 
 export default function Footer({ data }: FooterProps) {
-  // /logonavbar.png    08.00 - 20.00     10.00 - 16.00
   const [email, setEmail] = useState('')
   return (
     <footer className="w-full bg-primary py-4 px-4 md:px-6 min-[1441px]:px-0 gap-y-0">

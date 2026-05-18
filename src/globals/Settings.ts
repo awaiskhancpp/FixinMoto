@@ -15,6 +15,35 @@ export const Settings: GlobalConfig = {
         { name: 'weekEnds', type: 'text', label: 'Saturday & Sunday Hours' },
       ],
     },
-    { name: 'logo', type: 'upload', relationTo: 'media' },
+    {
+      name: 'socialLinks',
+      type: 'array',
+      fields: [
+        {
+          name: 'platform',
+          type: 'select',
+          options: [
+            { label: 'Facebook', value: 'facebook' },
+            { label: 'Instagram', value: 'instagram' },
+            { label: 'Twitter/X', value: 'twitter' },
+            { label: 'LinkedIn', value: 'linkedin' },
+          ],
+        },
+        {
+          name: 'url',
+          type: 'text',
+        },
+        {
+          name: 'SocialLogo',
+          type: 'upload',
+          relationTo: 'media',
+        },
+      ],
+    },
+    {
+      name: 'logo',
+      type: 'upload',
+      relationTo: 'media',
+    },
   ],
 }
