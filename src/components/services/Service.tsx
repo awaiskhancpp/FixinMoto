@@ -27,7 +27,6 @@ export default function Service({ card, trustedBy }: CardProps) {
   const loopedLogo = [...trustedBy, ...trustedBy, ...trustedBy]
   const swiperRef = useRef<any>(null)
   let word = ['Comprehensive', 'Solutions']
-
   return (
     <>
       <section className="w-full bg-black text-white relative px-4 md:px-6 min-[1441px]:px-0 py-6">
@@ -62,7 +61,7 @@ export default function Service({ card, trustedBy }: CardProps) {
               >
                 {card.slice(0, 4).map((c) => (
                   <SwiperSlide key={c.id}>
-                    <a href="/services" className="">
+                    <a href="/services/" className="">
                       <Card
                         title={c.serviceName}
                         mainImg={
@@ -98,7 +97,7 @@ export default function Service({ card, trustedBy }: CardProps) {
             </div>
             <div className="hidden xl:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {card.slice(0, 4).map((c, i) => (
-                <a href="/services" key={i} className="">
+                <a href={`/services/${c.slug}`} key={i} className="">
                   <Card
                     title={c.serviceName}
                     mainImg={

@@ -15,10 +15,10 @@ export default function Navbar({ services, data }: NavbarProps) {
   const [isPageClicked, setIsPageClicked] = useState(false)
 
   const NAV_LINKS = [
-    { label: 'AboutUs', href: '/aboutus' },
+    { label: 'About Us', href: '/aboutus' },
     { label: 'Appointment', href: '/appointment' },
     { label: 'Blogs', href: '/blogs' },
-    { label: 'OurTeam', href: '/ourteam' },
+    { label: 'Our Team', href: '/ourteam' },
   ]
 
   useEffect(() => {

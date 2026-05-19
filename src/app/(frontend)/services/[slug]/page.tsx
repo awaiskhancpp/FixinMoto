@@ -35,10 +35,8 @@ export default async function ServiceDetails({ params }: { params: Promise<{ slu
             ? currentService.backgroundImage?.url || ''
             : ''
         }
-        title={currentService.serviceName}
-        wordsToHighlight={(currentService.highlightedWords ?? [])
-          .map((item) => item.word)
-          .filter((word): word is string => typeof word === 'string')}
+        title={'Explore the Details of Our Expert Services'}
+        wordsToHighlight={['Explore', 'Expert', 'Services']}
       />
       <ServiceOverview content={currentService} />
       <ServicePackage packages={servicePackage.docs} />
