@@ -27,7 +27,7 @@ export default function BlogDetailed({ detail }: BlogDetailedProps) {
         <Image
           src={bannerSrc}
           fill
-          alt={detail.title ? `${detail.title} banner` : 'Blog banner'}
+          alt={detail.title || '...'}
           className="rounded-[15px] object-cover"
           sizes="(max-width: 768px) 100vw, 1440px"
           priority
@@ -44,7 +44,7 @@ export default function BlogDetailed({ detail }: BlogDetailedProps) {
             <span className="text-xs font-normal">{detail.author}</span>
           </div>
         </div>
-        {detail.blogDetail ? <RichText data={detail.blogDetail} /> : null}
+        <RichText data={detail.blogDetail} />
         {detail.social && detail.social.length > 0 ? (
           <div className="flex flex-col gap-2 py-20">
             <h3 className="text-lg font-medium">Share</h3>

@@ -51,10 +51,23 @@ export default function AppointmentForm({
 }: AppointmentFormProps) {
   const [activeCard, setActiveCard] = useState<Number | null>(null)
   const [selectedButtons, setSelectedButtons] = useState<Set<number>>(new Set())
-  console.log(location)
-  console.log(carMake)
-  console.log(carModel)
-  console.log(service)
+  const [selectedMake, setSelectedMake] = useState<string | number>('')
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    carMake: '',
+    carModel: '',
+    carYear: '',
+    licensePlate: '',
+    vin: '',
+    date: '',
+    time: '',
+    location: '',
+    services: [] as string[],
+    mainService: [] as string[],
+  })
   const toggleButton = (i: number) => {
     setSelectedButtons((prev) => {
       const newSet = new Set(prev)
@@ -66,22 +79,69 @@ export default function AppointmentForm({
       return newSet
     })
   }
+  const filteredModels = carModel.filter(
+    (model) => typeof model.make === 'object' && model.make?.id === selectedMake,
+  )
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+    if (name === 'carMake') {
+      setSelectedMake(value)
+    }
+  }
+  const handleServiceToggle = (serviceId: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      services: prev.services.includes(serviceId)
+        ? prev.services.filter((id) => id !== serviceId)
+        : [...prev.services, serviceId],
+    }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    try {
+      const response = await fetch('/api/appointment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+
+      if (response.ok) {
+        alert('Appointment booked successfully!')
+      }
+    } catch (error) {
+      console.error('Error:', error)
+      alert('Failed to book appointment')
+    }
+  }
   return (
     <>
-      <section className="bg-black text-white px-4 py-4 md:px-6 min-[1441px]:px-0 md:py-10">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-black text-white px-4 py-4 md:px-6 min-[1441px]:px-0 md:py-10"
+      >
         <div className="mx-auto max-w-6xl">
           <div>
             <h2 className="font-medium">Personal Information</h2>
             <div className="grid md:grid-cols-2 gap-3 pt-3 grid-cols-1 ">
               <input
                 type="text"
-                placeholder="   First Name"
-                className="bg-white rounded-sm text-black py-2"
+                placeholder="First Name"
+                value={formData.firstName}
+                onChange={handleInputChange}
+                className="bg-white rounded-sm text-black py-2 pl-6"
               />
               <input
                 type="text"
-                placeholder="   Last Name"
-                className="bg-white rounded-sm text-black py-2"
+                placeholder="Last Name"
+                value={formData.lastName}
+                onChange={handleInputChange}
+                className="bg-white rounded-sm text-black py-2 pl-6"
               />
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2">
@@ -96,7 +156,10 @@ export default function AppointmentForm({
                 <input
                   type="text"
                   placeholder="Email"
+                  value={formData.email}
+                  onChange={handleInputChange}
                   className="bg-white rounded-sm text-black py-2 pl-9 w-full"
+                  required
                 />
               </div>
               <div className="relative">
@@ -112,6 +175,8 @@ export default function AppointmentForm({
                 <input
                   type="text"
                   placeholder="Phone Number"
+                  value={formData.phone}
+                  onChange={handleInputChange}
                   className="bg-white rounded-sm text-black py-2 w-full pl-9"
                 />
               </div>
@@ -120,25 +185,40 @@ export default function AppointmentForm({
           <div className="pt-6">
             <h2 className="font-medium">Car Information</h2>
             <div className="grid md:grid-cols-3 grid-cols-1 pt-3 gap-2">
-              <select name="carmake" id="carmake" className=" py-2 rounded-lg text-black bg-white">
-                <option defaultValue="null">Select Car Make</option>
-                <option value="audi">Audi</option>
-                <option value="audi">Mercedes</option>
+              <select
+                name="carmake"
+                value={formData.carMake}
+                onChange={handleInputChange}
+                id="carmake"
+                className=" py-2 rounded-lg text-black bg-white"
+              >
+                <option defaultValue="">Select Car Make</option>
+                {carMake.map((make) => (
+                  <option key={make.id} value={make.id}>
+                    {make.name}
+                  </option>
+                ))}
               </select>
               <select
                 name="carmodel"
                 id="carmodel"
+                value={formData.carModel}
+                onChange={handleInputChange}
                 className=" py-2 rounded-lg text-black bg-white"
               >
-                <option defaultValue="null">Select Car Model</option>
-                <option value="a4">A4</option>
-                <option value="a3">A3</option>
+                <option defaultValue="">Select Car Model</option>
+                {filteredModels.map((model) => (
+                  <option value={model.id}>{model.name}</option>
+                ))}
               </select>
-              <select name="caryear" id="caryear" className=" py-2 rounded-lg text-black bg-white">
-                <option defaultValue="null">Select Car Year</option>
-                <option value="2000">2000</option>
-                <option value="2026">2026</option>
-              </select>
+              <input
+                name="caryear"
+                placeholder="Car Year"
+                value={formData.carYear}
+                onChange={handleInputChange}
+                id="caryear"
+                className=" py-2 rounded-lg text-black bg-white pl-6"
+              />
               <div className="md:col-span-3 grid md:grid-cols-2 grid-cols-1 gap-2">
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2">
@@ -153,6 +233,8 @@ export default function AppointmentForm({
                   <input
                     type="text"
                     placeholder="Licence Plate"
+                    value={formData.licensePlate}
+                    onChange={handleInputChange}
                     className="col-start-1 col-end-[5/2] bg-white rounded-sm text-black py-2 w-full pl-9"
                   />
                 </div>
@@ -168,6 +250,8 @@ export default function AppointmentForm({
                   </span>
                   <input
                     type="text"
+                    value={formData.vin}
+                    onChange={handleInputChange}
                     placeholder="Vin (Optional)"
                     className="bg-white rounded-sm text-black py-2 w-full pl-9"
                   />
@@ -188,7 +272,12 @@ export default function AppointmentForm({
                     className=""
                   />
                 </span>
-                <input type="date" className="text-black bg-white py-2 rounded-sm w-full pl-9" />
+                <input
+                  type="date"
+                  value={formData.date}
+                  onChange={handleInputChange}
+                  className="text-black bg-white py-2 rounded-sm w-full pl-9"
+                />
               </div>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2">
@@ -204,6 +293,8 @@ export default function AppointmentForm({
                   type="time"
                   id="appointment"
                   name="appointment"
+                  value={formData.time}
+                  onChange={handleInputChange}
                   min="09:00"
                   max="18:00"
                   className="bg-white text-black py-2 rounded-sm w-full pl-9"
@@ -222,11 +313,16 @@ export default function AppointmentForm({
                 <select
                   name="location"
                   id="location"
+                  value={formData.location}
+                  onChange={handleInputChange}
                   className="py-2 rounded-lg text-black bg-white w-full pl-9 "
                 >
-                  <option defaultValue="null">Select Location</option>
-                  <option value="abt">Abbottabad</option>
-                  <option value="rawalpindi">Rawalpindi</option>
+                  <option defaultValue="">Select Location</option>
+                  {location.map((l, i) => (
+                    <option value={l.name} key={i}>
+                      {l.name}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -266,7 +362,7 @@ export default function AppointmentForm({
           </div>
           <button className="mt-4 rounded-lg bg-secondary px-5 py-2">Make an Appointment</button>
         </div>
-      </section>
+      </form>
     </>
   )
 }

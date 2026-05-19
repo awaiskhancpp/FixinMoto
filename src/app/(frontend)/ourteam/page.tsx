@@ -10,6 +10,9 @@ export default async function () {
   const trustedBy = await payload.find({
     collection: 'trustedBy',
   })
+  const cta = await payload.find({
+    collection: 'cta',
+  })
   const person = await payload.find({ collection: 'person' })
   return (
     <>
@@ -20,7 +23,7 @@ export default async function () {
       />
       <OurTeam team={person.docs} />
       <TrustedPartners trustedBy={trustedBy.docs} />
-      <PromoCTA />
+      <PromoCTA cta={cta.docs} />
     </>
   )
 }

@@ -9,7 +9,7 @@ export default function ServiceOverview({ content }: ServiceOverviewProps) {
     <section className="px-4 py-4 md:px-6 min-[1441px]:px-0 md:py-10 ">
       <div className="text-white max-w-[1440px] mx-auto gap-4">
         <p className="text-white/70 text-md">Service Overview</p>
-        <h2 className="lg:text-6xl text-4xl font-bold pb-2">{content.serviceName}</h2>
+        <h2 className="lg:text-6xl text-4xl font-bold pb-6">{content.serviceName}</h2>
         <div className="relative w-full md:h-[523px] h-[350px]">
           <Image
             src={
@@ -22,9 +22,9 @@ export default function ServiceOverview({ content }: ServiceOverviewProps) {
             className="object-cover rounded-[15px]"
           />
         </div>
-        <div className="max-w-[1300px] mx-auto pt-4">
-          <p className="text-white/49 pb-2">{content.description}</p>
-          <h3 className="text-2xl pb-2">What's Included</h3>
+        <div className="max-w-[1300px] mx-auto pt-6">
+          <p className="text-white/49 pb-4">{content.description}</p>
+          <h3 className="text-2xl pb-3">What's Included</h3>
           <div className="grid md:grid-cols-2  grid-cols-1 gap-2 text-white/50">
             {content?.included.map((m, i) => (
               <div className="flex gap-3" key={i}>
@@ -33,7 +33,7 @@ export default function ServiceOverview({ content }: ServiceOverviewProps) {
               </div>
             ))}
           </div>
-          <p className="text-white/50 mt-2">{content.detail || ''}</p>
+          <p className="text-white/50 mt-4 pb-4">{content.detail || ''}</p>
           <div className="grid md:grid-cols-2 grid-cols-1 w-full gap-5 py-4">
             <div className="relative h-[367px]">
               <Image

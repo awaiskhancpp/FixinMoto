@@ -84,6 +84,7 @@ export interface Config {
     appointment: Appointment;
     location: Location;
     'main-service': MainService;
+    cta: Cta;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -108,6 +109,7 @@ export interface Config {
     appointment: AppointmentSelect<false> | AppointmentSelect<true>;
     location: LocationSelect<false> | LocationSelect<true>;
     'main-service': MainServiceSelect<false> | MainServiceSelect<true>;
+    cta: CtaSelect<false> | CtaSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -437,6 +439,18 @@ export interface MainService {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cta".
+ */
+export interface Cta {
+  id: number;
+  ctaHeading: string;
+  ctaText: string;
+  ctaImage: number | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -526,6 +540,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'main-service';
         value: number | MainService;
+      } | null)
+    | ({
+        relationTo: 'cta';
+        value: number | Cta;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -816,6 +834,17 @@ export interface LocationSelect<T extends boolean = true> {
 export interface MainServiceSelect<T extends boolean = true> {
   title?: T;
   description?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cta_select".
+ */
+export interface CtaSelect<T extends boolean = true> {
+  ctaHeading?: T;
+  ctaText?: T;
+  ctaImage?: T;
   updatedAt?: T;
   createdAt?: T;
 }

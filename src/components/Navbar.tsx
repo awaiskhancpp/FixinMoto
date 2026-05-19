@@ -15,10 +15,10 @@ export default function Navbar({ services, data }: NavbarProps) {
   const [isPageClicked, setIsPageClicked] = useState(false)
 
   const NAV_LINKS = [
-    { label: 'About Us', href: '/aboutus' },
+    { label: 'AboutUs', href: '/aboutus' },
     { label: 'Appointment', href: '/appointment' },
     { label: 'Blogs', href: '/blogs' },
-    { label: 'Our Team', href: '/ourteam' },
+    { label: 'Team', href: '/ourteam' },
   ]
 
   useEffect(() => {
@@ -37,85 +37,120 @@ export default function Navbar({ services, data }: NavbarProps) {
       : typeof data.logo === 'object'
         ? data.logo?.url || ''
         : ''
-
+  const shouldBeWhite = scrolled || isOpen
   return (
     <nav
-      className={`fixed z-[900] w-full px-4 md:px-6 min-[1441px]:px-0 ${scrolled ? 'bg-white text-black' : isOpen ? 'bg-white text-black' : 'bg-transparent text-white'}`}
+      className={`fixed z-[900] w-full px-4 md:px-6 min-[1441px]:px-0 ${shouldBeWhite ? 'bg-white text-black transition-all duration-300' : 'bg-transparent text-white'}`}
     >
-      <div className="mx-auto w-full max-w-[1440px] grid md:grid-cols-3 grid-cols-2 items-center pt-6 pb-3">
-        <div className="flex items-center">
-          <a href="/" className="lg:hidden">
-            <Image
-              src={logoSrc}
-              alt="navbarlogo"
-              width={120}
-              height={36}
-              className="object-cover"
-            />
-          </a>
-          <div className="hidden lg:flex flex-row gap-3 items-center">
-            {NAV_LINKS.map((n, i) => (
-              <a href={n.href} key={i} className="py-2 hover:text-secondary">
-                {n.label}
-              </a>
-            ))}
-            <div className="relative group hidden md:block">
-              <button
-                onClick={() => setIsPageClicked(!isPageClicked)}
-                className="flex items-center gap-1 py-2 hover:text-secondary"
-              >
-                Services
-                {isPageClicked ? <ChevronUp /> : <ChevronDown />}
-              </button>
-              <div
-                className={`absolute top-full left-0 bg-white text-black rounded-lg shadow-lg w-44 z-10 ${
-                  isPageClicked ? 'block' : 'hidden group-hover:block'
-                }`}
-              >
-                <ul className="p-2 text-sm font-medium">
-                  {services.map((p, i) => (
-                    <div key={i} className="inline-flex w-full p-2 hover:bg-gray-100 rounded">
-                      {p.serviceName}
-                    </div>
-                  ))}
-                </ul>
-              </div>
+      <div className="hidden xl:grid xl:grid-cols-3 items-start pt-6 pb-3 mx-auto w-full max-w-[1440px]">
+        <div className="flex gap-6">
+          {NAV_LINKS.map((n, i) => (
+            <a href={n.href} key={i} className="py-2 hover:text-secondary">
+              {n.label}
+            </a>
+          ))}
+          <div className="relative group">
+            <button className="flex items-center gap-1 py-2 hover:text-secondary">
+              Services
+              {isPageClicked ? <ChevronUp /> : <ChevronDown />}
+            </button>
+            <div
+              className={`absolute top-full left-0 bg-white text-black rounded-lg shadow-lg w-60 z-10 ${isPageClicked ? 'block' : 'hidden group-hover:block'}`}
+            >
+              <ul className="p-2 text-sm font-medium">
+                {services.map((p, i) => (
+                  <a
+                    key={i}
+                    href={`/services/${p.slug}`}
+                    className="inline-flex w-full p-2 hover:bg-transparent hover:text-secondary rounded"
+                  >
+                    {p.serviceName}
+                  </a>
+                ))}
+                <a
+                  href="/services"
+                  className="inline-flex w-full p-2 hover:bg-transparent hover:text-secondary rounded"
+                >
+                  View all Services
+                </a>
+              </ul>
             </div>
           </div>
         </div>
 
-        <div className="hidden lg:flex xl:justify-center lg:justify-end lg:items-center md:justify-end">
+        <div className="flex justify-center">
           <a href="/">
             <Image
               src={logoSrc}
-              alt="navbarlogo"
+              alt="logo"
               width={140}
               height={42}
-              className="object-cover"
+              className="object-cover transition-all duration-300"
             />
           </a>
         </div>
 
-        <div className="col-span-1 md:col-span-2 lg:col-span-1 flex justify-end items-center">
-          <button
-            type="button"
-            className={`inline-flex p-2 w-10 h-10 justify-center rounded-base lg:hidden ${scrolled || isOpen ? 'text-black' : 'text-white'}`}
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? <X /> : <Menu />}
-          </button>
+        <div className="flex justify-end">
           <a href="/contact">
-            <button className="hidden lg:block rounded-lg bg-secondary px-6 h-12 text-white">
-              Contact Us
-            </button>
+            <button className="rounded-lg bg-secondary px-6 h-12 text-white">Contact Us</button>
           </a>
         </div>
       </div>
 
+      <div className="xl:hidden flex items-center justify-between pt-6 pb-3 mx-auto w-full max-w-[1440px]">
+        <a href="/">
+          <Image src={logoSrc} alt="logo" width={120} height={36} className="object-cover" />
+        </a>
+        <div className="hidden lg:flex items-center gap-8">
+          {NAV_LINKS.map((n, i) => (
+            <a href={n.href} key={i} className="py-2 hover:text-secondary">
+              {n.label}
+            </a>
+          ))}
+
+          <div className="relative group">
+            <button
+              className="flex items-center gap-1 py-2 hover:text-secondary "
+              onClick={() => setIsPageClicked(!isPageClicked)}
+            >
+              Services
+              {isPageClicked ? <ChevronUp /> : <ChevronDown />}
+            </button>
+            <div
+              className={`absolute top-full left-0 bg-white text-black rounded-lg shadow-lg w-60 z-10 ${isPageClicked ? 'block' : 'hidden group-hover:block'}`}
+            >
+              <ul className="p-2 text-sm font-medium">
+                {services.map((p, i) => (
+                  <a
+                    key={i}
+                    href={`/services/${p.slug}`}
+                    className="inline-flex w-full p-2 hover:text-secondary hover:bg-transparent rounded"
+                  >
+                    {p.serviceName}
+                  </a>
+                ))}
+                <a
+                  href="/services"
+                  className="inline-flex w-full p-2 hover:text-secondary hover:border-transparent rounded"
+                >
+                  View all Services
+                </a>
+              </ul>
+            </div>
+          </div>
+
+          <a href="/contact">
+            <button className="rounded-lg bg-secondary px-6 h-12 text-white">Contact Us</button>
+          </a>
+        </div>
+
+        <button className="lg:hidden p-2 w-10 h-10" onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? <X /> : <Menu />}
+        </button>
+      </div>
+
       <div
-        className={`fixed inset-0 top-0 z-[-1] bg-white text-black flex flex-col gap-4 px-4 pt-24 lg:hidden transition-transform duration-200 ease-out ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        className={`fixed inset-0 top-0 z-[-1] bg-white text-black flex flex-col gap-4 px-4 pt-24 lg:hidden transition-transform duration-200 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
         {NAV_LINKS.map((n, i) => (
           <a href={n.href} key={i} className="text-lg py-3 border-b border-gray-100">
@@ -123,24 +158,27 @@ export default function Navbar({ services, data }: NavbarProps) {
           </a>
         ))}
 
-        <div>
-          <button
-            onClick={() => setIsPageClicked(!isPageClicked)}
-            className="flex items-center justify-between w-full text-lg py-3 border-b border-gray-100"
-          >
-            Services
-            {isPageClicked ? <ChevronUp /> : <ChevronDown />}
-          </button>
-          {isPageClicked && (
-            <div className="flex flex-col">
-              {services.map((p, i) => (
-                <div key={i} className="text-lg py-3 border-b border-gray-100">
-                  {p.serviceName}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        <button
+          onClick={() => setIsPageClicked(!isPageClicked)}
+          className="flex items-center justify-between w-full text-lg py-3 border-b border-gray-100"
+        >
+          Services
+          {isPageClicked ? <ChevronUp /> : <ChevronDown />}
+        </button>
+        {isPageClicked && (
+          <div className="flex flex-col">
+            {services.map((p, i) => (
+              <a
+                href={`/services/${p.slug}`}
+                key={i}
+                className="text-lg py-3 border-b border-gray-100 hover:text-secondary"
+              >
+                {p.serviceName}
+              </a>
+            ))}
+          </div>
+        )}
+
         <a href="/contact">
           <button className="mt-4 rounded-lg bg-secondary px-6 h-12 text-white w-full">
             Contact Us

@@ -23,6 +23,9 @@ export default async function ServiceDetails({ params }: { params: Promise<{ slu
     collection: 'service-package',
     depth: 1,
   })
+  const cta = await payload.find({
+    collection: 'cta',
+  })
   const currentService = service.docs[0]
   if (!currentService) {
     notFound()
@@ -41,7 +44,7 @@ export default async function ServiceDetails({ params }: { params: Promise<{ slu
       <ServiceOverview content={currentService} />
       <ServicePackage packages={servicePackage.docs} />
       <ServiceFAQ faqArray={faq.docs} />
-      <ServiceCTA />
+      <ServiceCTA cta={cta.docs} />
     </section>
   )
 }

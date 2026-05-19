@@ -54,12 +54,14 @@ export default function ServiceProcess() {
           <p className="max-w-xl text-base md:text-lg">
             Save big on premium services with our exclusive promotions and discounts.
           </p>
-          <button
-            type="button"
-            className="mt-3 rounded-lg bg-secondary px-8 py-4 text-base font-medium text-white"
-          >
-            View all promotion
-          </button>
+          <a href="/services">
+            <button
+              type="button"
+              className="mt-3 rounded-lg bg-secondary hover:border hover:border-white hover:bg-transparent hover:text-secondary px-8 py-4 text-base font-medium text-white"
+            >
+              View all promotion
+            </button>
+          </a>
         </div>
       </section>
 
@@ -93,7 +95,7 @@ export default function ServiceProcess() {
                     >
                       {step.title}
                     </h3>
-                    <p className={`text-base font-medium leading-normal text-white/70 `}>
+                    <p className={`text-base font-medium leading-normal text-white/70 w-[85%]`}>
                       {step.description}
                     </p>
                   </button>

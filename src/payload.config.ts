@@ -25,6 +25,7 @@ import { CarModel } from './collections/CarModel'
 import { Appointment } from './collections/Appointment'
 import { Location } from './collections/Location'
 import { MainService } from './collections/MainService'
+import { CTA } from './collections/CTA'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -53,6 +54,7 @@ export default buildConfig({
     Appointment,
     Location,
     MainService,
+    CTA,
   ],
   globals: [Settings, Homepage],
   secret: process.env.PAYLOAD_SECRET || '',
@@ -75,7 +77,6 @@ export default buildConfig({
       collections: {
         media: true,
       },
-
       token: process.env.BLOB_READ_WRITE_TOKEN || '',
     }),
   ],

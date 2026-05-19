@@ -25,7 +25,7 @@ export function HeadingGrid({ pageName, pageTitle, pageDescription, wordsToHighl
           )}
         </h2>
       </div>
-      <div className="lg:col-span-4 col-span-6 col-span-12 flex md:justify-center md:items-center md:text-start justify-start ">
+      <div className="lg:col-span-4 col-span-6 col-span-12 flex lg:justify-center lg:items-center lg:text-start justify-start ">
         <p className="text-white/70">{pageDescription}</p>
       </div>
     </div>

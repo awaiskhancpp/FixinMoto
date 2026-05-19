@@ -26,13 +26,13 @@ export default function ServiceFAQ({ faqArray }: serviceFaqProps) {
         <div className=" pt-6">
           <div className="flex flex-col">
             {faqArray.map((q, i) => (
-              <div key={q.id} className="border-b border-white/20 py-7">
+              <div key={q.id} className="border-b  last:border-none border-white/20 py-7">
                 <button
                   onClick={() => setActiveIndex(activeIndex === i ? null : i)}
                   className="flex w-full justify-between text-left"
                 >
-                  <span className="font-medium">{q.question}</span>
-                  {activeIndex === i ? <ChevronUp /> : <ChevronDown />}
+                  <span className="font-medium ">{q.question}</span>
+                  <div className="">{activeIndex === i ? <ChevronUp /> : <ChevronDown />}</div>
                 </button>
                 {activeIndex === i && <p className="pt-2 text-sm text-white/60">{q.answer}</p>}
               </div>
