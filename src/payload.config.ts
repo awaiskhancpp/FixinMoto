@@ -1,6 +1,4 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
-// import { lexicalEditor } from '@payloadcms/richtext-lexical'
-// import { slateEditor } from '@payloadcms/richtext-slate'
 import { resendAdapter } from '@payloadcms/email-resend'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { Categories } from './collections/Categories'
@@ -22,7 +20,11 @@ import { Blog } from './collections/Blog'
 
 import { Tags } from './collections/Tags'
 import { Person } from './collections/Person'
-
+import { CarMake } from './collections/CarMake'
+import { CarModel } from './collections/CarModel'
+import { Appointment } from './collections/Appointment'
+import { Location } from './collections/Location'
+import { MainService } from './collections/MainService'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -46,6 +48,11 @@ export default buildConfig({
     Categories,
     Tags,
     Person,
+    CarMake,
+    CarModel,
+    Appointment,
+    Location,
+    MainService,
   ],
   globals: [Settings, Homepage],
   secret: process.env.PAYLOAD_SECRET || '',

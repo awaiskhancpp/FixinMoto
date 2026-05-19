@@ -12,6 +12,18 @@ export default async function Appointment() {
     collection: 'testimonial',
     limit: 3,
   })
+  const location = await payload.find({
+    collection: 'location',
+  })
+  const carMake = await payload.find({
+    collection: 'car-make',
+  })
+  const carModel = await payload.find({
+    collection: 'car-model',
+  })
+  const services = await payload.find({
+    collection: 'services',
+  })
   const faq = await payload.find({
     collection: 'faq',
   })
@@ -41,7 +53,12 @@ export default async function Appointment() {
             </div>
           </div>
         </div>
-        <AppointmentForm />
+        <AppointmentForm
+          location={location.docs}
+          carMake={carMake.docs}
+          carModel={carModel.docs}
+          service={services.docs}
+        />
         <Testimonials card={testimonials.docs} />
         <Faq faqArray={faq.docs} />
       </section>

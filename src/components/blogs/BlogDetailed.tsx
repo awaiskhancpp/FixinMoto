@@ -8,15 +8,6 @@ function isPopulatedTag(entry: number | Tag): entry is Tag {
   return typeof entry === 'object' && entry !== null && 'name' in entry
 }
 
-function shareHref(forwardTo: string): string {
-  const t = forwardTo.trim()
-  if (!t) return '#'
-  if (/^https?:\/\//i.test(t)) return t
-  if (t.startsWith('//')) return `https:${t}`
-  if (t.startsWith('/')) return t
-  return `https://${t}`
-}
-
 interface BlogDetailedProps {
   detail: Blog
 }
@@ -60,8 +51,8 @@ export default function BlogDetailed({ detail }: BlogDetailedProps) {
           <div className="flex gap-2">
             {detail.social.map((s, i) => (
               <a
-                key={s.id ?? i}
-                href={shareHref(s.forwardTo)}
+                key={i}
+                href={s.forwardTo}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex cursor-pointer items-center justify-center rounded-md bg-secondary p-2"

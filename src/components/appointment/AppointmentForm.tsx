@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import Image from 'next/image'
+import type { CarMake, CarModel, Service, Location } from '@/payload-types'
 const CarInfo = [
   {
     iconImg: '/appointmentForm/carhood.png',
@@ -35,11 +36,25 @@ const ButtonName = [
   { name: 'Car Wash and Detailing', onclick: {} },
   { name: 'Windshield Repair', onclick: {} },
 ]
+interface AppointmentFormProps {
+  location: Location[]
+  carMake: CarMake[]
+  carModel: CarModel[]
+  service: Service[]
+}
 
-export default function AppointmentForm() {
+export default function AppointmentForm({
+  location,
+  carMake,
+  carModel,
+  service,
+}: AppointmentFormProps) {
   const [activeCard, setActiveCard] = useState<Number | null>(null)
   const [selectedButtons, setSelectedButtons] = useState<Set<number>>(new Set())
-
+  console.log(location)
+  console.log(carMake)
+  console.log(carModel)
+  console.log(service)
   const toggleButton = (i: number) => {
     setSelectedButtons((prev) => {
       const newSet = new Set(prev)
@@ -102,9 +117,9 @@ export default function AppointmentForm() {
               </div>
             </div>
           </div>
-          <div className="pt-3">
+          <div className="pt-6">
             <h2 className="font-medium">Car Information</h2>
-            <div className="grid md:grid-cols-3 grid-cols-1 pt-2 gap-2">
+            <div className="grid md:grid-cols-3 grid-cols-1 pt-3 gap-2">
               <select name="carmake" id="carmake" className=" py-2 rounded-lg text-black bg-white">
                 <option defaultValue="null">Select Car Make</option>
                 <option value="audi">Audi</option>
@@ -160,9 +175,9 @@ export default function AppointmentForm() {
               </div>
             </div>
           </div>
-          <div className="pt-3">
+          <div className="pt-6">
             <h2 className="font-medium">Appointment Details</h2>
-            <div className="grid md:grid-cols-3 grid-cols-1 gap-2">
+            <div className="grid md:grid-cols-3 grid-cols-1 pt-3 gap-2">
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2">
                   <Image

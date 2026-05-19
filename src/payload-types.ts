@@ -79,6 +79,11 @@ export interface Config {
     categories: Category;
     tags: Tag;
     person: Person;
+    'car-make': CarMake;
+    'car-model': CarModel;
+    appointment: Appointment;
+    location: Location;
+    'main-service': MainService;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -98,6 +103,11 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     tags: TagsSelect<false> | TagsSelect<true>;
     person: PersonSelect<false> | PersonSelect<true>;
+    'car-make': CarMakeSelect<false> | CarMakeSelect<true>;
+    'car-model': CarModelSelect<false> | CarModelSelect<true>;
+    appointment: AppointmentSelect<false> | AppointmentSelect<true>;
+    location: LocationSelect<false> | LocationSelect<true>;
+    'main-service': MainServiceSelect<false> | MainServiceSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -362,6 +372,71 @@ export interface Person {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "car-make".
+ */
+export interface CarMake {
+  id: number;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "car-model".
+ */
+export interface CarModel {
+  id: number;
+  name: string;
+  make?: (number | null) | CarMake;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "appointment".
+ */
+export interface Appointment {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  carMake: number | CarMake;
+  carModel: number | CarModel;
+  carYear: number;
+  licencePlate: string;
+  vin?: string | null;
+  date: string;
+  time: string;
+  location: string;
+  services: (number | Service)[];
+  mainService: number | Location;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "location".
+ */
+export interface Location {
+  id: number;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "main-service".
+ */
+export interface MainService {
+  id: number;
+  title: string;
+  description: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -431,6 +506,26 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'person';
         value: number | Person;
+      } | null)
+    | ({
+        relationTo: 'car-make';
+        value: number | CarMake;
+      } | null)
+    | ({
+        relationTo: 'car-model';
+        value: number | CarModel;
+      } | null)
+    | ({
+        relationTo: 'appointment';
+        value: number | Appointment;
+      } | null)
+    | ({
+        relationTo: 'location';
+        value: number | Location;
+      } | null)
+    | ({
+        relationTo: 'main-service';
+        value: number | MainService;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -661,6 +756,66 @@ export interface PersonSelect<T extends boolean = true> {
   twitter?: T;
   instagram?: T;
   linkdin?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "car-make_select".
+ */
+export interface CarMakeSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "car-model_select".
+ */
+export interface CarModelSelect<T extends boolean = true> {
+  name?: T;
+  make?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "appointment_select".
+ */
+export interface AppointmentSelect<T extends boolean = true> {
+  firstName?: T;
+  lastName?: T;
+  email?: T;
+  phone?: T;
+  carMake?: T;
+  carModel?: T;
+  carYear?: T;
+  licencePlate?: T;
+  vin?: T;
+  date?: T;
+  time?: T;
+  location?: T;
+  services?: T;
+  mainService?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "location_select".
+ */
+export interface LocationSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "main-service_select".
+ */
+export interface MainServiceSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
   updatedAt?: T;
   createdAt?: T;
 }
