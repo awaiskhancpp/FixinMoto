@@ -26,6 +26,7 @@ export default async function HomePage() {
   const trustedBy = await payload.find({
     collection: 'trustedBy',
   })
+
   const blogCard = await payload.find({ collection: 'blog' })
   const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
 

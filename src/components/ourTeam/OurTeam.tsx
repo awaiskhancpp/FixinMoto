@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { OurTeamCard } from '../OurTeamCard'
+import type { Person } from '@/payload-types'
 const ButtonLabels = [
   'All',
   'Brake Repair',
@@ -110,9 +111,13 @@ const MEMBERS = [
       'Emily ensures that every vehicle that leaves our shop is in top condition. With a keen eye for detail, she oversees our quality control process.',
   },
 ]
-export default function OurTeam() {
-  const [selected, setSelected] = useState<number | null>(null)
+interface ourTeamProps {
+  team: Person[]
+}
 
+export default function OurTeam({ team }: ourTeamProps) {
+  const [selected, setSelected] = useState<number | null>(null)
+  console.log(team)
   const toggleButton = (i: number) => {
     setSelected((prev) => (prev === i ? null : i))
   }
@@ -139,19 +144,19 @@ export default function OurTeam() {
         </div>
         <div className="mt-15 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {(selected === null || selected === 0
-            ? MEMBERS
-            : MEMBERS.filter((m) => m.profession === ButtonLabels[selected])
+            ? team
+            : team.filter((m) => m.profession === ButtonLabels[selected])
           ).map((m, i) => (
             <OurTeamCard
               key={i}
-              name={m.name}
-              profession={m.profession}
-              instagram={m.instagram}
-              facebook={m.facebook}
-              linkdin={m.linkdin}
-              twitter={m.twitter}
-              image={m.image}
-              quote={m.quote}
+              name={m.name || ''}
+              profession={m.profession || ''}
+              instagram={m.instagram || ''}
+              facebook={m.facebook || ''}
+              linkdin={m.linkdin || ''}
+              twitter={m.twitter || ''}
+              image={typeof m.image === 'object' ? m.image?.url || '' : ''}
+              quote={m.quote || ''}
             />
           ))}
         </div>

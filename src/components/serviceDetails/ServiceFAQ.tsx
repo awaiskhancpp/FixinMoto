@@ -9,33 +9,6 @@ interface serviceFaqProps {
 export default function ServiceFAQ({ faqArray }: serviceFaqProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(0)
 
-  const FAQS = [
-    {
-      question: 'What services do you offer?',
-      answer:
-        'We provide a wide range of services, including oil changes, brake repair, engine diagnostics, and more. Check our Services Needed section for details.',
-    },
-    {
-      question: 'Do you use original parts for repairs?',
-      answer:
-        'We provide a wide range of services, including oil changes, brake repair, engine diagnostics, and more. Check our Services Needed section for details.',
-    },
-    {
-      question: 'How long does a typical service take?',
-      answer:
-        'We provide a wide range of services, including oil changes, brake repair, engine diagnostics, and more. Check our Services Needed section for details.',
-    },
-    {
-      question: 'Can I drop off my car and pick it up later?',
-      answer:
-        'We provide a wide range of services, including oil changes, brake repair, engine diagnostics, and more. Check our Services Needed section for details.',
-    },
-    {
-      question: 'What forms of payment do you accept?',
-      answer:
-        'We provide a wide range of services, including oil changes, brake repair, engine diagnostics, and more. Check our Services Needed section for details.',
-    },
-  ]
   return (
     <section className="bg-black px-4 py-4 md:px-6 min-[1441px]:px-0 md:py-10 text-white">
       <div className="mx-auto max-w-[1440px] grid lg:grid-cols-2 grid-cols-1">
@@ -53,7 +26,7 @@ export default function ServiceFAQ({ faqArray }: serviceFaqProps) {
         <div className=" pt-6">
           <div className="flex flex-col">
             {faqArray.map((q, i) => (
-              <div key={i} className="border-b border-white/20 py-7">
+              <div key={q.id} className="border-b border-white/20 py-7">
                 <button
                   onClick={() => setActiveIndex(activeIndex === i ? null : i)}
                   className="flex w-full justify-between text-left"

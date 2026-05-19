@@ -9,10 +9,12 @@ import { notFound } from 'next/navigation'
 
 export default async function ServiceDetails({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
+  const decodedSlug = decodeURIComponent(slug)
   const payload = await getPayload({ config: configPromise })
   const service = await payload.find({
     collection: 'services',
-    where: { slug: { equals: slug } },
+    where: { slug: { equals: decodedSlug } },
+    limit: 1,
   })
   const faq = await payload.find({
     collection: 'faq',
@@ -38,7 +40,7 @@ export default async function ServiceDetails({ params }: { params: Promise<{ slu
           .map((item) => item.word)
           .filter((word): word is string => typeof word === 'string')}
       />
-      <ServiceOverview content={currentService.serviceDetail} />
+      <ServiceOverview content={currentService} />
       <ServicePackage packages={servicePackage.docs} />
       <ServiceFAQ faqArray={faq.docs} />
       <ServiceCTA />

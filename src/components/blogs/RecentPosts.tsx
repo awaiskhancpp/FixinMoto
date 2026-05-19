@@ -1,27 +1,7 @@
 import { Clock, User } from 'lucide-react'
 import type { Blog } from '@/payload-types'
-const RECENTPOSTS = [
-  {
-    title: "The Ultimate Guide to Maintaining Your Car's Engine",
-    date: 'Dec 9, 2026',
-    author: 'Alex Johnson',
-  },
-  {
-    title: '2024 Toyota Camry Review: The Perfect Blend of Comfort and Performance',
-    date: 'Dec 29, 2026',
-    author: 'Alex Johnson',
-  },
-  {
-    title: 'How to Choose the Best Car for Your Family: Tips and Recommendations',
-    date: 'Dec 26, 2026',
-    author: 'Alex Johnson',
-  },
-  {
-    title: 'The Future of Driving: Understanding Autonomous Vehicles',
-    date: 'Dec 9, 2026',
-    author: 'Alex Johnson',
-  },
-]
+import Link from 'next/link'
+
 interface Recentsprops {
   card: Blog[]
 }
@@ -31,9 +11,10 @@ export default function RecentPosts({ card }: Recentsprops) {
       <h2 className="text-white font-semibold">Recent Post</h2>
 
       <div className="mt-3 w-full space-y-6 ">
-        {card.slice(0, 4).map((p, i) => (
+        {card.slice(0, 4).map((p) => (
           <Post
-            key={i}
+            key={p.id}
+            slug={p.slug}
             title={p.title || ''}
             author={p.author || ''}
             date={p.datePublished || ''}
@@ -44,14 +25,15 @@ export default function RecentPosts({ card }: Recentsprops) {
   )
 }
 interface POST {
+  slug?: string | null
   title: string
   date: string
   author: string
 }
-function Post({ title, date, author }: POST) {
-  return (
-    <div className="w-full border-b border-white/20 last:border-none pb-2">
-      <h3 className="text-lg font-medium leading-[1.444] hover:text-secondary lg:line-clamp-2 xl:line-clamp-3 mt-3 ">
+function Post({ slug, title, date, author }: POST) {
+  const inner = (
+    <>
+      <h3 className="mt-3 text-lg font-medium leading-[1.444] hover:text-secondary lg:line-clamp-2 xl:line-clamp-3">
         {title}
       </h3>
       <div className="flex lg:flex-row md:flex-col flex-row gap-6 md:gap-2 opacity-50 mt-4">
@@ -64,6 +46,19 @@ function Post({ title, date, author }: POST) {
           <span className="text-xs font-normal ">{author}</span>
         </div>
       </div>
-    </div>
+    </>
   )
+
+  if (slug) {
+    return (
+      <Link
+        href={`/blogs/${slug}`}
+        className="block w-full border-b border-white/20 pb-2 last:border-none"
+      >
+        {inner}
+      </Link>
+    )
+  }
+
+  return <div className="w-full border-b border-white/20 last:border-none pb-2">{inner}</div>
 }

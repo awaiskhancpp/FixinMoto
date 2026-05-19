@@ -2,19 +2,23 @@
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { X, Menu, ChevronDown, ChevronUp } from 'lucide-react'
+import type { Service } from '@/payload-types'
+import type { Setting } from '@/payload-types'
+interface NavbarProps {
+  services: Service[]
+  data: Setting
+}
 
-export default function Navbar() {
+export default function Navbar({ services, data }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [isPageClicked, setIsPageClicked] = useState(false)
-  const PAGE_LINKS = [
-    { label: 'Blogs', href: '/blogs' },
-    { label: 'Services', href: '/services' },
-    { label: 'Our Team', href: '/ourteam' },
-  ]
+
   const NAV_LINKS = [
     { label: 'AboutUs', href: '/aboutus' },
     { label: 'Appointment', href: '/appointment' },
+    { label: 'Blogs', href: '/blogs' },
+    { label: 'OurTeam', href: '/ourteam' },
   ]
 
   useEffect(() => {
@@ -27,7 +31,12 @@ export default function Navbar() {
     if (isPageClicked) document.addEventListener('click', handleClickOutside)
     return () => document.removeEventListener('click', handleClickOutside)
   }, [isPageClicked])
-  const logoSrc = scrolled || isOpen ? '/logoNavbarBlack.png' : '/logonavbar.png'
+  const logoSrc =
+    scrolled || isOpen
+      ? '/logoNavbarBlack.png'
+      : typeof data.logo === 'object'
+        ? data.logo?.url || ''
+        : ''
 
   return (
     <nav
@@ -35,7 +44,7 @@ export default function Navbar() {
     >
       <div className="mx-auto w-full max-w-[1440px] grid md:grid-cols-3 grid-cols-2 items-center pt-6 pb-3">
         <div className="flex items-center">
-          <a href="/" className="md:hidden">
+          <a href="/" className="lg:hidden">
             <Image
               src={logoSrc}
               alt="navbarlogo"
@@ -44,7 +53,7 @@ export default function Navbar() {
               className="object-cover"
             />
           </a>
-          <div className="hidden md:flex flex-row gap-4 items-center">
+          <div className="hidden lg:flex flex-row gap-3 items-center">
             {NAV_LINKS.map((n, i) => (
               <a href={n.href} key={i} className="py-2 hover:text-secondary">
                 {n.label}
@@ -55,7 +64,7 @@ export default function Navbar() {
                 onClick={() => setIsPageClicked(!isPageClicked)}
                 className="flex items-center gap-1 py-2 hover:text-secondary"
               >
-                Pages
+                Services
                 {isPageClicked ? <ChevronUp /> : <ChevronDown />}
               </button>
               <div
@@ -64,14 +73,10 @@ export default function Navbar() {
                 }`}
               >
                 <ul className="p-2 text-sm font-medium">
-                  {PAGE_LINKS.map((p, i) => (
-                    <a
-                      key={i}
-                      href={p.href}
-                      className="inline-flex w-full p-2 hover:bg-gray-100 rounded"
-                    >
-                      {p.label}
-                    </a>
+                  {services.map((p, i) => (
+                    <div key={i} className="inline-flex w-full p-2 hover:bg-gray-100 rounded">
+                      {p.serviceName}
+                    </div>
                   ))}
                 </ul>
               </div>
@@ -79,7 +84,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        <div className="hidden md:flex lg:justify-center lg:items-center md:justify-end">
+        <div className="hidden lg:flex xl:justify-center lg:justify-end lg:items-center md:justify-end">
           <a href="/">
             <Image
               src={logoSrc}
@@ -91,16 +96,16 @@ export default function Navbar() {
           </a>
         </div>
 
-        <div className="flex justify-end items-center">
+        <div className="col-span-1 md:col-span-2 lg:col-span-1 flex justify-end items-center">
           <button
             type="button"
-            className={`inline-flex p-2 w-10 h-10 justify-center rounded-base md:hidden ${scrolled || isOpen ? 'text-black' : 'text-white'}`}
+            className={`inline-flex p-2 w-10 h-10 justify-center rounded-base lg:hidden ${scrolled || isOpen ? 'text-black' : 'text-white'}`}
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? <X /> : <Menu />}
           </button>
           <a href="/contact">
-            <button className="hidden md:block rounded-lg bg-secondary px-6 h-12 text-white">
+            <button className="hidden lg:block rounded-lg bg-secondary px-6 h-12 text-white">
               Contact Us
             </button>
           </a>
@@ -108,7 +113,7 @@ export default function Navbar() {
       </div>
 
       <div
-        className={`fixed inset-0 top-0 z-[-1] bg-white text-black flex flex-col gap-4 px-4 pt-24 md:hidden transition-transform duration-200 ease-out ${
+        className={`fixed inset-0 top-0 z-[-1] bg-white text-black flex flex-col gap-4 px-4 pt-24 lg:hidden transition-transform duration-200 ease-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -123,15 +128,15 @@ export default function Navbar() {
             onClick={() => setIsPageClicked(!isPageClicked)}
             className="flex items-center justify-between w-full text-lg py-3 border-b border-gray-100"
           >
-            Pages
+            Services
             {isPageClicked ? <ChevronUp /> : <ChevronDown />}
           </button>
           {isPageClicked && (
             <div className="flex flex-col">
-              {PAGE_LINKS.map((p, i) => (
-                <a href={p.href} key={i} className="text-lg py-3 border-b border-gray-100">
-                  {p.label}
-                </a>
+              {services.map((p, i) => (
+                <div key={i} className="text-lg py-3 border-b border-gray-100">
+                  {p.serviceName}
+                </div>
               ))}
             </div>
           )}

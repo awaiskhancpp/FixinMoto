@@ -21,6 +21,7 @@ import { TrustedBy } from './collections/TrustedBy'
 import { Blog } from './collections/Blog'
 
 import { Tags } from './collections/Tags'
+import { Person } from './collections/Person'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -44,6 +45,7 @@ export default buildConfig({
     Blog,
     Categories,
     Tags,
+    Person,
   ],
   globals: [Settings, Homepage],
   secret: process.env.PAYLOAD_SECRET || '',

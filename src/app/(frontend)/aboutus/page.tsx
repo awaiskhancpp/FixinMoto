@@ -4,9 +4,12 @@ import OurTeam from '@/components/aboutus/OurTeam'
 import WhyChooseFixinMoto from '@/components/aboutus/WhyChooseFixinMoto'
 import Achievements from '@/components/shared/Achievements'
 import PageHeader from '@/components/shared/PageHeader'
-
-export default function aboutUs() {
+import configPromise from '@payload-config'
+import { getPayload } from 'payload'
+export default async function aboutUs() {
   let words = ['Passion', 'Expertise']
+  const payload = await getPayload({ config: configPromise })
+  const people = await payload.find({ collection: 'person' })
   return (
     <>
       <PageHeader
@@ -17,7 +20,7 @@ export default function aboutUs() {
       <Journey />
       <WhyChooseFixinMoto />
       <Achievements />
-      <OurTeam />
+      <OurTeam team={people.docs} />
       <FixinMotoAction />
     </>
   )

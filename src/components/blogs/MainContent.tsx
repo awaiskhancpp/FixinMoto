@@ -3,7 +3,7 @@ import { Search } from 'lucide-react'
 import RecentPosts from './RecentPosts'
 import { useState } from 'react'
 import type { Blog } from '@/payload-types'
-import { BlogCard } from '../Blog'
+import { BlogCard } from './BlogCard'
 
 const ButtonName = [
   { name: 'Automotive News' },
@@ -35,7 +35,7 @@ export default function MainContent({ card }: blogProps) {
     <section className="px-4 py-4 md:px-6 order-2 md:order-1 min-[1441px]:px-0 md:py-10">
       <div className="mx-auto max-w-[1440px]">
         <div className="grid grid-cols-12 gap-3">
-          <div className="col-span-12 md:col-span-8 order-2 md:order-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="col-span-12 md:col-span-8 order-2 md:order-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 ">
             {card.map((c, i) => (
               <BlogCard
                 key={i}

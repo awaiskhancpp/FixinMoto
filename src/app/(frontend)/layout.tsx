@@ -13,12 +13,15 @@ export const metadata = {
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const payload = await getPayload({ config: configPromise })
   const settings = await payload.findGlobal({ slug: 'settings' })
+  const serviceTitles = await payload.find({
+    collection: 'services',
+  })
   const { children } = props
 
   return (
     <html lang="en">
       <body className="font-sans antialiased">
-        <Navbar />
+        <Navbar services={serviceTitles.docs} data={settings} />
         <main>{children}</main>
         <Footer data={settings} />
       </body>

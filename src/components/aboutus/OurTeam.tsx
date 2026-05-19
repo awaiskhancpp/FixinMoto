@@ -3,9 +3,13 @@ import { OurTeamCard } from '../OurTeamCard'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { useRef, useState } from 'react'
 import { Autoplay } from 'swiper/modules'
+import type { Person } from '@/payload-types'
 import 'swiper/css'
+interface OurTeamProps {
+  team: Person[]
+}
 
-export default function OurTeam() {
+export default function OurTeam({ team }: OurTeamProps) {
   const [activeCard, setActiveCard] = useState(0)
   const [visibleSlides, setVisibleSlides] = useState(1)
   const swiperRef = useRef<any>(null)
@@ -111,17 +115,17 @@ export default function OurTeam() {
               }}
               className="w-full"
             >
-              {TESTIMONIALS.map((p, i) => (
+              {team.map((p, i) => (
                 <SwiperSlide key={i}>
                   <OurTeamCard
-                    name={p.name}
-                    instagram={p.instagram}
-                    facebook={p.facebook}
-                    twitter={p.twitter}
-                    linkdin={p.linkdin}
-                    profession={p.profession}
-                    image={p.image}
-                    quote={p.quote}
+                    name={p.name || ''}
+                    instagram={p.instagram || ''}
+                    facebook={p.facebook || ''}
+                    twitter={p.twitter || ''}
+                    linkdin={p.linkdin || ''}
+                    profession={p.profession || ''}
+                    image={typeof p.image === 'object' ? p.image?.url || '' : ''}
+                    quote={p.quote || ''}
                   />
                 </SwiperSlide>
               ))}
@@ -142,17 +146,17 @@ export default function OurTeam() {
           </div>
 
           <div className="hidden xl:grid grid-cols-4 gap-3 mt-10">
-            {TESTIMONIALS.map((p, i) => (
+            {team.slice(0, 4).map((p, i) => (
               <div key={i} className="w-full h-full">
                 <OurTeamCard
-                  name={p.name}
-                  instagram={p.instagram}
-                  facebook={p.facebook}
-                  twitter={p.twitter}
-                  linkdin={p.linkdin}
-                  profession={p.profession}
-                  image={p.image}
-                  quote={p.quote}
+                  name={p.name || ''}
+                  instagram={p.instagram || ''}
+                  facebook={p.facebook || ''}
+                  twitter={p.twitter || ''}
+                  linkdin={p.linkdin || ''}
+                  profession={p.profession || ''}
+                  image={typeof p.image === 'object' ? p.image?.url || '' : ''}
+                  quote={p.quote || ''}
                 />
               </div>
             ))}

@@ -10,6 +10,7 @@ export default async function () {
   const trustedBy = await payload.find({
     collection: 'trustedBy',
   })
+  const person = await payload.find({ collection: 'person' })
   return (
     <>
       <PageHeader
@@ -17,7 +18,7 @@ export default async function () {
         wordsToHighlight={words}
         imageSrc="/ourTeamTitleImg.png"
       />
-      <OurTeam />
+      <OurTeam team={person.docs} />
       <TrustedPartners trustedBy={trustedBy.docs} />
       <PromoCTA />
     </>

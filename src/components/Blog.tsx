@@ -135,7 +135,7 @@ export default function Blog({ blogCard }: BlogProps) {
           </Swiper>
         </div>
         <div className="flex justify-center gap-2 xl:hidden mt-4">
-          {blogCard.map((_, i) => (
+          {blogCard.slice(0, 4).map((_, i) => (
             <button
               key={i}
               type="button"
@@ -150,7 +150,7 @@ export default function Blog({ blogCard }: BlogProps) {
           ))}
         </div>
         <div className="hidden xl:grid xl:grid-cols-4 gap-4 overflow-x-auto ">
-          {blogCard.map((post, i) => (
+          {blogCard.slice(0, 4).map((post, i) => (
             <BlogCard
               key={i}
               title={post.title || ''}

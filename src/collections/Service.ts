@@ -29,13 +29,13 @@ export const Service: CollectionConfig = {
     },
     { name: 'serviceDescription', type: 'text' },
     {
-      name: 'serviceDetail',
-      type: 'richText',
+      name: 'included',
+      type: 'array',
+      fields: [{ name: 'text', type: 'text' }],
       required: true,
-      editor: lexicalEditor({
-        features: ({ defaultFeatures }) => [...defaultFeatures, FixedToolbarFeature()],
-      }),
     },
+    { name: 'description', type: 'textarea' },
+    { name: 'detail', type: 'textarea' },
     {
       name: 'serviceIcon',
       type: 'upload',
@@ -44,6 +44,18 @@ export const Service: CollectionConfig = {
     },
     {
       name: 'backgroundImage',
+      type: 'upload',
+      relationTo: 'media',
+      required: true,
+    },
+    {
+      name: 'ImageNo1',
+      type: 'upload',
+      relationTo: 'media',
+      required: true,
+    },
+    {
+      name: 'ImageNo2',
       type: 'upload',
       relationTo: 'media',
       required: true,

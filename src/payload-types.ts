@@ -78,6 +78,7 @@ export interface Config {
     blog: Blog;
     categories: Category;
     tags: Tag;
+    person: Person;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -96,6 +97,7 @@ export interface Config {
     blog: BlogSelect<false> | BlogSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     tags: TagsSelect<false> | TagsSelect<true>;
+    person: PersonSelect<false> | PersonSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -228,23 +230,16 @@ export interface Service {
       }[]
     | null;
   serviceDescription?: string | null;
-  serviceDetail: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
+  included: {
+    text?: string | null;
+    id?: string | null;
+  }[];
+  description?: string | null;
+  detail?: string | null;
   serviceIcon: number | Media;
   backgroundImage: number | Media;
+  ImageNo1: number | Media;
+  ImageNo2: number | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -349,6 +344,24 @@ export interface Tag {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "person".
+ */
+export interface Person {
+  id: number;
+  slug: string;
+  name?: string | null;
+  quote?: string | null;
+  image: number | Media;
+  profession?: string | null;
+  facebook?: string | null;
+  twitter?: string | null;
+  instagram?: string | null;
+  linkdin?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -414,6 +427,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'tags';
         value: number | Tag;
+      } | null)
+    | ({
+        relationTo: 'person';
+        value: number | Person;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -534,9 +551,18 @@ export interface ServicesSelect<T extends boolean = true> {
         id?: T;
       };
   serviceDescription?: T;
-  serviceDetail?: T;
+  included?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  description?: T;
+  detail?: T;
   serviceIcon?: T;
   backgroundImage?: T;
+  ImageNo1?: T;
+  ImageNo2?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -618,6 +644,23 @@ export interface CategoriesSelect<T extends boolean = true> {
 export interface TagsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "person_select".
+ */
+export interface PersonSelect<T extends boolean = true> {
+  slug?: T;
+  name?: T;
+  quote?: T;
+  image?: T;
+  profession?: T;
+  facebook?: T;
+  twitter?: T;
+  instagram?: T;
+  linkdin?: T;
   updatedAt?: T;
   createdAt?: T;
 }
