@@ -64,7 +64,7 @@ export default function ServicePageCard({
         <button
           type="button"
           onClick={() => setOpenModal(!openModal)}
-          className="rounded-lg bg-secondary px-8 xl:px-6 py-[15px] text-sm font-medium  text-white"
+          className="rounded-lg bg-secondary px-2 md:px-2 xl:px-4 py-[15px] text-sm font-medium  text-white flex-1"
         >
           Book Now
         </button>

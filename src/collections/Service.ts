@@ -21,12 +21,6 @@ export const Service: CollectionConfig = {
       type: 'text',
       required: true,
     },
-    {
-      name: 'highlightedWords',
-      type: 'array',
-      label: 'Highlighted Words',
-      fields: [{ name: 'word', type: 'text' }],
-    },
     { name: 'serviceDescription', type: 'text' },
     {
       name: 'included',

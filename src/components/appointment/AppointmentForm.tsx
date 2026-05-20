@@ -98,12 +98,8 @@ export default function AppointmentForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!formData.mainService) {
-      toast.info('Please select at least one Main service')
-      return
-    }
-    if (formData.services.length === 0) {
-      toast.info('Please select at least one service')
+    if (!formData.mainService && (!formData.services || formData.services.length === 0)) {
+      toast.error('Select at least one main service or service')
       return
     }
 

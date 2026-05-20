@@ -27,6 +27,7 @@ import { Location } from './collections/Location'
 import { MainService } from './collections/MainService'
 import { CTA } from './collections/CTA'
 import { Contact } from './collections/Contact'
+import { Comments } from './collections/Comments'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -57,6 +58,7 @@ export default buildConfig({
     MainService,
     CTA,
     Contact,
+    Comments,
   ],
   globals: [Settings, Homepage],
   secret: process.env.PAYLOAD_SECRET || '',

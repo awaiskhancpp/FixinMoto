@@ -18,17 +18,18 @@ export default function HeroSection({ data }: HeroProps) {
       <div className="relative z-[20] mx-auto w-full max-w-[1440px] ">
         <div className="text-4xl text-white md:text-6xl lg:text-7xl 2xl:text-8xl">
           <h1 className={`max-w-[1100px]`}>
-            {titleArray?.map((t, i) => (
-              <>{`${t} `}</>
-            ))}
+            {titleArray?.map((t, i) =>
+              data.highlightedWords?.some((w) => w.word === t) ? (
+                <span key={i} className="text-secondary">{`${t} `}</span>
+              ) : (
+                <span key={i}>{`${t} `}</span>
+              ),
+            )}
           </h1>
-          {/* <h1>
-            Drive Confidently with <span className="text-secondary">FixinMoto</span>
-          </h1> */}
         </div>
         <p className="md:hidden mt-10 max-w-xl text-white">{data.heroTagline}</p>
         <div className="flex gap-4 pt-10  text-white">
-          <button className="h-12 w-48 rounded-lg bg-secondary px-6 py-3">
+          <button className="h-12 w-48 rounded-lg bg-secondary md:px-6 py-3">
             <a href="/appointment">Appointment Now</a>
           </button>
           <button className="h-12 w-48 rounded-lg border border-white bg-transparent">

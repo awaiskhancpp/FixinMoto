@@ -24,13 +24,11 @@ export const Appointment: CollectionConfig = {
       type: 'relationship',
       relationTo: 'services',
       hasMany: true,
-      required: true,
     },
     {
       name: 'mainService',
       type: 'relationship',
       relationTo: 'main-service',
-      required: true,
     },
   ],
 }

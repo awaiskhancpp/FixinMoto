@@ -33,15 +33,25 @@ export default function Faq({ faqArray }: FaqProps) {
           </div>
           <div className="flex flex-col">
             {faqArray.map((q, i) => (
-              <div key={i} className="border-b border-white/20 py-7">
-                <button
-                  onClick={() => setActiveIndex(activeIndex === i ? null : i)}
-                  className="flex w-full justify-between text-left"
-                >
-                  <span className="font-medium">{q.question}</span>
-                  {activeIndex === i ? <ChevronUp /> : <ChevronDown />}
-                </button>
-                {activeIndex === i && <p className="pt-2 text-sm text-white/60">{q.answer}</p>}
+              <div key={i} className="border-b border-white/20 py-7 last:border-none">
+                <div onClick={() => setActiveIndex(activeIndex === i ? null : i)}>
+                  <button
+                    // onClick={() => setActiveIndex(activeIndex === i ? null : i)}
+                    className="flex w-full justify-between text-left"
+                  >
+                    <span className="font-medium">{q.question}</span>
+                    {activeIndex === i ? <ChevronUp /> : <ChevronDown />}
+                  </button>
+                </div>
+
+                {activeIndex === i && (
+                  <p
+                    onDoubleClick={() => setActiveIndex(null)}
+                    className="pt-2 text-sm text-white/60"
+                  >
+                    {q.answer}
+                  </p>
+                )}
               </div>
             ))}
           </div>

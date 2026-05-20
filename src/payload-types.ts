@@ -86,6 +86,7 @@ export interface Config {
     'main-service': MainService;
     cta: Cta;
     contact: Contact;
+    comments: Comment;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -112,6 +113,7 @@ export interface Config {
     'main-service': MainServiceSelect<false> | MainServiceSelect<true>;
     cta: CtaSelect<false> | CtaSelect<true>;
     contact: ContactSelect<false> | ContactSelect<true>;
+    comments: CommentsSelect<false> | CommentsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -237,12 +239,6 @@ export interface Service {
   slug: string;
   serviceNumber: number;
   serviceName: string;
-  highlightedWords?:
-    | {
-        word?: string | null;
-        id?: string | null;
-      }[]
-    | null;
   serviceDescription?: string | null;
   included: {
     text?: string | null;
@@ -313,6 +309,7 @@ export interface Blog {
         id?: string | null;
       }[]
     | null;
+  comments?: (number | Comment)[] | null;
   cardImg?: (number | null) | Media;
   tags?: (number | Tag)[] | null;
   blogDetail: {
@@ -344,6 +341,19 @@ export interface Category {
   slug: string;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "comments".
+ */
+export interface Comment {
+  id: number;
+  blog: number | Blog;
+  firstName: string;
+  email: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -413,8 +423,8 @@ export interface Appointment {
   date: string;
   time: string;
   location: number | Location;
-  services: (number | Service)[];
-  mainService: number | MainService;
+  services?: (number | Service)[] | null;
+  mainService?: (number | null) | MainService;
   updatedAt: string;
   createdAt: string;
 }
@@ -566,6 +576,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'contact';
         value: number | Contact;
+      } | null)
+    | ({
+        relationTo: 'comments';
+        value: number | Comment;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -679,12 +693,6 @@ export interface ServicesSelect<T extends boolean = true> {
   slug?: T;
   serviceNumber?: T;
   serviceName?: T;
-  highlightedWords?:
-    | T
-    | {
-        word?: T;
-        id?: T;
-      };
   serviceDescription?: T;
   included?:
     | T
@@ -755,6 +763,7 @@ export interface BlogSelect<T extends boolean = true> {
         forwardTo?: T;
         id?: T;
       };
+  comments?: T;
   cardImg?: T;
   tags?: T;
   blogDetail?: T;
@@ -884,6 +893,18 @@ export interface ContactSelect<T extends boolean = true> {
   message?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "comments_select".
+ */
+export interface CommentsSelect<T extends boolean = true> {
+  blog?: T;
+  firstName?: T;
+  email?: T;
+  content?: T;
+  createdAt?: T;
+  updatedAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

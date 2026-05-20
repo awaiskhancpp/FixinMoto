@@ -2,7 +2,7 @@
 import { Search } from 'lucide-react'
 import RecentPosts from './RecentPosts'
 import { useState } from 'react'
-import type { Blog } from '@/payload-types'
+import type { Blog, Tag } from '@/payload-types'
 import { BlogCard } from './BlogCard'
 
 const ButtonName = [
@@ -17,8 +17,9 @@ const ButtonName = [
 ]
 interface blogProps {
   card: Blog[]
+  tag: Tag[]
 }
-export default function MainContent({ card }: blogProps) {
+export default function MainContent({ card, tag }: blogProps) {
   const [selectedButtons, setSelectedButtons] = useState<Set<number>>(new Set())
   const toggleButton = (i: number) => {
     setSelectedButtons((prev) => {
@@ -31,22 +32,33 @@ export default function MainContent({ card }: blogProps) {
       return newSet
     })
   }
+  const filteredCards =
+    selectedButtons.size === 0
+      ? card
+      : card.filter((blog) => {
+          return blog.tags?.some((blogTag) => {
+            const tagId = typeof blogTag === 'object' ? blogTag.id : blogTag
+            return selectedButtons.has(tagId)
+          })
+        })
   return (
     <section className="px-4 py-4 md:px-6 order-2 md:order-1 min-[1441px]:px-0 md:py-10">
       <div className="mx-auto max-w-[1440px]">
         <div className="grid grid-cols-12 gap-3">
-          <div className="col-span-12 md:col-span-8 order-2 md:order-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 ">
-            {card.map((c, i) => (
-              <BlogCard
-                key={i}
-                title={c.title || ''}
-                author={c.author || ''}
-                date={c.datePublished || ''}
-                imgSrc={typeof c?.cardImg === 'object' ? c?.cardImg?.url || '' : ''}
-                category={typeof c.Category === 'object' ? c.Category?.name || '' : ''}
-                slug={c.slug || ''}
-              />
-            ))}
+          <div className="col-span-12 md:col-span-8 order-2 md:order-1">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 min-h-[400px]">
+              {filteredCards.map((c, i) => (
+                <BlogCard
+                  key={i}
+                  title={c.title || ''}
+                  author={c.author || ''}
+                  date={c.datePublished || ''}
+                  imgSrc={typeof c?.cardImg === 'object' ? c?.cardImg?.url || '' : ''}
+                  category={typeof c.Category === 'object' ? c.Category?.name || '' : ''}
+                  slug={c.slug || ''}
+                />
+              ))}
+            </div>
           </div>
           <div className="col-span-12 md:col-span-4 order-1 md:order-2 flex flex-col">
             <div className="relative items-center">
@@ -63,15 +75,15 @@ export default function MainContent({ card }: blogProps) {
             <div className="bg-primary mt-4 px-[15px] pb-6 rounded-lg">
               <h2 className="text-white font-semibold mt-3 pt-2">Tags</h2>
               <div className="pt-4 flex md:overflow-hidden overflow-x-scroll  lg:flex-wrap gap-3 text-white">
-                {ButtonName.map((b, i) => (
+                {tag.map((t, i) => (
                   <button
                     key={i}
-                    onClick={() => toggleButton(i)}
+                    onClick={() => toggleButton(t.id)}
                     className={`rounded-3xl px-3 py-2 transition-all whitespace-nowrap text-sm duration-200 ${
-                      selectedButtons.has(i) ? 'bg-secondary' : 'border border-white'
+                      selectedButtons.has(t.id) ? 'bg-secondary' : 'border border-white'
                     }`}
                   >
-                    {b.name}
+                    {t.name}
                   </button>
                 ))}
               </div>

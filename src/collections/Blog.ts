@@ -36,6 +36,12 @@ export const Blog: CollectionConfig = {
         },
       ],
     },
+    {
+      name: 'comments',
+      type: 'relationship',
+      relationTo: 'comments',
+      hasMany: true,
+    },
     { name: 'cardImg', type: 'upload', relationTo: 'media' },
     { name: 'tags', type: 'relationship', relationTo: 'tags', hasMany: true },
     {
@@ -48,4 +54,19 @@ export const Blog: CollectionConfig = {
     },
     { name: 'slug', type: 'text' },
   ],
+  hooks: {
+    afterDelete: [
+      async ({ req, id }) => {
+        await req.payload.delete({
+          collection: 'comments',
+          where: {
+            blog: {
+              equals: id,
+            },
+          },
+          overrideAccess: true,
+        })
+      },
+    ],
+  },
 }

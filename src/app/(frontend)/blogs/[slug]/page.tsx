@@ -18,16 +18,23 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
     limit: 1,
     depth: 2,
   })
-
   const post = blog.docs[0]
   if (!post) {
     notFound()
   }
+  const comments = await payload.find({
+    collection: 'comments',
+    where: {
+      blog: {
+        equals: post.id,
+      },
+    },
+  })
 
   return (
     <section className="bg-primary px-4 py-4 md:px-6 md:py-10 min-[1441px]:px-0">
       <div className="mx-auto mt-20 flex max-w-[1440px] flex-col gap-4 text-white">
-        <BlogDetailed detail={post} />
+        <BlogDetailed detail={post} comment={comments.docs} />
       </div>
     </section>
   )

@@ -37,7 +37,7 @@ export default function ServiceOverview({ content }: ServiceOverviewProps) {
           <div className="grid md:grid-cols-2 grid-cols-1 w-full gap-5 py-4">
             <div className="relative h-[367px]">
               <Image
-                src="/oil_and_fluid1.jpg"
+                src={typeof content?.ImageNo1 === 'object' ? content?.ImageNo1?.url || '' : ''}
                 fill
                 alt="..."
                 className="object-cover rounded-[15px]"
@@ -46,7 +46,7 @@ export default function ServiceOverview({ content }: ServiceOverviewProps) {
 
             <div className="relative h-[367px]">
               <Image
-                src="/oil_and_fluid2.jpg"
+                src={typeof content?.ImageNo2 === 'object' ? content?.ImageNo2?.url || '' : ''}
                 fill
                 alt="..."
                 className="object-cover rounded-[15px]"

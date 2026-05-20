@@ -81,7 +81,7 @@ export default function Navbar({ services, data }: NavbarProps) {
               }`}
             >
               <ul className="p-2 text-sm font-medium">
-                {services.map((p, i) => (
+                {services.slice(0, 5).map((p, i) => (
                   <a
                     key={i}
                     href={`/services/${p.slug}`}

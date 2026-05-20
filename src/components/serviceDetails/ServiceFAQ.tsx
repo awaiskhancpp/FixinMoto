@@ -34,7 +34,14 @@ export default function ServiceFAQ({ faqArray }: serviceFaqProps) {
                   <span className="font-medium ">{q.question}</span>
                   <div className="">{activeIndex === i ? <ChevronUp /> : <ChevronDown />}</div>
                 </button>
-                {activeIndex === i && <p className="pt-2 text-sm text-white/60">{q.answer}</p>}
+                {activeIndex === i && (
+                  <p
+                    onDoubleClick={() => setActiveIndex(null)}
+                    className="pt-2 text-sm text-white/60"
+                  >
+                    {q.answer}
+                  </p>
+                )}
               </div>
             ))}
           </div>

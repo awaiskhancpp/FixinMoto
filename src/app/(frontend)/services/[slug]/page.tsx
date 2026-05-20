@@ -34,9 +34,7 @@ export default async function ServiceDetails({ params }: { params: Promise<{ slu
     <section className="bg-black">
       <PageHeader
         imageSrc={
-          typeof currentService?.backgroundImage === 'object'
-            ? currentService.backgroundImage?.url || ''
-            : ''
+          typeof currentService?.ImageNo1 === 'object' ? currentService.ImageNo1?.url || '' : ''
         }
         title={'Explore the Details of Our Expert Services'}
         wordsToHighlight={['Explore', 'Expert', 'Services']}
