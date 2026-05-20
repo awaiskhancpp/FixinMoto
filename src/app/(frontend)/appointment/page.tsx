@@ -24,6 +24,9 @@ export default async function Appointment() {
   const services = await payload.find({
     collection: 'services',
   })
+  const mainService = await payload.find({
+    collection: 'main-service',
+  })
   const faq = await payload.find({
     collection: 'faq',
   })
@@ -58,6 +61,7 @@ export default async function Appointment() {
           carMake={carMake.docs}
           carModel={carModel.docs}
           service={services.docs}
+          mainService={mainService.docs}
         />
         <Testimonials card={testimonials.docs} />
         <Faq faqArray={faq.docs} />

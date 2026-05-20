@@ -142,7 +142,7 @@ export default function OurTeam({ team }: ourTeamProps) {
             </button>
           ))}
         </div>
-        <div className="mt-15 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="mt-15 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 min-h-[600px] gap-5">
           {(selected === null || selected === 0
             ? team
             : team.filter((m) => m.profession === ButtonLabels[selected])

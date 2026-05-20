@@ -25,15 +25,28 @@ export default function ContactUs({ data }: ContactProps) {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setFormData({
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      message: '',
-    })
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+
+      if (response.ok) {
+        alert('Message sent successfully!')
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          message: '',
+        })
+      } else {
+      }
+    } catch (error) {}
   }
   return (
     <div className="w-full bg-primary">
@@ -68,59 +81,58 @@ export default function ContactUs({ data }: ContactProps) {
                 information you need.
               </p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <input
-                type="text"
-                placeholder="First Name"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleInputChange}
-                required
-                className="text-white/50 border border-white/50 px-3 py-3 rounded-[15px] bg-transparent"
-              />
-              <input
-                type="text"
-                placeholder="Last Name"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleInputChange}
-                required
-                className="text-white/50 border border-white/50 px-3 py-3 rounded-[15px] bg-transparent"
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                required
-                className="text-white/50 border border-white/50 px-3 py-3 rounded-[15px] bg-transparent"
-              />
-              <input
-                type="text"
-                placeholder="Phone"
-                name="phone"
-                value={formData.phone}
-                required
-                onChange={handleInputChange}
-                className="text-white/50 border border-white/50 px-3 py-3 rounded-[15px] bg-transparent"
-              />
-              <div className="col-span-1 sm:col-span-2">
-                <textarea
-                  placeholder="Message"
-                  name="message"
-                  value={formData.message}
+            <form action="" onSubmit={handleSubmit}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <input
+                  type="text"
+                  placeholder="First Name"
+                  name="firstName"
+                  value={formData.firstName}
                   onChange={handleInputChange}
-                  className="w-full min-h-[160px] rounded-[15px] border border-white/50 bg-transparent px-3 py-3 text-white placeholder:text-white/50"
+                  required
+                  className="text-white/50 border border-white/50 px-3 py-3 rounded-[15px] outline-none bg-transparent"
                 />
+                <input
+                  type="text"
+                  placeholder="Last Name"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleInputChange}
+                  required
+                  className="text-white/50 border border-white/50 px-3 py-3 rounded-[15px] outline-none bg-transparent"
+                />
+                <input
+                  type="email"
+                  placeholder="Email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  className="text-white/50 border border-white/50 px-3 py-3 rounded-[15px] outline-none bg-transparent"
+                />
+                <input
+                  type="text"
+                  placeholder="Phone"
+                  name="phone"
+                  value={formData.phone}
+                  required
+                  onChange={handleInputChange}
+                  className="text-white/50 border border-white/50 px-3 py-3 outline-none rounded-[15px] bg-transparent"
+                />
+                <div className="col-span-1 sm:col-span-2">
+                  <textarea
+                    placeholder="Message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    className="w-full min-h-[160px] rounded-[15px] border outline-none border-white/50 bg-transparent px-3 py-3 text-white placeholder:text-white/50"
+                  />
+                </div>
+                <button className="bg-secondary md:col-start-2 px-4 py-4 rounded-lg" type="submit">
+                  Submit
+                </button>
               </div>
-              <button
-                className="bg-secondary md:col-start-2 px-4 py-4 rounded-lg"
-                onClick={handleSubmit}
-              >
-                Submit
-              </button>
-            </div>
+            </form>
           </div>
           <div className="md:col-span-5 flex flex-col gap-4">
             <div>

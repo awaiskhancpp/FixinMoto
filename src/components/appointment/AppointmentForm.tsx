@@ -1,7 +1,9 @@
 'use client'
+
 import { useState } from 'react'
 import Image from 'next/image'
-import type { CarMake, CarModel, Service, Location } from '@/payload-types'
+import type { CarMake, CarModel, Service, Location, MainService } from '@/payload-types'
+
 const CarInfo = [
   {
     iconImg: '/appointmentForm/carhood.png',
@@ -22,25 +24,13 @@ const CarInfo = [
     content: 'Keep Your Fleet Running: Professional Maintenance for Vehicles',
   },
 ]
-const ButtonName = [
-  { name: 'Oil Change', onclick: {} },
-  { name: 'Brake Repair', onclick: {} },
-  { name: 'Tire Services', onclick: {} },
-  { name: 'Battery Check/Replacement', onclick: {} },
-  { name: 'Engine Diagnostic', onclick: {} },
-  { name: 'Transmission Service', onclick: {} },
-  { name: 'AC/Heating Repair', onclick: {} },
-  { name: 'Suspension/Steering Repair', onclick: {} },
-  { name: 'Exhaust Repair', onclick: {} },
-  { name: 'General Maintenance', onclick: {} },
-  { name: 'Car Wash and Detailing', onclick: {} },
-  { name: 'Windshield Repair', onclick: {} },
-]
+
 interface AppointmentFormProps {
   location: Location[]
   carMake: CarMake[]
   carModel: CarModel[]
   service: Service[]
+  mainService: MainService[]
 }
 
 export default function AppointmentForm({
@@ -48,10 +38,10 @@ export default function AppointmentForm({
   carMake,
   carModel,
   service,
+  mainService,
 }: AppointmentFormProps) {
-  const [activeCard, setActiveCard] = useState<Number | null>(null)
-  const [selectedButtons, setSelectedButtons] = useState<Set<number>>(new Set())
-  const [selectedMake, setSelectedMake] = useState<string | number>('')
+  const [activeCard, setActiveCard] = useState<number | null>(null)
+  const [selectedMakeId, setSelectedMakeId] = useState<number | null>(null)
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -60,38 +50,39 @@ export default function AppointmentForm({
     carMake: '',
     carModel: '',
     carYear: '',
-    licensePlate: '',
+    licencePlate: '',
     vin: '',
     date: '',
     time: '',
     location: '',
     services: [] as string[],
-    mainService: [] as string[],
+    mainService: '',
   })
-  const toggleButton = (i: number) => {
-    setSelectedButtons((prev) => {
-      const newSet = new Set(prev)
-      if (newSet.has(i)) {
-        newSet.delete(i)
-      } else {
-        newSet.add(i)
-      }
-      return newSet
-    })
-  }
-  const filteredModels = carModel.filter(
-    (model) => typeof model.make === 'object' && model.make?.id === selectedMake,
-  )
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
+  const makeIdParsed = selectedMakeId ?? (formData.carMake === '' ? NaN : Number(formData.carMake))
+  const handleMainServiceClick = (index: number, serviceId: string) => {
+    setActiveCard(index)
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      mainService: serviceId,
     }))
-    if (name === 'carMake') {
-      setSelectedMake(value)
-    }
   }
+  const filteredModels = carModel.filter((model) => {
+    if (typeof model.make !== 'object' || model.make === null) return false
+    return model.make.id === makeIdParsed
+  })
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setFormData((prev) => {
+      const next = { ...prev, [name]: value }
+      if (name === 'carMake') {
+        next.carModel = ''
+        setSelectedMakeId(value === '' ? null : Number(value))
+      }
+      return next
+    })
+  }
+
   const handleServiceToggle = (serviceId: string) => {
     setFormData((prev) => ({
       ...prev,
@@ -103,139 +94,138 @@ export default function AppointmentForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-
+    const appointmentData = {
+      ...formData,
+      ...formData,
+      carMake: formData.carMake ? Number(formData.carMake) : null,
+      carModel: formData.carModel ? Number(formData.carModel) : null,
+      location: formData.location ? Number(formData.location) : null,
+      services: formData.services.map((id) => Number(id)),
+      mainService: formData.mainService ? Number(formData.mainService) : null,
+      carYear: formData.carYear ? Number(formData.carYear) : null,
+    }
     try {
       const response = await fetch('/api/appointment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(appointmentData),
       })
-
-      if (response.ok) {
-        alert('Appointment booked successfully!')
-      }
     } catch (error) {
       console.error('Error:', error)
-      alert('Failed to book appointment')
     }
   }
+
   return (
     <>
       <form
         onSubmit={handleSubmit}
-        className="bg-black text-white px-4 py-4 md:px-6 min-[1441px]:px-0 md:py-10"
+        className="bg-black px-4 py-4 text-white md:px-6 md:py-10 min-[1441px]:px-0"
       >
         <div className="mx-auto max-w-6xl">
           <div>
             <h2 className="font-medium">Personal Information</h2>
-            <div className="grid md:grid-cols-2 gap-3 pt-3 grid-cols-1 ">
+            <div className="grid grid-cols-1 gap-3 pt-3 md:grid-cols-2">
               <input
                 type="text"
                 placeholder="First Name"
+                name="firstName"
                 value={formData.firstName}
                 onChange={handleInputChange}
-                className="bg-white rounded-sm text-black py-2 pl-6"
+                className="rounded-sm bg-white py-2 pl-6 text-black"
               />
               <input
                 type="text"
                 placeholder="Last Name"
+                name="lastName"
                 value={formData.lastName}
                 onChange={handleInputChange}
-                className="bg-white rounded-sm text-black py-2 pl-6"
+                className="rounded-sm bg-white py-2 pl-6 text-black"
               />
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2">
-                  <Image
-                    src="/appointmentForm/mail.png"
-                    alt=""
-                    width={16}
-                    height={16}
-                    className=""
-                  />
+                  <Image src="/appointmentForm/mail.png" alt="" width={16} height={16} />
                 </span>
                 <input
-                  type="text"
+                  type="email"
                   placeholder="Email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="bg-white rounded-sm text-black py-2 pl-9 w-full"
+                  name="email"
+                  className="w-full rounded-sm bg-white py-2 pl-9 text-black"
                   required
                 />
               </div>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2">
-                  <Image
-                    src="/appointmentForm/call.png"
-                    alt=""
-                    width={16}
-                    height={16}
-                    className=""
-                  />
+                  <Image src="/appointmentForm/call.png" alt="" width={16} height={16} />
                 </span>
                 <input
-                  type="text"
+                  type="tel"
                   placeholder="Phone Number"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className="bg-white rounded-sm text-black py-2 w-full pl-9"
+                  name="phone"
+                  className="w-full rounded-sm bg-white py-2 pl-9 text-black"
                 />
               </div>
             </div>
           </div>
+
           <div className="pt-6">
             <h2 className="font-medium">Car Information</h2>
-            <div className="grid md:grid-cols-3 grid-cols-1 pt-3 gap-2">
+            <div className="grid grid-cols-1 gap-2 pt-3 md:grid-cols-3">
               <select
-                name="carmake"
+                name="carMake"
                 value={formData.carMake}
                 onChange={handleInputChange}
-                id="carmake"
-                className=" py-2 rounded-lg text-black bg-white"
+                id="carMake"
+                className="rounded-lg bg-white py-2 text-black"
               >
-                <option defaultValue="">Select Car Make</option>
+                <option value="">Select Car Make</option>
                 {carMake.map((make) => (
                   <option key={make.id} value={make.id}>
                     {make.name}
                   </option>
                 ))}
               </select>
+
               <select
-                name="carmodel"
-                id="carmodel"
+                name="carModel"
+                id="carModel"
                 value={formData.carModel}
                 onChange={handleInputChange}
-                className=" py-2 rounded-lg text-black bg-white"
+                disabled={formData.carMake === '' || Number.isNaN(makeIdParsed)}
+                className="rounded-lg bg-white py-2 text-black disabled:opacity-50"
               >
-                <option defaultValue="">Select Car Model</option>
+                <option value="">Select Car Model</option>
                 {filteredModels.map((model) => (
-                  <option value={model.id}>{model.name}</option>
+                  <option key={model.id} value={model.id}>
+                    {model.name}
+                  </option>
                 ))}
               </select>
+
               <input
-                name="caryear"
+                name="carYear"
                 placeholder="Car Year"
                 value={formData.carYear}
                 onChange={handleInputChange}
-                id="caryear"
-                className=" py-2 rounded-lg text-black bg-white pl-6"
+                id="carYear"
+                className="rounded-lg bg-white py-2 pl-6 text-black"
               />
-              <div className="md:col-span-3 grid md:grid-cols-2 grid-cols-1 gap-2">
+
+              <div className="grid grid-cols-1 gap-2 md:col-span-3 md:grid-cols-2">
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2">
-                    <Image
-                      src="/appointmentForm/car_rental.png"
-                      alt=""
-                      width={16}
-                      height={16}
-                      className=""
-                    />
+                    <Image src="/appointmentForm/car_rental.png" alt="" width={16} height={16} />
                   </span>
                   <input
                     type="text"
                     placeholder="Licence Plate"
-                    value={formData.licensePlate}
+                    value={formData.licencePlate}
                     onChange={handleInputChange}
-                    className="col-start-1 col-end-[5/2] bg-white rounded-sm text-black py-2 w-full pl-9"
+                    name="licencePlate"
+                    className="w-full rounded-sm bg-white py-2 pl-9 text-black"
                   />
                 </div>
                 <div className="relative">
@@ -245,7 +235,6 @@ export default function AppointmentForm({
                       alt=""
                       width={16}
                       height={16}
-                      className=""
                     />
                   </span>
                   <input
@@ -253,73 +242,58 @@ export default function AppointmentForm({
                     value={formData.vin}
                     onChange={handleInputChange}
                     placeholder="Vin (Optional)"
-                    className="bg-white rounded-sm text-black py-2 w-full pl-9"
+                    name="vin"
+                    className="w-full rounded-sm bg-white py-2 pl-9 text-black"
                   />
                 </div>
               </div>
             </div>
           </div>
+
           <div className="pt-6">
             <h2 className="font-medium">Appointment Details</h2>
-            <div className="grid md:grid-cols-3 grid-cols-1 pt-3 gap-2">
+            <div className="grid grid-cols-1 gap-2 pt-3 md:grid-cols-3">
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2">
-                  <Image
-                    src="/appointmentForm/calendar_month.png"
-                    alt=""
-                    width={16}
-                    height={16}
-                    className=""
-                  />
+                  <Image src="/appointmentForm/calendar_month.png" alt="" width={16} height={16} />
                 </span>
                 <input
                   type="date"
                   value={formData.date}
                   onChange={handleInputChange}
-                  className="text-black bg-white py-2 rounded-sm w-full pl-9"
+                  name="date"
+                  className="w-full rounded-sm bg-white py-2 pl-9 text-black"
                 />
               </div>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2">
-                  <Image
-                    src="/appointmentForm/alarm.png"
-                    alt=""
-                    width={16}
-                    height={16}
-                    className=""
-                  />
+                  <Image src="/appointmentForm/alarm.png" alt="" width={16} height={16} />
                 </span>
                 <input
                   type="time"
                   id="appointment"
-                  name="appointment"
+                  name="time"
                   value={formData.time}
                   onChange={handleInputChange}
                   min="09:00"
                   max="18:00"
-                  className="bg-white text-black py-2 rounded-sm w-full pl-9"
+                  className="w-full rounded-sm bg-white py-2 pl-9 text-black"
                 />
               </div>
               <div className="relative w-full">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2">
-                  <Image
-                    src="/appointmentForm/location_on.png"
-                    alt=""
-                    width={16}
-                    height={16}
-                    className=""
-                  />
+                  <Image src="/appointmentForm/location_on.png" alt="" width={16} height={16} />
                 </span>
                 <select
                   name="location"
                   id="location"
                   value={formData.location}
                   onChange={handleInputChange}
-                  className="py-2 rounded-lg text-black bg-white w-full pl-9 "
+                  className="w-full rounded-lg bg-white py-3 pl-9 text-black"
                 >
-                  <option defaultValue="">Select Location</option>
-                  {location.map((l, i) => (
-                    <option value={l.name} key={i}>
+                  <option value="">Select Location</option>
+                  {location.map((l) => (
+                    <option key={l.id} value={l.id}>
                       {l.name}
                     </option>
                   ))}
@@ -327,45 +301,56 @@ export default function AppointmentForm({
               </div>
             </div>
           </div>
-          <div className="pt-3">
+
+          <div className="pt-6">
             <h2 className="font-medium">Service Details</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-2 pt-2 ">
-              {CarInfo.map((c, i) => (
-                <div
-                  key={i}
-                  onClick={() => setActiveCard(i)}
-                  className={`border border-secondary rounded-[15px] ${activeCard === i ? 'bg-secondary' : ''}`}
-                >
-                  <Card
-                    iconImg={c.iconImg}
-                    imgOnClick={c.imgOnClick}
-                    serviceTitle={c.serviceTitle}
-                    content={c.content}
-                    clicked={activeCard === i}
-                  />
-                </div>
-              ))}
-            </div>
-            <div className="pt-4 flex flex-wrap gap-3">
-              {ButtonName.map((b, i) => (
+            <div className="grid grid-cols-1 gap-2 pt-2 md:grid-cols-2 lg:grid-cols-3">
+              {mainService.map((c, i) => (
                 <button
                   key={i}
-                  onClick={() => toggleButton(i)}
-                  className={`rounded-3xl px-3 py-2 ${
-                    selectedButtons.has(i) ? 'bg-secondary' : 'border border-white'
+                  type="button"
+                  onClick={() => handleMainServiceClick(i, String(c.id))}
+                  className={`rounded-[15px] border border-secondary text-left transition-colors ${
+                    activeCard === i ? 'bg-secondary' : 'bg-transparent'
                   }`}
                 >
-                  {b.name}
+                  <Card
+                    iconImg={typeof c.mainIcon === 'object' ? c.mainIcon?.url || '' : ''}
+                    imgOnClick={typeof c.changedIcon === 'object' ? c.changedIcon?.url || '' : ''}
+                    serviceTitle={c.title}
+                    content={c.description}
+                    clicked={activeCard === i}
+                  />
+                </button>
+              ))}
+            </div>
+            <div className="flex flex-wrap gap-3 pt-6">
+              {service.map((s) => (
+                <button
+                  key={s.id}
+                  type="button"
+                  onClick={() => handleServiceToggle(String(s.id))}
+                  className={`rounded-3xl px-3 py-2 transition-colors ${
+                    formData.services.includes(String(s.id))
+                      ? 'bg-secondary'
+                      : 'border border-white'
+                  }`}
+                >
+                  {s.serviceName}
                 </button>
               ))}
             </div>
           </div>
-          <button className="mt-4 rounded-lg bg-secondary px-5 py-2">Make an Appointment</button>
+
+          <button type="submit" className="mt-6 rounded-lg bg-secondary px-5 py-2">
+            Make an Appointment
+          </button>
         </div>
       </form>
     </>
   )
 }
+
 interface CardProps {
   iconImg: string
   imgOnClick: string | undefined
@@ -377,8 +362,8 @@ interface CardProps {
 export const Card = ({ iconImg, imgOnClick, serviceTitle, content, clicked }: CardProps) => {
   const imgSrc = clicked ? imgOnClick : iconImg
   return (
-    <div className={`flex flex-row py-2 px-2 rounded-[15px] `}>
-      <Image src={imgSrc || '/'} alt="..." width={64} height={64} className=" object-contain" />
+    <div className="flex flex-row rounded-[15px] px-2 py-2">
+      <Image src={imgSrc || iconImg} alt="" width={64} height={64} className="object-contain" />
       <div className="flex flex-col pl-2">
         <h3 className="font-medium">{serviceTitle}</h3>
         <p className="text-white/50">{content}</p>

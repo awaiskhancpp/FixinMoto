@@ -13,7 +13,12 @@ export const Appointment: CollectionConfig = {
     { name: 'vin', type: 'text' },
     { name: 'date', type: 'text', required: true },
     { name: 'time', type: 'text', required: true },
-    { name: 'location', type: 'text', required: true },
+    {
+      name: 'location',
+      type: 'relationship',
+      relationTo: 'location',
+      required: true,
+    },
     {
       name: 'services',
       type: 'relationship',
@@ -24,7 +29,7 @@ export const Appointment: CollectionConfig = {
     {
       name: 'mainService',
       type: 'relationship',
-      relationTo: 'location',
+      relationTo: 'main-service',
       required: true,
     },
   ],

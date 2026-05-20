@@ -28,11 +28,10 @@ export default function WhyChooseUS() {
               <p>Fast, reliable service you can trust.</p>
             </div>
           </div>
-          <a href="/aboutus">
-            <button className="text-white bg-red-500 hover:border hover:border-white hover:bg-transparent hover:text-secondary w-40 h-14 px-7 py-4 rounded-lg mt-4 mb-4">
-              Learn More
-            </button>
-          </a>
+
+          <button className="text-white bg-red-500 hover:border hover:border-white hover:bg-transparent hover:text-secondary w-40 h-14 px-7 py-4 rounded-lg mt-4 mb-4">
+            <a href="/aboutus">Learn More</a>
+          </button>
         </div>
         <div className="relative h-[400px] w-full min-w-0 max-w-full rounded-xl md:h-[500px] md:flex-1 lg:h-[580px]">
           <Image

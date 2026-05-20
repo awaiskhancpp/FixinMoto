@@ -24,22 +24,26 @@ export default function Footer({ data }: FooterProps) {
             alt="footerlogo"
           />
           <div className="lg:py-4 space-y-2 mt-3">
-            <div className="flex">
+            <a
+              href={`https://maps.google.com/?q=${data.address || ''}`}
+              target="_blank"
+              className="flex"
+            >
               <MapPin className="text-red-500 shrink-0 w-4 h-4 mt-0.5 mr-1" />
               <p className="text-white/50">{data.address}</p>
-            </div>
-            <div className="flex">
+            </a>
+            <a href={`tel:${data.phone}`} className="flex">
               <Phone className="text-red-500 shrink-0 w-4 h-4 mt-0.5 mr-1" />
               <p className="text-white/50">{data.phone}</p>
-            </div>
-            <div className="flex ">
+            </a>
+            <a href={`mailto:${data.contactEmail}`} className="flex ">
               <Mail className="text-red-500 shrink-0 w-4 h-4 mt-0.5 mr-1" />
               <p className="text-white/50">{data.contactEmail}</p>
-            </div>
-            <div className="flex">
+            </a>
+            <a href={`${data.website}`} className="flex">
               <Globe className="text-red-500 shrink-0 w-4 h-4 mt-0.5 mr-1" />
               <p className="text-white/50">{data.website}</p>
-            </div>
+            </a>
           </div>
         </div>
         <div className="lg:col-span-3 lg:py-5 order-3 lg:order-2">
@@ -53,22 +57,19 @@ export default function Footer({ data }: FooterProps) {
           <div className="grid">
             <h3 className="text-2xl font-medium lg:mt-5 pb-2">Quick Links</h3>
             <div className="space-y-2 mt-4 grid">
-              <a href="aboutus" className="text-white/50">
+              <a href="aboutus" className="text-white/50 hover:text-white">
                 About us
               </a>
-              <a href="#" className="text-white/50">
-                Why with us
-              </a>
-              <a href="/services" className="text-white/50">
+              <a href="/services" className="text-white/50 hover:text-white">
                 Out Services
               </a>
-              <a href="/appointment" className="text-white/50">
+              <a href="/appointment" className="text-white/50 hover:text-white">
                 Appointment
               </a>
-              <a href="#" className="text-white/50">
-                Blog
+              <a href="/blogs" className="text-white/50 hover:text-white">
+                Blogs
               </a>
-              <a href="/contact" className="text-white/50">
+              <a href="/contact" className="text-white/50 hover:text-white">
                 Contact us
               </a>
             </div>
