@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { MapPin, Phone, Mail } from 'lucide-react'
 import type { Setting as ContactType } from '@/payload-types'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 interface ContactProps {
   data: ContactType
 }
@@ -15,6 +16,7 @@ export default function ContactUs({ data }: ContactProps) {
     phone: '',
     message: '',
   })
+  const [isSubmitted, setIsSubmitted] = useState(false)
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
   ) => {
@@ -27,26 +29,43 @@ export default function ContactUs({ data }: ContactProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!formData.email.includes('@')) {
+      toast.error('Enter a valid email')
+      return
+    }
 
     try {
+      setIsSubmitted(true)
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       })
 
-      if (response.ok) {
-        alert('Message sent successfully!')
-        setFormData({
-          firstName: '',
-          lastName: '',
-          email: '',
-          phone: '',
-          message: '',
-        })
-      } else {
+      const data = await response.json()
+
+      if (!response.ok) {
+        const message = data?.errors?.[0]?.message || data?.error || 'Failed to send message'
+
+        toast.error(message)
+        return
       }
-    } catch (error) {}
+
+      toast.success('Message sent successfully!')
+
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        message: '',
+      })
+    } catch (error) {
+      console.log(error)
+      toast.error('Network error. Try again.')
+    } finally {
+      setIsSubmitted(false)
+    }
   }
   return (
     <div className="w-full bg-primary">
@@ -128,8 +147,40 @@ export default function ContactUs({ data }: ContactProps) {
                     className="w-full min-h-[160px] rounded-[15px] border outline-none border-white/50 bg-transparent px-3 py-3 text-white placeholder:text-white/50"
                   />
                 </div>
-                <button className="bg-secondary md:col-start-2 px-4 py-4 rounded-lg" type="submit">
-                  Submit
+                <button
+                  type="submit"
+                  disabled={isSubmitted}
+                  className="
+                  bg-secondary
+                  md:col-start-2
+                  px-4 py-4
+                  rounded-lg
+                  text-white
+                  text-sm
+                  font-medium
+                  shadow-[0px_4px_12px_rgba(34,34,34,0.1)]
+                  flex
+                  items-center
+                  justify-center
+                  gap-2
+                  transition-all
+                  duration-300
+                  hover:scale-[1.03]
+                  hover:shadow-[0px_8px_24px_rgba(34,34,34,0.2)]
+                  active:scale-[0.97]
+                  disabled:cursor-not-allowed
+                  disabled:opacity-70
+                  disabled:hover:scale-100
+                "
+                >
+                  {isSubmitted ? (
+                    <>
+                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                      Submitting...
+                    </>
+                  ) : (
+                    <>Submit</>
+                  )}
                 </button>
               </div>
             </form>

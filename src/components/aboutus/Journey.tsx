@@ -35,7 +35,7 @@ export default function Journey() {
             </div>
             <div className="absolute -bottom-4 -left-3 z-10 h-[200px] w-[200px] overflow-hidden rounded-[15px] sm:left-3 sm:h-[220px] sm:w-[220px] md:-bottom-4 md:-left-5 lg:h-[220px] lg:w-[220px]">
               <Image
-                src="/fromPassionToPrecision2.jpg"
+                src="/passionToPrecisionImg2.jpg"
                 alt=""
                 fill
                 className="object-cover"

@@ -68,7 +68,7 @@ export function BlogCard({ title, date, author, imgSrc, category, slug }: BlogCa
         </h3>
       </div>
 
-      <div className="flex flex-row items-center px-[14px] text-black/50 opacity-50 space-x-4">
+      <div className="flex flex-row items-center px-[14px] text-black/80 opacity-80 space-x-4">
         <div className="flex flex-1 items-center justify-start gap-2">
           <Calendar className="size-4 shrink-0" strokeWidth={1.5} />
           <time className="text-xs font-normal " dateTime={date}>

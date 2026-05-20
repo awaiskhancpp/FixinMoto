@@ -35,7 +35,7 @@ export default function WhyChooseUS() {
         </div>
         <div className="relative h-[400px] w-full min-w-0 max-w-full rounded-xl md:h-[500px] md:flex-1 lg:h-[580px]">
           <Image
-            src="/passionToPrecisionimg1.jpg"
+            src="/passionToPrecisionImg1.jpg"
             alt="middleimg"
             fill
             className="rounded-xl object-cover"

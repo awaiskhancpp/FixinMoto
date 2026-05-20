@@ -32,11 +32,14 @@ export default function Footer({ data }: FooterProps) {
       if (response.ok) {
         setEmail('')
         toast.success('Thank You for Subscribing')
-      } else if (response.status === 409) {
-        toast.info('This email is already subscribed')
-      } else {
-        toast.error(data?.message || 'Failed to subscribe')
+        return
       }
+      if (response.status === 409 || data?.message === 'EMAIL_ALREADY_EXISTS') {
+        toast.info('This email is already subscribed')
+        return
+      }
+      const payloadError = data?.errors?.[0]?.message
+      toast.error(payloadError || 'Subscription failed')
     } catch (e) {
       toast.error('Something went wrong!')
     } finally {

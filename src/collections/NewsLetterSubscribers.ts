@@ -11,6 +11,16 @@ export const NewLetterSubscribers: CollectionConfig = {
       type: 'email',
       required: true,
       unique: true,
+      hooks: {
+        beforeValidate: [
+          ({ value }) => {
+            if (typeof value === 'string') {
+              return value.trim().toLowerCase()
+            }
+            return value
+          },
+        ],
+      },
     },
   ],
 }
