@@ -20,10 +20,14 @@ export const Blog: CollectionConfig = {
       type: 'array',
       fields: [
         {
-          name: 'logo',
-          type: 'upload',
-          relationTo: 'media',
-          required: true,
+          name: 'platform',
+          type: 'select',
+          options: [
+            { label: 'Facebook', value: 'facebook' },
+            { label: 'Instagram', value: 'instagram' },
+            { label: 'Twitter', value: 'twitter' },
+            { label: 'LinkedIn', value: 'linkedin' },
+          ],
         },
         {
           name: 'forwardTo',

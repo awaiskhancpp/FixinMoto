@@ -116,7 +116,7 @@ interface TestimonialCardProps {
 const TestimonialCard = ({ name, image, quote, rating }: TestimonialCardProps) => {
   return (
     <div
-      className={`flex group snap-center h-[460] overflow-x-hidden flex-col gap-2.5 rounded-[15px] transition-colors duration-300 hover:bg-secondary bg-[#F8F8F6] px-6  py-[40px]`}
+      className={`flex group snap-center h-[460] overflow-x-hidden flex-col gap-2.5 rounded-[15px] transition-colors duration-300 hover:bg-secondary bg-[#F8F8F6] px-6 hover:text-white  py-[40px]`}
     >
       <div className="flex ">
         {Array.from({ length: rating }).map((_, i) => (
@@ -127,8 +127,12 @@ const TestimonialCard = ({ name, image, quote, rating }: TestimonialCardProps) =
           />
         ))}
       </div>
-      <p className="text-base font-medium leading-normal text-black/50 flex-1 ">{quote}</p>
-      <h3 className="text-2xl font-medium leading-[1.333] text-primary">{name}</h3>
+      <p className="text-base font-medium leading-normal text-black/50 flex-1 group-hover:text-white">
+        {quote}
+      </p>
+      <h3 className="text-2xl font-medium leading-[1.333] text-primary group-hover:text-white">
+        {name}
+      </h3>
 
       <div className="relative  overflow-hidden rounded-md">
         <Image

@@ -1,9 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import Image from 'next/image'
 import type { CarMake, CarModel, Service, Location, MainService } from '@/payload-types'
-
+import { toast } from 'react-toastify'
 const CarInfo = [
   {
     iconImg: '/appointmentForm/carhood.png',
@@ -58,6 +58,10 @@ export default function AppointmentForm({
     services: [] as string[],
     mainService: '',
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const dateRef = useRef<HTMLInputElement>(null)
+  const timeRef = useRef<HTMLInputElement>(null)
+
   const makeIdParsed = selectedMakeId ?? (formData.carMake === '' ? NaN : Number(formData.carMake))
   const handleMainServiceClick = (index: number, serviceId: string) => {
     setActiveCard(index)
@@ -95,15 +99,17 @@ export default function AppointmentForm({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!formData.mainService) {
-      alert('Please select a main service')
+      toast.info('Please select at least one Main service')
       return
     }
     if (formData.services.length === 0) {
-      alert('Please select at least one service')
+      toast.info('Please select at least one service')
       return
     }
+
+    setIsSubmitting(true)
+
     const appointmentData = {
-      ...formData,
       ...formData,
       carMake: formData.carMake ? Number(formData.carMake) : null,
       carModel: formData.carModel ? Number(formData.carModel) : null,
@@ -119,8 +125,35 @@ export default function AppointmentForm({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(appointmentData),
       })
+
+      if (response.ok) {
+        toast.success('Appointment Submitted Successfully')
+
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          carMake: '',
+          carModel: '',
+          carYear: '',
+          licencePlate: '',
+          vin: '',
+          date: '',
+          time: '',
+          location: '',
+          services: [],
+          mainService: '',
+        })
+
+        setActiveCard(null)
+      } else {
+        toast.error('Failed to send Appointment')
+      }
     } catch (error) {
-      console.error('Error:', error)
+      toast.error('Something went wrong! Please try again')
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -267,24 +300,26 @@ export default function AppointmentForm({
           <div className="pt-6">
             <h2 className="font-medium">Appointment Details</h2>
             <div className="grid grid-cols-1 gap-2 pt-3 md:grid-cols-3">
-              <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2">
+              <div className="relative" onClick={() => dateRef.current?.showPicker()}>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
                   <Image src="/appointmentForm/calendar_month.png" alt="" width={16} height={16} />
                 </span>
                 <input
+                  ref={dateRef}
                   type="date"
                   value={formData.date}
                   onChange={handleInputChange}
                   name="date"
                   required
-                  className="w-full rounded-sm bg-white py-2 pl-9 text-black"
+                  className="custom-date-input w-full rounded-sm bg-white py-2 pl-9 text-black cursor-pointer"
                 />
               </div>
-              <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2">
+              <div className="relative" onClick={() => timeRef.current?.showPicker()}>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
                   <Image src="/appointmentForm/alarm.png" alt="" width={16} height={16} />
                 </span>
                 <input
+                  ref={timeRef}
                   type="time"
                   id="appointment"
                   name="time"
@@ -293,7 +328,7 @@ export default function AppointmentForm({
                   min="09:00"
                   max="18:00"
                   required
-                  className="w-full rounded-sm bg-white py-2 pl-9 text-black"
+                  className="custom-date-input w-full rounded-sm bg-white py-2 pl-9 text-black cursor-pointer"
                 />
               </div>
               <div className="relative w-full">
@@ -359,8 +394,39 @@ export default function AppointmentForm({
             </div>
           </div>
 
-          <button type="submit" className="mt-6 rounded-lg bg-secondary px-5 py-2">
-            Make an Appointment
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="
+    mt-6
+    rounded-lg
+    bg-secondary
+    px-6
+    py-3
+    font-medium
+    text-white
+    transition-all
+    duration-300
+    hover:scale-[1.03]
+    hover:shadow-lg
+    active:scale-[0.98]
+    disabled:cursor-not-allowed
+    disabled:opacity-70
+    disabled:hover:scale-100
+    flex
+    items-center
+    justify-center
+    min-w-[220px]
+  "
+          >
+            {isSubmitting ? (
+              <div className="flex items-center gap-2">
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                Submitting...
+              </div>
+            ) : (
+              'Make an Appointment'
+            )}
           </button>
         </div>
       </form>

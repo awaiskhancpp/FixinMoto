@@ -3,12 +3,46 @@ import Image from 'next/image'
 import { MapPin, Phone, Mail, Globe, ArrowUpRight } from 'lucide-react'
 import type { Setting as FooterType } from '@/payload-types'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
+
 interface FooterProps {
   data: FooterType
 }
 
 export default function Footer({ data }: FooterProps) {
   const [email, setEmail] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const handleSubmit = async () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+    if (!emailRegex.test(email)) {
+      toast.error('Please enter a valid email address')
+      return
+    }
+    try {
+      setIsSubmitting(true)
+      const response = await fetch('/api/newsletter-subscribers', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      })
+      const data = await response.json()
+      if (response.ok) {
+        setEmail('')
+        toast.success('Thank You for Subscribing')
+      } else if (response.status === 409) {
+        toast.info('This email is already subscribed')
+      } else {
+        toast.error(data?.message || 'Failed to subscribe')
+      }
+    } catch (e) {
+      toast.error('Something went wrong!')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
   return (
     <footer className="w-full bg-primary py-4 px-4 md:px-6 min-[1441px]:px-0 gap-y-0">
       <div className="mx-auto grid max-w-[1440px] grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-14 text-white">
@@ -36,11 +70,20 @@ export default function Footer({ data }: FooterProps) {
               <Phone className="text-red-500 shrink-0 w-4 h-4 mt-0.5 mr-1" />
               <p className="text-white/50">{data.phone}</p>
             </a>
-            <a href={`mailto:${data.contactEmail}`} className="flex ">
-              <Mail className="text-red-500 shrink-0 w-4 h-4 mt-0.5 mr-1" />
-              <p className="text-white/50">{data.contactEmail}</p>
-            </a>
-            <a href={`${data.website}`} className="flex">
+            {data?.contactEmail && (
+              <a
+                href={`mailto:${data.contactEmail}`}
+                target="_top"
+                className="flex transition-colors cursor-pointer"
+              >
+                <Mail className="text-red-500 shrink-0 w-4 h-4 mt-0.5 mr-1" />
+                <p className="text-white/50">{data.contactEmail}</p>
+              </a>
+            )}
+            <a
+              href={`${data.website?.startsWith('http') ? data.website : `https://${data.website}`}`}
+              className="flex"
+            >
               <Globe className="text-red-500 shrink-0 w-4 h-4 mt-0.5 mr-1" />
               <p className="text-white/50">{data.website}</p>
             </a>
@@ -84,27 +127,50 @@ export default function Footer({ data }: FooterProps) {
                 to your inbox.
               </p>
               <input
-                type="text"
+                type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder=" Email Address"
                 className="w-full border border-white/50 rounded-lg px-3 py-2.5 bg-transparent text-white/50 placeholder:text-white/50"
               />
               <button
-                onClick={async () => {
-                  fetch('/api/newsletter', {
-                    method: 'POST',
-                    headers: {
-                      'content-type': 'application/json',
-                    },
-                    body: JSON.stringify({ email }),
-                  })
-                  setEmail('')
-                }}
-                className="bg-secondary rounded-lg px-8 py-[15px] text-white text-sm font-medium shadow-[0px_4px_12px_rgba(34,34,34,0.1)] flex items-center gap-2"
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+                className="
+                bg-secondary
+                rounded-lg
+                px-8
+                py-[15px]
+                text-white
+                text-sm
+                font-medium
+                shadow-[0px_4px_12px_rgba(34,34,34,0.1)]
+                flex
+                items-center
+                justify-center
+                gap-2
+                transition-all
+                duration-300
+                hover:scale-[1.03]
+                hover:shadow-[0px_8px_24px_rgba(34,34,34,0.2)]
+                active:scale-[0.97]
+                disabled:cursor-not-allowed
+                disabled:opacity-70
+                disabled:hover:scale-100
+                min-w-[140px]
+              "
               >
-                Submit
-                <ArrowUpRight className="size-5" />
+                {isSubmitting ? (
+                  <>
+                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                    Submitting...
+                  </>
+                ) : (
+                  <>
+                    Submit
+                    <ArrowUpRight className="size-5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  </>
+                )}
               </button>
             </div>
           </div>

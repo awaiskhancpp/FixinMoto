@@ -10,11 +10,25 @@ export async function POST(req: Request) {
       config,
     })
 
+    const existingEmail = await payload.find({
+      collection: 'newsletter-subscribers',
+      where: { email: { equals: body.email } },
+      overrideAccess: true,
+    })
+
+    if (existingEmail.docs.length > 0) {
+      return NextResponse.json(
+        { success: false, error: 'Email already subscribed' },
+        { status: 409 },
+      )
+    }
+
     const subscriber = await payload.create({
       collection: 'newsletter-subscribers',
       data: {
         email: body.email,
       },
+      overrideAccess: true,
     })
 
     await payload.sendEmail({
@@ -22,7 +36,7 @@ export async function POST(req: Request) {
       subject: 'Welcome to FixinMoto Newsletter',
       html: `
         <h1>Welcome to FixinMoto</h1>
-        <p>Thank you for subscribing Ato our newsletter.</p>
+        <p>Thank you for subscribing to our newsletter.</p>
       `,
     })
 

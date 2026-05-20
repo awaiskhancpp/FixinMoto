@@ -7,3 +7,12 @@
   --color-secondary: #db323e;
   
 }
+.custom-date-input::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  display: none;
+}
+
+.custom-date-input::-webkit-inner-spin-button,
+.custom-date-input::-webkit-clear-button {
+  display: none;
+}

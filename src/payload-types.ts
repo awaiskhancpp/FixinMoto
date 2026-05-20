@@ -308,7 +308,7 @@ export interface Blog {
   bannerImg: number | Media;
   social?:
     | {
-        logo: number | Media;
+        platform?: ('facebook' | 'instagram' | 'twitter' | 'linkedin') | null;
         forwardTo: string;
         id?: string | null;
       }[]
@@ -751,7 +751,7 @@ export interface BlogSelect<T extends boolean = true> {
   social?:
     | T
     | {
-        logo?: T;
+        platform?: T;
         forwardTo?: T;
         id?: T;
       };
