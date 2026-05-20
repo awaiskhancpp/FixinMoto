@@ -8,7 +8,7 @@ export default function ServiceOverview({ content }: ServiceOverviewProps) {
   return (
     <section className="px-4 py-4 md:px-6 min-[1441px]:px-0 md:py-10 ">
       <div className="text-white max-w-[1440px] mx-auto gap-4">
-        <p className="text-white/70 text-md">Service Overview</p>
+        <p className="text-white/70 text-md pb-2">Service Overview</p>
         <h2 className="lg:text-6xl text-4xl font-bold pb-6">{content.serviceName}</h2>
         <div className="relative w-full md:h-[523px] h-[350px]">
           <Image

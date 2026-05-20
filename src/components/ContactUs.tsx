@@ -144,19 +144,28 @@ export default function ContactUs({ data }: ContactProps) {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-              <button className="flex items-center bg-secondary px-3 py-3 rounded-lg gap-2 text-white text-sm">
+              <a
+                href={`https://maps.google.com/?q=${data.address || ''}`}
+                className="flex items-center bg-secondary px-3 py-3 rounded-lg gap-2 text-white text-sm"
+              >
                 <MapPin className="shrink-0" size={18} />
                 {data.address}
-              </button>
-              <button className="flex items-center justify-center bg-secondary px-3 py-3 rounded-lg gap-2 text-white text-sm">
+              </a>
+              <a
+                href={`tel:${data.phone}`}
+                className="flex items-center justify-center bg-secondary px-3 py-3 rounded-lg gap-2 text-white text-sm"
+              >
                 <Phone className="shrink-0" size={18} />
                 {data.phone}
-              </button>
+              </a>
               <div className="col-span-2">
-                <button className="w-full flex items-center justify-center bg-secondary px-3 py-6 rounded-lg gap-2 text-white text-sm">
+                <a
+                  href={`mailto:${data.contactEmail}`}
+                  className="w-full flex items-center justify-center bg-secondary px-3 py-6 rounded-lg gap-2 text-white text-sm"
+                >
                   <Mail className="shrink-0" size={18} />
                   {data.contactEmail}
-                </button>
+                </a>
               </div>
             </div>
 

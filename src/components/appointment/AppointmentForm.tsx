@@ -94,6 +94,14 @@ export default function AppointmentForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!formData.mainService) {
+      alert('Please select a main service')
+      return
+    }
+    if (formData.services.length === 0) {
+      alert('Please select at least one service')
+      return
+    }
     const appointmentData = {
       ...formData,
       ...formData,
@@ -104,6 +112,7 @@ export default function AppointmentForm({
       mainService: formData.mainService ? Number(formData.mainService) : null,
       carYear: formData.carYear ? Number(formData.carYear) : null,
     }
+
     try {
       const response = await fetch('/api/appointment', {
         method: 'POST',
@@ -165,6 +174,7 @@ export default function AppointmentForm({
                   value={formData.phone}
                   onChange={handleInputChange}
                   name="phone"
+                  required
                   className="w-full rounded-sm bg-white py-2 pl-9 text-black"
                 />
               </div>
@@ -179,6 +189,7 @@ export default function AppointmentForm({
                 value={formData.carMake}
                 onChange={handleInputChange}
                 id="carMake"
+                required
                 className="rounded-lg bg-white py-2 text-black"
               >
                 <option value="">Select Car Make</option>
@@ -194,6 +205,7 @@ export default function AppointmentForm({
                 id="carModel"
                 value={formData.carModel}
                 onChange={handleInputChange}
+                required
                 disabled={formData.carMake === '' || Number.isNaN(makeIdParsed)}
                 className="rounded-lg bg-white py-2 text-black disabled:opacity-50"
               >
@@ -210,6 +222,7 @@ export default function AppointmentForm({
                 placeholder="Car Year"
                 value={formData.carYear}
                 onChange={handleInputChange}
+                required
                 id="carYear"
                 className="rounded-lg bg-white py-2 pl-6 text-black"
               />
@@ -226,6 +239,7 @@ export default function AppointmentForm({
                     onChange={handleInputChange}
                     name="licencePlate"
                     className="w-full rounded-sm bg-white py-2 pl-9 text-black"
+                    required
                   />
                 </div>
                 <div className="relative">
@@ -262,6 +276,7 @@ export default function AppointmentForm({
                   value={formData.date}
                   onChange={handleInputChange}
                   name="date"
+                  required
                   className="w-full rounded-sm bg-white py-2 pl-9 text-black"
                 />
               </div>
@@ -277,6 +292,7 @@ export default function AppointmentForm({
                   onChange={handleInputChange}
                   min="09:00"
                   max="18:00"
+                  required
                   className="w-full rounded-sm bg-white py-2 pl-9 text-black"
                 />
               </div>
@@ -289,6 +305,7 @@ export default function AppointmentForm({
                   id="location"
                   value={formData.location}
                   onChange={handleInputChange}
+                  required
                   className="w-full rounded-lg bg-white py-3 pl-9 text-black"
                 >
                   <option value="">Select Location</option>

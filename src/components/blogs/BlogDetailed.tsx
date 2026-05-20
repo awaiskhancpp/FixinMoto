@@ -15,26 +15,24 @@ interface BlogDetailedProps {
 
 export default function BlogDetailed({ detail }: BlogDetailedProps) {
   const bannerSrc =
-    typeof detail.bannerImg === 'object' && detail.bannerImg?.url
-      ? detail.bannerImg.url
-      : '/heroimg.png'
+    typeof detail.cardImg === 'object' && detail.cardImg?.url ? detail.cardImg.url : '/'
 
   const resolvedTags = detail.tags?.filter(isPopulatedTag) ?? []
 
   return (
     <>
-      <div className="relative h-[350px] w-full md:h-[523px]">
-        <Image
-          src={bannerSrc}
-          fill
-          alt={detail.title || '...'}
-          className="rounded-[15px] object-cover"
-          sizes="(max-width: 768px) 100vw, 1440px"
-          priority
-        />
-      </div>
-      <div className="text-white max-w-[800px] mx-auto">
-        <div className="flex flex-row px-[14px] opacity-50 mb-2">
+      <div className="text-white max-w-[900px] mx-auto">
+        <div className="relative h-[350px] w-full md:h-[523px]">
+          <Image
+            src={bannerSrc}
+            fill
+            alt={detail.title || '...'}
+            className="rounded-[15px] object-cover"
+            sizes="(max-width: 768px) 100vw, 1440px"
+            priority
+          />
+        </div>
+        <div className="flex flex-row px-[14px] opacity-50 mt-2 mb-2">
           <div className="flex w-32 gap-2">
             <Clock className="size-4 shrink-0" strokeWidth={1.5} />
             <time className="text-xs font-normal">{detail.datePublished}</time>
