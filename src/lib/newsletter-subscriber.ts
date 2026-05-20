@@ -1,107 +1,50 @@
 import { getPayload } from 'payload'
-import type { ValidationError } from 'payload'
 import config from '@payload-config'
 import { NextResponse } from 'next/server'
 import 'dotenv/config'
 
-function normalizeNewsletterEmail(raw: unknown): string | null {
-  if (typeof raw !== 'string') return null
-  const normalized = raw.trim().toLowerCase()
-  if (!normalized) return null
-  return normalized
-}
-
-function isDuplicateEmailError(error: unknown): boolean {
-  if (error && typeof error === 'object') {
-    const err = error as ValidationError
-    if (Array.isArray(err.errors) && err.errors.length > 0) {
-      return err.errors.some((e) => {
-        const msg = typeof e.message === 'string' ? e.message : ''
-        return (
-          /unique|duplicate/i.test(msg) ||
-          (typeof e.path === 'string' && e.path === 'email') ||
-          (Array.isArray(e.path) && e.path.includes('email'))
-        )
-      })
-    }
-  }
-  const message = error instanceof Error ? error.message : String(error)
-  return /unique|duplicate|23505/i.test(message) || message.toLowerCase().includes('already exists')
-}
-
-export async function newsletterSubscribePOST(req: Request) {
+export async function POST(req: Request) {
   try {
-    const body = await req.json()
-    const email = normalizeNewsletterEmail(body?.email)
-    if (!email) {
+    const { email } = await req.json()
+
+    if (!email || typeof email !== 'string') {
       return NextResponse.json(
         { success: false, error: 'Valid email is required' },
         { status: 400 },
       )
     }
 
-    const payload = await getPayload({
-      config,
-    })
+    const normalizedEmail = email.trim().toLowerCase()
+    const payload = await getPayload({ config })
 
-    const existingEmail = await payload.find({
+    const existing = await payload.find({
       collection: 'newsletter-subscribers',
-      where: { email: { equals: email } },
-      limit: 1,
+      where: { email: { equals: normalizedEmail } },
       overrideAccess: true,
     })
 
-    if (existingEmail.docs.length > 0) {
+    if (existing.docs.length > 0) {
       return NextResponse.json(
-        { success: false, error: 'Email already subscribed', message: 'EMAIL_ALREADY_EXISTS' },
+        { success: false, error: 'Email already subscribed' },
         { status: 409 },
       )
     }
 
-    let subscriber
-    try {
-      subscriber = await payload.create({
-        collection: 'newsletter-subscribers',
-        data: {
-          email,
-        },
-        overrideAccess: true,
-      })
-    } catch (createError) {
-      if (isDuplicateEmailError(createError)) {
-        return NextResponse.json(
-          {
-            success: false,
-            error: 'Email already subscribed',
-            message: 'EMAIL_ALREADY_EXISTS',
-          },
-          { status: 409 },
-        )
-      }
-      throw createError
-    }
+    const subscriber = await payload.create({
+      collection: 'newsletter-subscribers',
+      data: { email: normalizedEmail },
+      overrideAccess: true,
+    })
 
     await payload.sendEmail({
-      to: email,
+      to: normalizedEmail,
       subject: 'Welcome to FixinMoto Newsletter',
-      html: `
-        <h1>Welcome to FixinMoto</h1>
-        <p>Thank you for subscribing to our newsletter.</p>
-      `,
+      html: '<h1>Welcome to FixinMoto</h1><p>Thank you for subscribing!</p>',
     })
 
-    return NextResponse.json({
-      success: true,
-      subscriber,
-    })
+    return NextResponse.json({ success: true, subscriber })
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Something went wrong'
-    return NextResponse.json(
-      {
-        success: false,
-        error: message,
-      },
-      { status: 500 },
-    )
+    return NextResponse.json({ success: false, error: message }, { status: 500 })
   }
 }

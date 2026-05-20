@@ -1,3 +1,1 @@
-import { newsletterSubscribePOST } from '@/lib/newsletter-subscriber'
-
-export const POST = newsletterSubscribePOST
+export { POST } from '@/lib/newsletter-subscriber'
