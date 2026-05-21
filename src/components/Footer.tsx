@@ -29,19 +29,18 @@ export default function Footer({ data }: FooterProps) {
         body: JSON.stringify({ email }),
       })
       const data = await response.json()
-      if (response.status === 409) {
-        toast.info('This email is already subscribed')
-        setEmail('')
-        return
-      }
+
+      console.log(data)
       if (response.ok) {
         setEmail('')
         toast.success('Thank You for Subscribing!')
         return
       }
-
-      const errorMsg = data?.errors?.[0]?.message || data?.message || 'Subscription failed'
-      toast.error(errorMsg)
+      if (response.status === 409) {
+        toast.info('This email is already subscribed')
+        setEmail('')
+        return
+      }
     } catch (e) {
       console.error('Error:', e)
       toast.error('Something went wrong! Please try again')

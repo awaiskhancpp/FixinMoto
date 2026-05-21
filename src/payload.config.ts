@@ -28,6 +28,7 @@ import { MainService } from './collections/MainService'
 import { CTA } from './collections/CTA'
 import { Contact } from './collections/Contact'
 import { Comments } from './collections/Comments'
+import { ServiceBooking } from './collections/ServiceBookings'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -59,6 +60,7 @@ export default buildConfig({
     CTA,
     Contact,
     Comments,
+    ServiceBooking,
   ],
   globals: [Settings, Homepage],
   secret: process.env.PAYLOAD_SECRET || '',

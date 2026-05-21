@@ -22,6 +22,20 @@ const socialIcons: Record<string, string> = {
   linkedin: '/social/linkdin.png',
 }
 export default function BlogDetailed({ detail, comment }: BlogDetailedProps) {
+  const parsedDate = Date.parse(detail.createdAt)
+  const milliSecondsAgo = Date.now() - parsedDate
+  const seconds = Math.floor(milliSecondsAgo / 1000)
+  const minutes = Math.floor(seconds / 60)
+  const hrs = Math.floor(minutes / 60)
+  const days = Math.floor(hrs / 24)
+  let timeAgo = 'updated now'
+  if (days > 0) {
+    timeAgo = `${days} day${days > 1 ? 's' : ''} ago`
+  } else if (hrs > 0) {
+    timeAgo = `${hrs} hr${hrs > 1 ? 's' : ''} ago`
+  } else if (minutes > 0) {
+    timeAgo = `${minutes} min${minutes > 1 ? 's' : ''} ago`
+  }
   const bannerSrc =
     typeof detail.cardImg === 'object' && detail.cardImg?.url ? detail.cardImg.url : '/'
 
@@ -43,7 +57,7 @@ export default function BlogDetailed({ detail, comment }: BlogDetailedProps) {
         <div className="flex flex-row px-[14px] opacity-50 mt-4 mb-4">
           <div className="flex w-32 gap-2">
             <Clock className="size-4 shrink-0" strokeWidth={1.5} />
-            <time className="text-xs font-normal">{detail.createdAt}</time>
+            <time className="text-xs font-normal">{timeAgo}</time>
           </div>
           <div className="flex w-32 gap-2">
             <User className="size-4 shrink-0" strokeWidth={1.5} />

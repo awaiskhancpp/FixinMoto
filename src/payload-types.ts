@@ -87,6 +87,7 @@ export interface Config {
     cta: Cta;
     contact: Contact;
     comments: Comment;
+    'service-booking': ServiceBooking;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -114,6 +115,7 @@ export interface Config {
     cta: CtaSelect<false> | CtaSelect<true>;
     contact: ContactSelect<false> | ContactSelect<true>;
     comments: CommentsSelect<false> | CommentsSelect<true>;
+    'service-booking': ServiceBookingSelect<false> | ServiceBookingSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -478,6 +480,24 @@ export interface Contact {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "service-booking".
+ */
+export interface ServiceBooking {
+  id: number;
+  name: string;
+  email: string;
+  contact: string;
+  date: string;
+  time: string;
+  service: string;
+  cardTitle: string;
+  cardDescription?: string | null;
+  bookingStatus?: ('pending' | 'confirmed' | 'cancelled') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -579,6 +599,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'comments';
         value: number | Comment;
+      } | null)
+    | ({
+        relationTo: 'service-booking';
+        value: number | ServiceBooking;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -903,6 +927,23 @@ export interface CommentsSelect<T extends boolean = true> {
   content?: T;
   createdAt?: T;
   updatedAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "service-booking_select".
+ */
+export interface ServiceBookingSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  contact?: T;
+  date?: T;
+  time?: T;
+  service?: T;
+  cardTitle?: T;
+  cardDescription?: T;
+  bookingStatus?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -11,7 +11,7 @@ export default function OurTeam({ team }: ourTeamProps) {
   const [selected, setSelected] = useState<string | null>(null)
   const profession = ['All', ...new Set(team.map((t) => t.profession))]
   const toggleButton = (profession: string) => {
-    setSelected((prev) => (prev === profession ? null : profession))
+    setSelected(profession)
   }
   return (
     <section className="bg-primary px-4 py-4 md:px-6 min-[1441px]:px-0 md:py-10">
@@ -28,7 +28,7 @@ export default function OurTeam({ team }: ourTeamProps) {
             <button
               key={i}
               onClick={() => toggleButton(b || '')}
-              className={`text-white px-6 py-3  rounded-[15px] ${selected === b ? 'bg-secondary' : 'border border-white'}`}
+              className={`text-white px-6 py-3  rounded-[15px] ${selected === b ? 'bg-secondary border border-secondary' : 'border border-white'}`}
             >
               {b}
             </button>
