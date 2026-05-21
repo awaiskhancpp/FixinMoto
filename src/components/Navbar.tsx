@@ -16,10 +16,10 @@ export default function Navbar({ services, data }: NavbarProps) {
   const [isPageClicked, setIsPageClicked] = useState(false)
 
   const NAV_LINKS = [
-    { label: 'AboutUs', href: '/aboutus' },
+    { label: 'About Us', href: '/aboutus' },
     { label: 'Appointment', href: '/appointment' },
     { label: 'Blogs', href: '/blogs' },
-    { label: 'Team', href: '/ourteam' },
+    { label: 'Our Team', href: '/ourteam' },
   ]
 
   useEffect(() => {
@@ -124,15 +124,17 @@ export default function Navbar({ services, data }: NavbarProps) {
           </a>
         ))}
 
-        <button
-          onClick={() => setIsPageClicked(!isPageClicked)}
-          className="flex items-center justify-between w-full text-lg py-3 border-b border-gray-100"
-        >
-          Services
-          {isPageClicked ? <ChevronUp /> : <ChevronDown />}
-        </button>
+        <a href="/services">
+          <button
+            onClick={() => setIsPageClicked(!isPageClicked)}
+            className="flex items-center justify-between w-full text-lg py-3 border-b border-gray-100"
+          >
+            Services
+            {/* {isPageClicked ? <ChevronUp /> : <ChevronDown />} */}
+          </button>
+        </a>
 
-        {isPageClicked && (
+        {/* {isPageClicked && (
           <div className="flex flex-col">
             {services.slice(0, 5).map((p, i) => (
               <a
@@ -144,7 +146,7 @@ export default function Navbar({ services, data }: NavbarProps) {
               </a>
             ))}
           </div>
-        )}
+        )} */}
 
         <a href="/contact">
           <button className="mt-4 rounded-lg bg-secondary px-6 h-12 text-white w-full">

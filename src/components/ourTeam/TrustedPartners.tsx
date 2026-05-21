@@ -33,6 +33,10 @@ export default function TrustedPartners({ trustedBy }: trustedPartners) {
               modules={[Autoplay]}
               slidesPerView="auto"
               spaceBetween={50}
+              autoplay={{
+                delay: 0,
+                disableOnInteraction: false,
+              }}
               loop
               speed={6000}
               wrapperClass="trusted-partners-wrapper"
