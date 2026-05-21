@@ -4,6 +4,7 @@ import { useRef, useState } from 'react'
 import Image from 'next/image'
 import type { CarMake, CarModel, Service, Location, MainService } from '@/payload-types'
 import { toast } from 'react-toastify'
+import Select from 'react-select'
 const CarInfo = [
   {
     iconImg: '/appointmentForm/carhood.png',
@@ -221,9 +222,11 @@ export default function AppointmentForm({
                 required
                 className="rounded-lg bg-white py-2 text-black"
               >
-                <option value="">Select Car Make</option>
+                <option value="" className="rounded-lg">
+                  Select Car Make
+                </option>
                 {carMake.map((make) => (
-                  <option key={make.id} value={make.id}>
+                  <option className="" key={make.id} value={make.id}>
                     {make.name}
                   </option>
                 ))}

@@ -1,26 +1,31 @@
 'use client'
 import { Search } from 'lucide-react'
 import RecentPosts from './RecentPosts'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import type { Blog, Tag } from '@/payload-types'
 import { BlogCard } from './BlogCard'
 
-const ButtonName = [
-  { name: 'Automotive News' },
-  { name: 'Electric Vehicles (EVs)' },
-  { name: 'Motorsports' },
-  { name: 'Car Technology' },
-  { name: 'Car Culture' },
-  { name: 'Buying Guides' },
-  { name: 'Car Reviews' },
-  { name: 'Tuning' },
-]
 interface blogProps {
   card: Blog[]
   tag: Tag[]
 }
 export default function MainContent({ card, tag }: blogProps) {
   const [selectedButtons, setSelectedButtons] = useState<Set<number>>(new Set())
+  const [search, setSearch] = useState('')
+  const [debouncedQuery, setDebouncedQuery] = useState('')
+  const debounceTimer = useRef<NodeJS.Timeout | null>(null)
+  useEffect(() => {
+    debounceTimer.current = setTimeout(() => {
+      setDebouncedQuery(search)
+    }, 300)
+
+    return () => {
+      if (debounceTimer.current) {
+        clearTimeout(debounceTimer.current)
+      }
+    }
+  }, [search])
+
   const toggleButton = (i: number) => {
     setSelectedButtons((prev) => {
       const newSet = new Set(prev)
@@ -33,12 +38,18 @@ export default function MainContent({ card, tag }: blogProps) {
     })
   }
   const filteredCards =
-    selectedButtons.size === 0
+    selectedButtons.size === 0 && !search
       ? card
       : card.filter((blog) => {
           return blog.tags?.some((blogTag) => {
-            const tagId = typeof blogTag === 'object' ? blogTag.id : blogTag
-            return selectedButtons.has(tagId)
+            const blogSearch = blog.title?.toLowerCase().includes(debouncedQuery.toLowerCase())
+            const matchesTags =
+              selectedButtons.size === 0 ||
+              blog.tags?.some((blogTag) => {
+                const tagId = typeof blogTag === 'object' ? blogTag.id : blogTag
+                return selectedButtons.has(tagId)
+              })
+            return blogSearch && matchesTags
           })
         })
   return (
@@ -65,6 +76,8 @@ export default function MainContent({ card, tag }: blogProps) {
               <Search className=" absolute top-1/2 -translate-y-1/2 left-3 text-white/70" />
               <input
                 type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search"
                 className="w-full border border-white/50 rounded-lg px-10 py-2.5 bg-transparent text-white/50 placeholder:text-white/50"
               />

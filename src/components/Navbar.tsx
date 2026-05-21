@@ -134,7 +134,7 @@ export default function Navbar({ services, data }: NavbarProps) {
 
         {isPageClicked && (
           <div className="flex flex-col">
-            {services.map((p, i) => (
+            {services.slice(0, 5).map((p, i) => (
               <a
                 href={`/services/${p.slug}`}
                 key={i}

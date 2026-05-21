@@ -1,6 +1,9 @@
 'use client'
 import dynamic from 'next/dynamic'
-export default function MapClient() {
+interface MapClientProps {
+  center?: { lat: number; lon: number }
+}
+export default function MapClient({ center }: MapClientProps) {
   const Map = dynamic(() => import('@/components/Map'), { ssr: false })
-  return <Map />
+  return <Map center={center} />
 }
