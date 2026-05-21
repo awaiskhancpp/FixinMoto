@@ -1,6 +1,6 @@
 import { Clock, User } from 'lucide-react'
 import Image from 'next/image'
-interface BlogCard {
+interface BlogCardProps {
   title: string
   date: string
   author: string
@@ -9,7 +9,22 @@ interface BlogCard {
   slug: string
 }
 
-export function BlogCard({ title, date, author, imgSrc, category, slug }: BlogCard) {
+export function BlogCard({ title, date, author, imgSrc, category, slug }: BlogCardProps) {
+  const authorName = author.split('@')[0]
+  const parsedDate = Date.parse(date)
+  const milliSecondsAgo = Date.now() - parsedDate
+  const seconds = Math.floor(milliSecondsAgo / 1000)
+  const minutes = Math.floor(seconds / 60)
+  const hrs = Math.floor(minutes / 60)
+  const days = Math.floor(hrs / 24)
+  let timeAgo = 'updated now'
+  if (days > 0) {
+    timeAgo = `${days} day${days > 1 ? 's' : ''} ago`
+  } else if (hrs > 0) {
+    timeAgo = `${hrs} hr${hrs > 1 ? 's' : ''} ago`
+  } else if (minutes > 0) {
+    timeAgo = `${minutes} min${minutes > 1 ? 's' : ''} ago`
+  }
   return (
     <a href={`/blogs/${slug}`} className="bg-primary h-full text-white rounded-2xl">
       <div className="relative aspect-[4/3] bg-primary w-full">
@@ -27,11 +42,11 @@ export function BlogCard({ title, date, author, imgSrc, category, slug }: BlogCa
       <div className="flex items-center gap-3 px-[14px] mt-5 pb-2 opacity-50 text-xs">
         <div className="flex items-center gap-1">
           <Clock className="size-3 shrink-0" strokeWidth={1.5} />
-          <time>{date}</time>
+          <time>{timeAgo}</time>
         </div>
         <div className="flex items-center gap-1">
           <User className="size-3 shrink-0" strokeWidth={1.5} />
-          <span>{author}</span>
+          <span>{authorName}</span>
         </div>
       </div>
     </a>

@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import type { Blog } from '@/payload-types'
 import 'swiper/css'
 import 'swiper/css/pagination'
+import { blogAuthorLabel } from '@/lib/blogAuthor'
 
 interface BlogProps {
   blogCard: Blog[]
@@ -49,6 +50,21 @@ interface BlogCard {
 }
 
 export function BlogCard({ title, date, author, imgSrc, category, slug }: BlogCard) {
+  const authorName = author.split('@')[0]
+  const parsedDate = Date.parse(date)
+  const milliSecondsAgo = Date.now() - parsedDate
+  const seconds = Math.floor(milliSecondsAgo / 1000)
+  const minutes = Math.floor(seconds / 60)
+  const hrs = Math.floor(minutes / 60)
+  const days = Math.floor(hrs / 24)
+  let timeAgo = 'updated now'
+  if (days > 0) {
+    timeAgo = `${days} day${days > 1 ? 's' : ''} ago`
+  } else if (hrs > 0) {
+    timeAgo = `${hrs} hr${hrs > 1 ? 's' : ''} ago`
+  } else if (minutes > 0) {
+    timeAgo = `${minutes} min${minutes > 1 ? 's' : ''} ago`
+  }
   return (
     <a href={`/blogs/${slug}`} className="flex flex-col rounded-[17px] bg-[#edf2fd] pb-5">
       <div className="relative aspect-[387/300] w-full overflow-hidden rounded-t-lg">
@@ -72,12 +88,12 @@ export function BlogCard({ title, date, author, imgSrc, category, slug }: BlogCa
         <div className="flex flex-1 items-center justify-start gap-2">
           <Calendar className="size-4 shrink-0" strokeWidth={1.5} />
           <time className="text-xs font-normal " dateTime={date}>
-            {date}
+            {timeAgo}
           </time>
         </div>
         <div className="flex flex-1 items-center justify-end pt-3 gap-2">
           <User className="size-4 shrink-0" strokeWidth={1.5} />
-          <span className="text-xs font-normal ">{author}</span>
+          <span className="text-xs font-normal ">{authorName}</span>
         </div>
       </div>
     </a>
@@ -124,8 +140,8 @@ export default function Blog({ blogCard }: BlogProps) {
               <SwiperSlide key={i}>
                 <BlogCard
                   title={post.title || ''}
-                  author={post.author || ''}
-                  date={post.datePublished || ''}
+                  author={blogAuthorLabel(post.author)}
+                  date={post.createdAt}
                   imgSrc={typeof post?.cardImg === 'object' ? post?.cardImg?.url || '' : ''}
                   category={typeof post.Category === 'object' ? post.Category?.name || '' : ''}
                   slug={post.slug || ''}
@@ -154,8 +170,8 @@ export default function Blog({ blogCard }: BlogProps) {
             <BlogCard
               key={i}
               title={post.title || ''}
-              author={post.author || ''}
-              date={post.datePublished || ''}
+              author={blogAuthorLabel(post.author)}
+              date={post.createdAt}
               imgSrc={typeof post?.cardImg === 'object' ? post?.cardImg?.url || '' : ''}
               category={typeof post.Category === 'object' ? post.Category?.name || '' : ''}
               slug={post.slug || ''}

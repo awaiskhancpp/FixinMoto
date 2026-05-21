@@ -12,8 +12,8 @@ export const Blog: CollectionConfig = {
       required: true,
     },
     { name: 'title', type: 'text' },
-    { name: 'datePublished', type: 'text' },
-    { name: 'author', type: 'text' },
+
+    { name: 'author', type: 'relationship', relationTo: 'users' },
     { name: 'bannerImg', type: 'upload', relationTo: 'media', required: true },
     {
       name: 'social',
@@ -52,7 +52,7 @@ export const Blog: CollectionConfig = {
         features: ({ defaultFeatures }) => [...defaultFeatures, FixedToolbarFeature()],
       }),
     },
-    { name: 'slug', type: 'text' },
+    { name: 'slug', type: 'text', unique: true, required: true },
   ],
   hooks: {
     afterDelete: [

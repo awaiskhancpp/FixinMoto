@@ -3,6 +3,7 @@ import { Search } from 'lucide-react'
 import RecentPosts from './RecentPosts'
 import { useState, useRef, useEffect } from 'react'
 import type { Blog, Tag } from '@/payload-types'
+import { blogAuthorLabel } from '@/lib/blogAuthor'
 import { BlogCard } from './BlogCard'
 
 interface blogProps {
@@ -62,8 +63,8 @@ export default function MainContent({ card, tag }: blogProps) {
                 <BlogCard
                   key={i}
                   title={c.title || ''}
-                  author={c.author || ''}
-                  date={c.datePublished || ''}
+                  author={blogAuthorLabel(c.author)}
+                  date={c.createdAt}
                   imgSrc={typeof c?.cardImg === 'object' ? c?.cardImg?.url || '' : ''}
                   category={typeof c.Category === 'object' ? c.Category?.name || '' : ''}
                   slug={c.slug || ''}
@@ -93,7 +94,9 @@ export default function MainContent({ card, tag }: blogProps) {
                     key={i}
                     onClick={() => toggleButton(t.id)}
                     className={`rounded-3xl px-3 py-2 transition-all whitespace-nowrap text-sm duration-200 ${
-                      selectedButtons.has(t.id) ? 'bg-secondary' : 'border border-white'
+                      selectedButtons.has(t.id)
+                        ? 'bg-secondary border border-secondary'
+                        : 'border border-white'
                     }`}
                   >
                     {t.name}

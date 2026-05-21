@@ -299,8 +299,7 @@ export interface Blog {
   id: number;
   Category: number | Category;
   title?: string | null;
-  datePublished?: string | null;
-  author?: string | null;
+  author?: (number | null) | User;
   bannerImg: number | Media;
   social?:
     | {
@@ -327,7 +326,7 @@ export interface Blog {
     };
     [k: string]: unknown;
   };
-  slug?: string | null;
+  slug: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -753,7 +752,6 @@ export interface TrustedBySelect<T extends boolean = true> {
 export interface BlogSelect<T extends boolean = true> {
   Category?: T;
   title?: T;
-  datePublished?: T;
   author?: T;
   bannerImg?: T;
   social?:

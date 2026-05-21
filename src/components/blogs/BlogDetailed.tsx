@@ -1,6 +1,7 @@
 import { Clock, User } from 'lucide-react'
 import Image from 'next/image'
 import type { Blog, Tag } from '@/payload-types'
+import { blogAuthorLabel } from '@/lib/blogAuthor'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { Tags } from '@/components/Tags'
 import ContentForm from './ContentForm'
@@ -46,7 +47,7 @@ export default function BlogDetailed({ detail, comment }: BlogDetailedProps) {
           </div>
           <div className="flex w-32 gap-2">
             <User className="size-4 shrink-0" strokeWidth={1.5} />
-            <span className="text-xs font-normal">{detail.author}</span>
+            <span className="text-xs font-normal">{blogAuthorLabel(detail.author)}</span>
           </div>
         </div>
         <RichText data={detail.blogDetail} />
