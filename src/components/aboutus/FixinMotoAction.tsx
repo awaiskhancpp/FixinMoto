@@ -6,6 +6,7 @@ export default function FixinMotoAction() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [overlayOpen, setOverlayOpen] = useState(true)
   const [isMobile, setIsMobile] = useState(false)
+  const [paused, setIsPaused] = useState(false)
 
   useEffect(() => {
     const checkMobile = () => {
@@ -18,11 +19,8 @@ export default function FixinMotoAction() {
   }, [])
   const handlePlay = async () => {
     setOverlayOpen(false)
-    try {
-      await videoRef.current?.play()
-    } catch (e) {
-      console.error(e)
-    }
+    await videoRef.current?.play()
+    setIsPaused(false)
   }
   return (
     <div className="w-full h-screen md:h-[90vh] relative">
@@ -34,8 +32,10 @@ export default function FixinMotoAction() {
         playsInline
         preload="auto"
         controls={!overlayOpen}
+        onPlay={() => setIsPaused(false)}
+        onPause={() => setIsPaused(true)}
       />
-      {overlayOpen && (
+      {overlayOpen || paused ? (
         <div
           role="button"
           tabIndex={0}
@@ -58,7 +58,7 @@ export default function FixinMotoAction() {
             </h3>
           </div>
         </div>
-      )}
+      ) : null}
     </div>
   )
 }
