@@ -19,7 +19,7 @@ function MapUpdater({ center }: MapProps) {
   const map = useMap()
 
   useEffect(() => {
-    if (center) {
+    if (center && center.lat && center.lon) {
       map.setView([center.lat, center.lon], 13)
     }
   }, [center, map])
@@ -27,7 +27,7 @@ function MapUpdater({ center }: MapProps) {
   return null
 }
 
-export default function Map({ center = { lat: 51.505, lon: -0.09 } }: MapProps) {
+export default function Map({ center = { lat: 40.73061, lon: -73.935242 } }: MapProps) {
   return (
     <MapContainer
       center={[center.lat, center.lon]}

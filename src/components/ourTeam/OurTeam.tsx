@@ -117,7 +117,7 @@ interface ourTeamProps {
 
 export default function OurTeam({ team }: ourTeamProps) {
   const [selected, setSelected] = useState<number | null>(null)
-  console.log(team)
+
   const toggleButton = (i: number) => {
     setSelected((prev) => (prev === i ? null : i))
   }

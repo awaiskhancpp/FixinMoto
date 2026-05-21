@@ -162,14 +162,20 @@ export default function AppointmentForm({
       >
         <div className="mx-auto max-w-6xl">
           <div>
-            <h2 className="font-medium">Personal Information</h2>
+            <h2 className="font-medium">
+              Personal Information <span className="text-red-500">*</span>
+            </h2>
             <div className="grid grid-cols-1 gap-3 pt-3 md:grid-cols-2">
               <input
                 type="text"
                 placeholder="First Name"
                 name="firstName"
                 value={formData.firstName}
-                onChange={handleInputChange}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/[0-9]/g, '')
+                  handleInputChange({ target: { name: 'firstName', value } } as any)
+                }}
+                required
                 className="rounded-sm bg-white py-2 pl-6 text-black"
               />
               <input
@@ -177,7 +183,11 @@ export default function AppointmentForm({
                 placeholder="Last Name"
                 name="lastName"
                 value={formData.lastName}
-                onChange={handleInputChange}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/[0-9]/g, '')
+                  handleInputChange({ target: { name: 'lastName', value } } as any)
+                }}
+                required
                 className="rounded-sm bg-white py-2 pl-6 text-black"
               />
               <div className="relative">
@@ -202,7 +212,10 @@ export default function AppointmentForm({
                   type="tel"
                   placeholder="Phone Number"
                   value={formData.phone}
-                  onChange={handleInputChange}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/[^0-9+\-\s]/g, '')
+                    handleInputChange({ target: { name: 'phone', value } } as any)
+                  }}
                   name="phone"
                   required
                   className="w-full rounded-sm bg-white py-2 pl-9 text-black"
@@ -251,11 +264,15 @@ export default function AppointmentForm({
 
               <input
                 name="carYear"
-                placeholder="Car Year"
+                placeholder="Car Year *"
                 value={formData.carYear}
-                onChange={handleInputChange}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/[^0-9]/g, '')
+                  handleInputChange({ target: { name: 'carYear', value } } as any)
+                }}
                 required
                 id="carYear"
+                maxLength={4}
                 className="rounded-lg bg-white py-2 pl-6 text-black"
               />
 
@@ -266,9 +283,12 @@ export default function AppointmentForm({
                   </span>
                   <input
                     type="text"
-                    placeholder="Licence Plate"
+                    placeholder="Licence Plate *"
                     value={formData.licencePlate}
-                    onChange={handleInputChange}
+                    onChange={(e) => {
+                      const value = e.target.value.toUpperCase().replace(/[^A-Z0-9\s\-]/g, '')
+                      handleInputChange({ target: { name: 'licencePlate', value } } as any)
+                    }}
                     name="licencePlate"
                     className="w-full rounded-sm bg-white py-2 pl-9 text-black"
                     required
@@ -286,9 +306,13 @@ export default function AppointmentForm({
                   <input
                     type="text"
                     value={formData.vin}
-                    onChange={handleInputChange}
+                    onChange={(e) => {
+                      const value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '')
+                      handleInputChange({ target: { name: 'vin', value } } as any)
+                    }}
                     placeholder="Vin (Optional)"
                     name="vin"
+                    maxLength={17}
                     className="w-full rounded-sm bg-white py-2 pl-9 text-black"
                   />
                 </div>
@@ -297,7 +321,9 @@ export default function AppointmentForm({
           </div>
 
           <div className="pt-6">
-            <h2 className="font-medium">Appointment Details</h2>
+            <h2 className="font-medium">
+              Appointment Details <span className="text-red-500">*</span>
+            </h2>
             <div className="grid grid-cols-1 gap-2 pt-3 md:grid-cols-3">
               <div className="relative" onClick={() => dateRef.current?.showPicker()}>
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
@@ -354,7 +380,9 @@ export default function AppointmentForm({
           </div>
 
           <div className="pt-6">
-            <h2 className="font-medium">Service Details</h2>
+            <h2 className="font-medium">
+              Service Details <span className="text-red-500">*</span>
+            </h2>
             <div className="grid grid-cols-1 gap-2 pt-2 md:grid-cols-2 lg:grid-cols-3">
               {mainService.map((c, i) => (
                 <button

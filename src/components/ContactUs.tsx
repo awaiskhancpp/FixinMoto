@@ -61,7 +61,6 @@ export default function ContactUs({ data }: ContactProps) {
         message: '',
       })
     } catch (error) {
-      console.log(error)
       toast.error('Network error. Try again.')
     } finally {
       setIsSubmitted(false)
