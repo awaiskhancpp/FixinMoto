@@ -43,7 +43,7 @@ export default function BlogDetailed({ detail, comment }: BlogDetailedProps) {
         <div className="flex flex-row px-[14px] opacity-50 mt-4 mb-4">
           <div className="flex w-32 gap-2">
             <Clock className="size-4 shrink-0" strokeWidth={1.5} />
-            <time className="text-xs font-normal">{detail.datePublished}</time>
+            <time className="text-xs font-normal">{detail.createdAt}</time>
           </div>
           <div className="flex w-32 gap-2">
             <User className="size-4 shrink-0" strokeWidth={1.5} />
