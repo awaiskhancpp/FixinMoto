@@ -1,7 +1,6 @@
 import { Clock, User } from 'lucide-react'
 import Image from 'next/image'
 import type { Blog, Tag } from '@/payload-types'
-import { blogAuthorLabel } from '@/lib/blogAuthor'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { Tags } from '@/components/Tags'
 import ContentForm from './ContentForm'
@@ -37,6 +36,9 @@ export default function BlogDetailed({ detail, comment }: BlogDetailedProps) {
   } else if (minutes > 0) {
     timeAgo = `${minutes} min${minutes > 1 ? 's' : ''} ago`
   }
+  const authorEmail =
+    typeof detail.author === 'object' && detail.author?.email ? detail.author.email : 'Unknown'
+  const authorName = authorEmail.split('@')[0]
   const bannerSrc =
     typeof detail.cardImg === 'object' && detail.cardImg?.url ? detail.cardImg.url : '/'
 
@@ -62,7 +64,7 @@ export default function BlogDetailed({ detail, comment }: BlogDetailedProps) {
           </div>
           <div className="flex w-32 gap-2">
             <User className="size-4 shrink-0" strokeWidth={1.5} />
-            <span className="text-xs font-normal">{blogAuthorLabel(detail.author)}</span>
+            <span className="text-xs font-normal">{authorName}</span>
           </div>
         </div>
         <div className="blog-detail-body">
