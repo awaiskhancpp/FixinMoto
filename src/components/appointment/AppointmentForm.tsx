@@ -142,6 +142,11 @@ export default function AppointmentForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    const emailRegex = /^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    if (!emailRegex.test(formData.email)) {
+      toast.error('Enter a valid email address')
+      return
+    }
     if (!formData.mainService && (!formData.services || formData.services.length === 0)) {
       toast.error('Select at least one main service or service')
       return
@@ -298,6 +303,7 @@ export default function AppointmentForm({
                     handleInputChange({ target: { name: 'phone', value } } as any)
                   }}
                   name="phone"
+                  maxLength={11}
                   required
                   className="w-full rounded-sm bg-white py-2 pl-9 text-black"
                 />
@@ -345,15 +351,17 @@ export default function AppointmentForm({
 
               <input
                 name="carYear"
+                type="number"
                 placeholder="Car Year *"
                 value={formData.carYear}
                 onChange={(e) => {
-                  const value = e.target.value.replace(/[^0-9]/g, '')
+                  const value = e.target.value
                   handleInputChange({ target: { name: 'carYear', value } } as any)
                 }}
                 required
                 id="carYear"
-                maxLength={4}
+                max={new Date().getFullYear()}
+                min={new Date().getFullYear() - 60}
                 className="rounded-lg bg-white py-2 pl-6 text-black"
               />
 
