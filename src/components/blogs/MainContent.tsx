@@ -3,7 +3,6 @@ import { Search } from 'lucide-react'
 import RecentPosts from './RecentPosts'
 import { useState, useRef, useEffect } from 'react'
 import type { Blog, Tag } from '@/payload-types'
-import { blogAuthorLabel } from '@/lib/blogAuthor'
 import { BlogCard } from './BlogCard'
 
 interface blogProps {
@@ -63,7 +62,7 @@ export default function MainContent({ card, tag }: blogProps) {
                 <BlogCard
                   key={i}
                   title={c.title || ''}
-                  author={blogAuthorLabel(c.author)}
+                  author={typeof c.author === 'object' ? c.author?.email || '' : ''}
                   date={c.createdAt}
                   imgSrc={typeof c?.cardImg === 'object' ? c?.cardImg?.url || '' : ''}
                   category={typeof c.Category === 'object' ? c.Category?.name || '' : ''}

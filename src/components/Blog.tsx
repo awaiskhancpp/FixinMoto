@@ -8,7 +8,6 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import type { Blog } from '@/payload-types'
 import 'swiper/css'
 import 'swiper/css/pagination'
-import { blogAuthorLabel } from '@/lib/blogAuthor'
 
 interface BlogProps {
   blogCard: Blog[]
@@ -140,7 +139,7 @@ export default function Blog({ blogCard }: BlogProps) {
               <SwiperSlide key={i}>
                 <BlogCard
                   title={post.title || ''}
-                  author={blogAuthorLabel(post.author)}
+                  author={typeof post.author === 'object' ? post.author?.email || '' : ''}
                   date={post.createdAt}
                   imgSrc={typeof post?.cardImg === 'object' ? post?.cardImg?.url || '' : ''}
                   category={typeof post.Category === 'object' ? post.Category?.name || '' : ''}
@@ -170,7 +169,7 @@ export default function Blog({ blogCard }: BlogProps) {
             <BlogCard
               key={i}
               title={post.title || ''}
-              author={blogAuthorLabel(post.author)}
+              author={typeof post.author === 'object' ? post.author?.email || '' : ''}
               date={post.createdAt}
               imgSrc={typeof post?.cardImg === 'object' ? post?.cardImg?.url || '' : ''}
               category={typeof post.Category === 'object' ? post.Category?.name || '' : ''}

@@ -1,6 +1,5 @@
 import { Clock, User } from 'lucide-react'
 import type { Blog } from '@/payload-types'
-import { blogAuthorLabel } from '@/lib/blogAuthor'
 import Link from 'next/link'
 
 interface Recentsprops {
@@ -17,7 +16,7 @@ export default function RecentPosts({ card }: Recentsprops) {
             key={p.id}
             slug={p.slug}
             title={p.title || ''}
-            author={blogAuthorLabel(p.author)}
+            author={typeof p.author === 'object' ? p.author?.email || '' : ''}
             date={p.createdAt}
           />
         ))}
