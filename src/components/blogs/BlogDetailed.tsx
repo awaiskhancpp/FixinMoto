@@ -1,11 +1,11 @@
 import { Clock, User } from 'lucide-react'
 import Image from 'next/image'
 import type { Blog, Tag } from '@/payload-types'
-import { RichText } from '@payloadcms/richtext-lexical/react'
-import { Tags } from '@/components/Tags'
+// import { RichText } from '@payloadcms/richtext-lexical/react'
 import ContentForm from './ContentForm'
 import { Comment } from '@/payload-types'
 import '@/app/(frontend)/styles.css'
+import RichText from '../RichText'
 
 function isPopulatedTag(entry: number | Tag): entry is Tag {
   return typeof entry === 'object' && entry !== null && 'name' in entry
@@ -46,7 +46,7 @@ export default function BlogDetailed({ detail, comment }: BlogDetailedProps) {
 
   return (
     <>
-      <div className="text-white max-w-[900px] mx-auto">
+      <div className="text-white max-w-[800px] mx-auto">
         <div className="relative h-[350px] w-full md:h-[523px]">
           <Image
             src={bannerSrc}
@@ -57,7 +57,7 @@ export default function BlogDetailed({ detail, comment }: BlogDetailedProps) {
             priority
           />
         </div>
-        <div className="flex flex-row px-[14px] opacity-50 mt-4 mb-4">
+        <div className="flex flex-row px-[14px] opacity-60 mt-4 mb-4">
           <div className="flex w-32 gap-2">
             <Clock className="size-4 shrink-0" strokeWidth={1.5} />
             <time className="text-xs font-normal">{timeAgo}</time>
@@ -67,9 +67,9 @@ export default function BlogDetailed({ detail, comment }: BlogDetailedProps) {
             <span className="text-xs font-normal">{authorName}</span>
           </div>
         </div>
-        <div className="blog-detail-body">
-          <RichText data={detail.blogDetail} />
-        </div>
+        {/* <div className="blog-detail-body"> */}
+        <RichText content={detail.blogDetail} />
+        {/* </div> */}
         {detail.social && detail.social.length > 0 ? (
           <div className="flex flex-col gap-2 py-10">
             <h3 className="text-lg font-medium">Share</h3>
@@ -96,7 +96,7 @@ export default function BlogDetailed({ detail, comment }: BlogDetailedProps) {
             </div>
           </div>
         ) : null}
-        <div className="bg-primary mt-4 px-[15px] pb-6 rounded-lg">
+        <div className="bg-primary mt-4  pb-6">
           <h2 className="text-white font-semibold mt-3 pt-2">Tags</h2>
           <div className="pt-4 flex flex-wrap gap-3 text-white">
             {resolvedTags?.map((b, i) => (

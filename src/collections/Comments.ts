@@ -1,4 +1,5 @@
 import { CollectionConfig } from 'payload'
+import { checkbox } from 'payload/shared'
 
 export const Comments: CollectionConfig = {
   slug: 'comments',
@@ -27,6 +28,12 @@ export const Comments: CollectionConfig = {
     {
       name: 'createdAt',
       type: 'date',
+    },
+    {
+      name: 'approved',
+      type: 'checkbox',
+      label: 'Approved by Admin',
+      defaultValue: false,
     },
   ],
 }

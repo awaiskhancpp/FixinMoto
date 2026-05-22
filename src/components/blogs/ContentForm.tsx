@@ -3,6 +3,7 @@ import { ArrowUpRight } from 'lucide-react'
 import Image from 'next/image'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import { Mail, CircleUserRound } from 'lucide-react'
 
 interface ContentFormProps {
   blogId: Number
@@ -45,33 +46,40 @@ export default function ContentForm({ blogId }: ContentFormProps) {
   return (
     <>
       <div>
-        <h2 className="text-4xl font-bold pb-4">Leave a Comment</h2>
+        <h2 className="text-4xl font-bold pb-7">Leave a Comment</h2>
         <div className="space-y-3">
+          <div className="grid grid-cols-2 gap-3">
+            <div className="relative">
+              <span className="absolute left-2 top-1/2 -translate-y-1/2">
+                <CircleUserRound className="text-secondary" />
+              </span>
+              <input
+                type="text"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                placeholder="First Name"
+                className="bg-white rounded-sm text-black w-full px-2 py-2 pl-9"
+              />
+            </div>
+            <div className="relative">
+              <span className="absolute left-2 top-1/2 -translate-y-1/2">
+                <Mail className="text-secondary" />
+              </span>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
+                className="bg-white rounded-sm text-black py-2 pl-9 w-full"
+              />
+            </div>
+          </div>
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Your Content"
             className="text-black bg-white w-full px-2 mb-2 rounded-sm py-2"
           />
-          <input
-            type="text"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            placeholder="First Name"
-            className="bg-white rounded-sm text-black w-full px-2 py-2"
-          />
-          <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2">
-              <Image src="/appointmentForm/mail.png" alt="" width={16} height={16} />
-            </span>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email"
-              className="bg-white rounded-sm text-black py-2 pl-9 w-full"
-            />
-          </div>
           <button
             onClick={handleSubmit}
             disabled={isSubmitting}

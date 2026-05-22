@@ -547,7 +547,7 @@ export default function AppointmentForm({
                   onClick={() => handleServiceToggle(String(s.id))}
                   className={`rounded-3xl px-3 py-2 transition-colors ${
                     formData.services.includes(String(s.id))
-                      ? 'bg-secondary'
+                      ? 'bg-secondary border border-secondary'
                       : 'border border-white'
                   }`}
                 >

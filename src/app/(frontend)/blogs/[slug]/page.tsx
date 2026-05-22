@@ -25,9 +25,18 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
   const comments = await payload.find({
     collection: 'comments',
     where: {
-      blog: {
-        equals: post.id,
-      },
+      and: [
+        {
+          blog: {
+            equals: post.id,
+          },
+        },
+        {
+          approved: {
+            equals: true,
+          },
+        },
+      ],
     },
   })
 

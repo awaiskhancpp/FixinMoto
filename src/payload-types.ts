@@ -354,6 +354,7 @@ export interface Comment {
   email: string;
   content: string;
   createdAt: string;
+  approved?: boolean | null;
   updatedAt: string;
 }
 /**
@@ -926,6 +927,7 @@ export interface CommentsSelect<T extends boolean = true> {
   email?: T;
   content?: T;
   createdAt?: T;
+  approved?: T;
   updatedAt?: T;
 }
 /**
