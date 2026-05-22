@@ -1,30 +1,10 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import type { CarMake, CarModel, Service, Location, MainService } from '@/payload-types'
 import { toast } from 'react-toastify'
-import Select from 'react-select'
-const CarInfo = [
-  {
-    iconImg: '/appointmentForm/carhood.png',
-    imgOnClick: '/appointmentForm/carhoodwhite.png',
-    serviceTitle: 'Towing Services',
-    content: "Fast & Reliable Towing: We're Here When You Need Us",
-  },
-  {
-    iconImg: '/appointmentForm/towtruck.png',
-    imgOnClick: '/appointmentForm/towtruckwhite.png',
-    serviceTitle: 'Emergency Roadside Assistance',
-    content: '24/7 Roadside Help: Jump Starts, Tire Changes & More',
-  },
-  {
-    iconImg: '/appointmentForm/carwrench.png',
-    imgOnClick: '/appointmentForm/carwrenchwhite.png',
-    serviceTitle: 'Fleet Maintenance Services',
-    content: 'Keep Your Fleet Running: Professional Maintenance for Vehicles',
-  },
-]
+import type { ScheduleForDayPayload } from '@/lib/scheduling'
 
 interface AppointmentFormProps {
   location: Location[]
@@ -60,10 +40,71 @@ export default function AppointmentForm({
     mainService: '',
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const dateRef = useRef<HTMLInputElement>(null)
-  const timeRef = useRef<HTMLInputElement>(null)
+  const [bounds, setBounds] = useState<{ minDate: string; maxDate: string } | null>(null)
+  const [hoursLabel, setHoursLabel] = useState<{
+    weekDays?: string | null
+    weekEnds?: string | null
+  } | null>(null)
+  const [daySchedule, setDaySchedule] = useState<ScheduleForDayPayload | null>(null)
+  const [scheduleLoading, setScheduleLoading] = useState(false)
 
-  const makeIdParsed = selectedMakeId ?? (formData.carMake === '' ? NaN : Number(formData.carMake))
+  const dateRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    let cancelled = false
+    async function loadBounds() {
+      try {
+        const res = await fetch('/api/booking-schedule')
+        const data = (await res.json()) as {
+          bounds?: { minDate: string; maxDate: string }
+          serviceHours?: { weekDays?: string | null; weekEnds?: string | null }
+        }
+        if (!cancelled && data.bounds) {
+          setBounds(data.bounds)
+          setHoursLabel(data.serviceHours ?? null)
+        }
+      } catch {
+        if (!cancelled) toast.error('Could not load booking calendar')
+      }
+    }
+    void loadBounds()
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  useEffect(() => {
+    let cancelled = false
+    async function loadDay() {
+      if (!formData.date) {
+        setScheduleLoading(false)
+        setDaySchedule(null)
+        return
+      }
+      setScheduleLoading(true)
+      try {
+        const res = await fetch(`/api/booking-schedule?date=${encodeURIComponent(formData.date)}`)
+        const data = (await res.json()) as ScheduleForDayPayload
+        if (!cancelled) setDaySchedule(data)
+      } catch {
+        if (!cancelled) setDaySchedule(null)
+      } finally {
+        if (!cancelled) setScheduleLoading(false)
+      }
+    }
+    void loadDay()
+    return () => {
+      cancelled = true
+    }
+  }, [formData.date])
+
+  const scheduleReady = !!daySchedule && daySchedule.date === formData.date
+  const slotsForUi = scheduleReady ? (daySchedule?.slots ?? []) : []
+  const dayUsed = scheduleReady ? (daySchedule?.usedCount ?? 0) : 0
+  const dayCapacity = scheduleReady ? (daySchedule?.capacity ?? 5) : 5
+  const noSlotsLeft =
+    scheduleReady && slotsForUi.length === 0 && !scheduleLoading && !daySchedule?.error
+
   const handleMainServiceClick = (index: number, serviceId: string) => {
     setActiveCard(index)
     setFormData((prev) => ({
@@ -71,6 +112,7 @@ export default function AppointmentForm({
       mainService: serviceId,
     }))
   }
+  const makeIdParsed = selectedMakeId ?? (formData.carMake === '' ? NaN : Number(formData.carMake))
   const filteredModels = carModel.filter((model) => {
     if (typeof model.make !== 'object' || model.make === null) return false
     return model.make.id === makeIdParsed
@@ -80,6 +122,7 @@ export default function AppointmentForm({
     const { name, value } = e.target
     setFormData((prev) => {
       const next = { ...prev, [name]: value }
+      if (name === 'date') next.time = ''
       if (name === 'carMake') {
         next.carModel = ''
         setSelectedMakeId(value === '' ? null : Number(value))
@@ -101,6 +144,33 @@ export default function AppointmentForm({
     e.preventDefault()
     if (!formData.mainService && (!formData.services || formData.services.length === 0)) {
       toast.error('Select at least one main service or service')
+      return
+    }
+    if (formData.licencePlate && formData.licencePlate.length < 2) {
+      toast.error('License plate must be at least 2 characters')
+      return
+    }
+
+    if (formData.vin && formData.vin.length !== 17) {
+      toast.error('VIN must be exactly 17 characters')
+      return
+    }
+
+    if (!bounds || !formData.date) {
+      toast.error('Select a booking date')
+      return
+    }
+    if (formData.date < bounds.minDate || formData.date > bounds.maxDate) {
+      toast.error('Date is outside the allowed booking window')
+      return
+    }
+    if (
+      scheduleLoading ||
+      !slotsForUi.length ||
+      !formData.time ||
+      !slotsForUi.includes(formData.time)
+    ) {
+      toast.error('Choose a valid time slot')
       return
     }
 
@@ -144,8 +214,19 @@ export default function AppointmentForm({
         })
 
         setActiveCard(null)
+        setDaySchedule(null)
       } else {
-        toast.error('Failed to send Appointment')
+        let msg = 'Failed to send appointment'
+        try {
+          const data = (await response.json()) as {
+            errors?: Array<{ message?: string }>
+            message?: string
+          }
+          msg = data?.errors?.[0]?.message || data?.message || `Server error (${response.status})`
+        } catch {
+          msg = `Server error (${response.status})`
+        }
+        toast.error(msg)
       }
     } catch (error) {
       toast.error('Something went wrong! Please try again')
@@ -252,7 +333,7 @@ export default function AppointmentForm({
                 onChange={handleInputChange}
                 required
                 disabled={formData.carMake === '' || Number.isNaN(makeIdParsed)}
-                className="rounded-lg bg-white py-2 text-black disabled:opacity-50"
+                className="rounded-lg bg-white py-2 text-black disabled:text-muted disabled:cursor-not-allowed"
               >
                 <option value="">Select Car Model</option>
                 {filteredModels.map((model) => (
@@ -286,12 +367,16 @@ export default function AppointmentForm({
                     placeholder="Licence Plate *"
                     value={formData.licencePlate}
                     onChange={(e) => {
-                      const value = e.target.value.toUpperCase().replace(/[^A-Z0-9\s\-]/g, '')
-                      handleInputChange({ target: { name: 'licencePlate', value } } as any)
+                      let value = e.target.value.toUpperCase().replace(/[^A-Z0-9\s\-]/g, '')
+                      if (value.length <= 8) {
+                        handleInputChange({ target: { name: 'licencePlate', value } } as any)
+                      }
                     }}
                     name="licencePlate"
                     className="w-full rounded-sm bg-white py-2 pl-9 text-black"
                     required
+                    minLength={2}
+                    maxLength={8}
                   />
                 </div>
                 <div className="relative">
@@ -307,10 +392,13 @@ export default function AppointmentForm({
                     type="text"
                     value={formData.vin}
                     onChange={(e) => {
-                      const value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '')
-                      handleInputChange({ target: { name: 'vin', value } } as any)
+                      let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '')
+                      value = value.replace(/[IOQ]/g, '')
+                      if (value.length <= 17) {
+                        handleInputChange({ target: { name: 'vin', value } } as any)
+                      }
                     }}
-                    placeholder="Vin (Optional)"
+                    placeholder="Vin (Optional) - 17 chars"
                     name="vin"
                     maxLength={17}
                     className="w-full rounded-sm bg-white py-2 pl-9 text-black"
@@ -324,6 +412,16 @@ export default function AppointmentForm({
             <h2 className="font-medium">
               Appointment Details <span className="text-red-500">*</span>
             </h2>
+            <p className="text-white/50 mt-2 text-xs">
+              {hoursLabel?.weekDays || hoursLabel?.weekEnds ? (
+                <>
+                  {' '}
+                  {hoursLabel.weekDays ? <>Mon–Fri {hoursLabel.weekDays}</> : null}
+                  {hoursLabel.weekDays && hoursLabel.weekEnds ? ' · ' : null}
+                  {hoursLabel.weekEnds ? <>Sat–Sun {hoursLabel.weekEnds}</> : null}
+                </>
+              ) : null}
+            </p>
             <div className="grid grid-cols-1 gap-2 pt-3 md:grid-cols-3">
               <div className="relative" onClick={() => dateRef.current?.showPicker()}>
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
@@ -335,26 +433,50 @@ export default function AppointmentForm({
                   value={formData.date}
                   onChange={handleInputChange}
                   name="date"
+                  min={bounds?.minDate}
+                  max={bounds?.maxDate}
                   required
-                  className="custom-date-input w-full rounded-sm bg-white py-2 pl-9 text-black cursor-pointer"
+                  disabled={!bounds}
+                  className={`custom-date-input w-full rounded-lg bg-white py-[11px] lg:py-[10px] xl:py-[9.5px] pl-9 text-black cursor-pointer disabled:opacity-60 ${
+                    scheduleReady && dayUsed >= dayCapacity ? 'ring-2 ring-red-500/70' : ''
+                  }`}
                 />
+                {scheduleLoading ? (
+                  <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-black/70">
+                    …
+                  </span>
+                ) : null}
+                {bounds && scheduleReady ? (
+                  <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-black/60">
+                    {dayUsed}/{dayCapacity}
+                  </span>
+                ) : null}
               </div>
-              <div className="relative" onClick={() => timeRef.current?.showPicker()}>
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
+              <div className="relative flex items-center gap-2">
+                <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2">
                   <Image src="/appointmentForm/alarm.png" alt="" width={16} height={16} />
                 </span>
-                <input
-                  ref={timeRef}
-                  type="time"
-                  id="appointment"
+                <select
                   name="time"
                   value={formData.time}
                   onChange={handleInputChange}
-                  min="09:00"
-                  max="18:00"
                   required
-                  className="custom-date-input w-full rounded-sm bg-white py-2 pl-9 text-black cursor-pointer"
-                />
+                  disabled={
+                    !formData.date ||
+                    scheduleLoading ||
+                    noSlotsLeft ||
+                    !slotsForUi.length ||
+                    dayUsed >= dayCapacity
+                  }
+                  className="custom-date-input w-full rounded-lg bg-white py-3 pl-9 text-black"
+                >
+                  <option value="">{scheduleLoading ? 'Loading times…' : 'Select time'}</option>
+                  {slotsForUi.map((slot) => (
+                    <option key={slot} value={slot}>
+                      {slot}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="relative w-full">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2">
@@ -377,6 +499,12 @@ export default function AppointmentForm({
                 </select>
               </div>
             </div>
+            {daySchedule?.error ? (
+              <p className="mt-2 text-sm text-secondary">{daySchedule.error}</p>
+            ) : null}
+            {noSlotsLeft ? (
+              <p className="mt-2 text-sm text-white/70">No open slots this day.</p>
+            ) : null}
           </div>
 
           <div className="pt-6">
@@ -423,28 +551,35 @@ export default function AppointmentForm({
 
           <button
             type="submit"
-            disabled={isSubmitting}
+            disabled={
+              isSubmitting ||
+              scheduleLoading ||
+              !slotsForUi.length ||
+              noSlotsLeft ||
+              !formData.time ||
+              dayUsed >= dayCapacity
+            }
             className="
-    mt-6
-    rounded-lg
-    bg-secondary
-    px-6
-    py-3
-    font-medium
-    text-white
-    transition-all
-    duration-300
-    hover:scale-[1.03]
-    hover:shadow-lg
-    active:scale-[0.98]
-    disabled:cursor-not-allowed
-    disabled:opacity-70
-    disabled:hover:scale-100
-    flex
-    items-center
-    justify-center
-    min-w-[220px]
-  "
+              mt-6
+              rounded-lg
+              bg-secondary
+              px-6
+              py-3
+              font-medium
+              text-white
+              transition-all
+              duration-300
+              hover:scale-[1.03]
+              hover:shadow-lg 
+              active:scale-[0.98]
+              disabled:cursor-not-allowed
+              disabled:text-muted
+              disabled:hover:scale-100
+              flex
+              items-center
+              justify-center
+              min-w-[220px]
+            "
           >
             {isSubmitting ? (
               <div className="flex items-center gap-2">

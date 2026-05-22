@@ -1,7 +1,15 @@
 import type { CollectionConfig } from 'payload'
 
+import { assertBookingSlotAllowed } from '@/lib/scheduling'
+
 export const ServiceBooking: CollectionConfig = {
   slug: 'service-booking',
+  access: {
+    create: () => true,
+    read: ({ req }) => Boolean(req.user),
+    update: ({ req }) => Boolean(req.user),
+    delete: ({ req }) => Boolean(req.user),
+  },
   fields: [
     {
       name: 'name',
@@ -22,64 +30,11 @@ export const ServiceBooking: CollectionConfig = {
       name: 'date',
       type: 'date',
       required: true,
-      validate: (value) => {
-        if (!value) return true
-
-        const selectedDate = new Date(value)
-        const tomorrow = new Date()
-        tomorrow.setDate(tomorrow.getDate() + 1)
-        const maxDate = new Date()
-        maxDate.setDate(maxDate.getDate() + 14)
-
-        if (selectedDate < tomorrow) {
-          return 'Date must be tomorrow or later'
-        }
-        if (selectedDate > maxDate) {
-          return 'Date must be within 2 weeks'
-        }
-        return true
-      },
     },
     {
       name: 'time',
       type: 'text',
       required: true,
-      validate: (value: any) => {
-        if (!value) return true
-
-        const validTimes = [
-          '08:00',
-          '08:30',
-          '09:00',
-          '09:30',
-          '10:00',
-          '10:30',
-          '11:00',
-          '11:30',
-          '12:00',
-          '12:30',
-          '13:00',
-          '13:30',
-          '14:00',
-          '14:30',
-          '15:00',
-          '15:30',
-          '16:00',
-          '16:30',
-          '17:00',
-          '17:30',
-          '18:00',
-          '18:30',
-          '19:00',
-          '19:30',
-          '20:00',
-        ]
-
-        if (!validTimes.includes(value)) {
-          return 'Invalid time slot'
-        }
-        return true
-      },
     },
     {
       name: 'service',
@@ -111,21 +66,43 @@ export const ServiceBooking: CollectionConfig = {
   ],
   hooks: {
     beforeValidate: [
-      async ({ data }) => {
-        const payload = data?.req?.payload
-        if (!payload || !data.date) return data
+      async ({ data, req, operation, originalDoc }) => {
+        if (!req.payload || data == null) return data
 
-        const existingBookings = await payload.find({
-          collection: 'service-booking',
-          where: {
-            date: { equals: data.date },
-            bookingStatus: { not_equals: 'cancelled' },
-          },
+        const statusFromMerge =
+          typeof data.bookingStatus === 'string'
+            ? data.bookingStatus
+            : typeof originalDoc?.bookingStatus === 'string'
+              ? originalDoc.bookingStatus
+              : 'pending'
+
+        if (statusFromMerge === 'cancelled') {
+          return data
+        }
+
+        if (!data.date || !data.time) {
+          return data
+        }
+
+        const settings = await req.payload.findGlobal({
+          slug: 'settings',
+          depth: 0,
+          overrideAccess: true,
         })
 
-        if (existingBookings.totalDocs >= 5) {
-          throw new Error('Maximum 5 appointments allowed per day. This date is fully booked.')
-        }
+        const ignoreSb =
+          operation === 'update' && originalDoc && 'id' in originalDoc ? originalDoc.id : undefined
+
+        const { dateKey, timeHHmm } = await assertBookingSlotAllowed(
+          req.payload,
+          settings as { serviceHours?: { weekDays?: string | null; weekEnds?: string | null } },
+          data.date as string | Date | undefined,
+          data.time as string,
+          ignoreSb !== undefined ? { ignoreServiceBookingId: ignoreSb as string | number } : undefined,
+        )
+
+        ;(data as { date?: string; time?: string }).date = dateKey
+        ;(data as { date?: string; time?: string }).time = timeHHmm
 
         return data
       },

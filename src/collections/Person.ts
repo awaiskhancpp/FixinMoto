@@ -1,4 +1,3 @@
-import { FixedToolbarFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
 
 export const Person: CollectionConfig = {

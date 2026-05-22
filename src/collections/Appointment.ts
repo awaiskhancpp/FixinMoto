@@ -1,4 +1,7 @@
 import { CollectionConfig } from 'payload'
+
+import { assertBookingSlotAllowed } from '@/lib/scheduling'
+
 export const Appointment: CollectionConfig = {
   slug: 'appointment',
   fields: [
@@ -31,4 +34,39 @@ export const Appointment: CollectionConfig = {
       relationTo: 'main-service',
     },
   ],
+  hooks: {
+    beforeValidate: [
+      async ({ data, req, operation, originalDoc }) => {
+        if (!req.payload || data == null) return data
+
+        const dateVal = typeof data.date === 'string' ? data.date : undefined
+        const timeVal = typeof data.time === 'string' ? data.time : undefined
+        if (!dateVal?.trim() || !timeVal?.trim()) return data
+
+        const settings = await req.payload.findGlobal({
+          slug: 'settings',
+          depth: 0,
+          overrideAccess: true,
+        })
+
+        const ignoreAppointment =
+          operation === 'update' && originalDoc && 'id' in originalDoc ? originalDoc.id : undefined
+
+        const { dateKey, timeHHmm } = await assertBookingSlotAllowed(
+          req.payload,
+          settings as { serviceHours?: { weekDays?: string | null; weekEnds?: string | null } },
+          dateVal,
+          timeVal,
+          ignoreAppointment !== undefined
+            ? { ignoreAppointmentId: ignoreAppointment as string | number }
+            : undefined,
+        )
+
+        data.date = dateKey
+        data.time = timeHHmm
+
+        return data
+      },
+    ],
+  },
 }

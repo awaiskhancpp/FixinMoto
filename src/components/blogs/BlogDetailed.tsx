@@ -6,6 +6,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react'
 import { Tags } from '@/components/Tags'
 import ContentForm from './ContentForm'
 import { Comment } from '@/payload-types'
+import '@/app/(frontend)/styles.css'
 
 function isPopulatedTag(entry: number | Tag): entry is Tag {
   return typeof entry === 'object' && entry !== null && 'name' in entry
@@ -64,7 +65,9 @@ export default function BlogDetailed({ detail, comment }: BlogDetailedProps) {
             <span className="text-xs font-normal">{blogAuthorLabel(detail.author)}</span>
           </div>
         </div>
-        <RichText data={detail.blogDetail} />
+        <div className="blog-detail-body">
+          <RichText data={detail.blogDetail} />
+        </div>
         {detail.social && detail.social.length > 0 ? (
           <div className="flex flex-col gap-2 py-10">
             <h3 className="text-lg font-medium">Share</h3>

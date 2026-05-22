@@ -3,11 +3,10 @@ import Faq from '@/components/appointment/Faq'
 import Testimonials from '@/components/appointment/Testimonials'
 import Image from 'next/image'
 import { getPayload } from 'payload'
-import config from '@/payload.config'
+import configPromise from '@payload-config'
 
 export default async function Appointment() {
-  const payloadConfig = await config
-  const payload = await getPayload({ config: payloadConfig })
+  const payload = await getPayload({ config: configPromise })
   const testimonials = await payload.find({
     collection: 'testimonial',
     limit: 3,

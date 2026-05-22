@@ -1,14 +1,22 @@
 'use client'
 import Image from 'next/image'
-import { useState, useEffect } from 'react'
+import type { Setting } from '@/payload-types'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import type { ScheduleForDayPayload } from '@/lib/scheduling'
 
-interface ServicePageCard {
+interface ServicePageCardProps {
   title: string
   description: string
   imageSrc: string
   slug: string
   services: string[]
+  serviceHours?: Setting['serviceHours'] | null
+}
+
+type BoundsResponse = {
+  bounds: { minDate: string; maxDate: string }
+  serviceHours?: { weekDays?: string | null; weekEnds?: string | null }
 }
 
 export default function ServicePageCard({
@@ -17,10 +25,14 @@ export default function ServicePageCard({
   imageSrc,
   services,
   slug,
-}: ServicePageCard) {
+}: ServicePageCardProps) {
   const [openModal, setOpenModal] = useState(false)
-  const [bookedSlots, setBookedSlots] = useState<Record<string, string[]>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [bounds, setBounds] = useState<{ minDate: string; maxDate: string } | null>(null)
+  const [hoursLabel, setHoursLabel] = useState<BoundsResponse['serviceHours'] | null>(null)
+  const [daySchedule, setDaySchedule] = useState<ScheduleForDayPayload | null>(null)
+  const [scheduleLoading, setScheduleLoading] = useState(false)
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -33,66 +45,77 @@ export default function ServicePageCard({
   })
 
   useEffect(() => {
-    if (openModal) {
-      fetchBookedSlots()
+    let cancelled = false
+    async function loadBounds() {
+      try {
+        const res = await fetch('/api/booking-schedule')
+        const data = (await res.json()) as BoundsResponse
+        if (!cancelled && data.bounds) {
+          setBounds(data.bounds)
+          setHoursLabel(data.serviceHours ?? null)
+        }
+      } catch {
+        if (!cancelled) toast.error('Could not load booking dates')
+      }
+    }
+    if (openModal) loadBounds()
+    return () => {
+      cancelled = true
     }
   }, [openModal])
 
-  const fetchBookedSlots = async () => {
-    try {
-      const response = await fetch('/api/service-booking')
-      const data = await response.json()
-
-      const slots: Record<string, string[]> = {}
-      data.docs?.forEach((booking: any) => {
-        if (booking.date && booking.time && booking.bookingStatus !== 'cancelled') {
-          if (!slots[booking.date]) {
-            slots[booking.date] = []
-          }
-          if (!slots[booking.date].includes(booking.time)) {
-            slots[booking.date].push(booking.time)
-          }
-        }
-      })
-      setBookedSlots(slots)
-    } catch (error) {
-      console.error('Failed to fetch booked slots:', error)
+  useEffect(() => {
+    let cancelled = false
+    async function loadDay() {
+      if (!openModal || !formData.date) {
+        setScheduleLoading(false)
+        setDaySchedule(null)
+        return
+      }
+      setScheduleLoading(true)
+      try {
+        const res = await fetch(`/api/booking-schedule?date=${encodeURIComponent(formData.date)}`)
+        const data = (await res.json()) as ScheduleForDayPayload
+        if (!cancelled) setDaySchedule(data)
+      } catch {
+        if (!cancelled) setDaySchedule(null)
+      } finally {
+        if (!cancelled) setScheduleLoading(false)
+      }
     }
-  }
-
-  const getMinDate = () => {
-    const today = new Date()
-    today.setDate(today.getDate() + 1)
-    return today.toISOString().split('T')[0]
-  }
-
-  const getMaxDate = () => {
-    const today = new Date()
-    today.setDate(today.getDate() + 14)
-    return today.toISOString().split('T')[0]
-  }
-
-  const isDateDisabled = (dateString: string) => {
-    return (bookedSlots[dateString]?.length || 0) >= 5
-  }
-
-  const isTimeSlotBooked = (dateString: string, timeString: string) => {
-    return bookedSlots[dateString]?.includes(timeString) || false
-  }
+    void loadDay()
+    return () => {
+      cancelled = true
+    }
+  }, [openModal, formData.date])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
+    setFormData((prev) => {
+      if (name === 'date') {
+        return { ...prev, date: value, time: '' }
+      }
+      return { ...prev, [name]: value }
+    })
   }
+
+  const slotsForUi = daySchedule?.slots ?? []
+  const usedCount = daySchedule?.usedCount ?? 0
+  const capacity = daySchedule?.capacity ?? 5
+  const scheduleReady = !!daySchedule && daySchedule.date === formData.date
+  const noSlotsLeft =
+    scheduleReady && slotsForUi.length === 0 && !scheduleLoading && !daySchedule?.error
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!formData.date) {
+    if (!formData.date || !bounds) {
       toast.error('Please select a date')
+      return
+    }
+
+    if (formData.date < bounds.minDate || formData.date > bounds.maxDate) {
+      toast.error('Date outside the allowed booking window')
       return
     }
 
@@ -101,13 +124,8 @@ export default function ServicePageCard({
       return
     }
 
-    if (isDateDisabled(formData.date)) {
-      toast.error('This date is fully booked')
-      return
-    }
-
-    if (isTimeSlotBooked(formData.date, formData.time)) {
-      toast.error('This time slot is already booked')
+    if (slotsForUi.length === 0 || !slotsForUi.includes(formData.time) || scheduleLoading) {
+      toast.error('This slot is no longer available')
       return
     }
 
@@ -123,8 +141,6 @@ export default function ServicePageCard({
       if (response.ok) {
         toast.success('Booking submitted successfully!')
 
-        await fetchBookedSlots()
-
         setFormData({
           name: '',
           email: '',
@@ -135,45 +151,27 @@ export default function ServicePageCard({
           cardTitle: title,
           cardDescription: description,
         })
+        setDaySchedule(null)
         setOpenModal(false)
       } else {
-        const data = await response.json()
-        toast.error(data?.message || 'Failed to submit booking')
+        let msg = 'Failed to submit booking'
+        try {
+          const data = (await response.json()) as {
+            errors?: Array<{ message?: string }>
+            message?: string
+          }
+          msg = data?.errors?.[0]?.message || data?.message || `Server error (${response.status})`
+        } catch {
+          msg = `Server error (${response.status})`
+        }
+        toast.error(msg)
       }
-    } catch (error) {
+    } catch {
       toast.error('Something went wrong!')
     } finally {
       setIsSubmitting(false)
     }
   }
-
-  const timeSlots = [
-    '08:00',
-    '08:30',
-    '09:00',
-    '09:30',
-    '10:00',
-    '10:30',
-    '11:00',
-    '11:30',
-    '12:00',
-    '12:30',
-    '13:00',
-    '13:30',
-    '14:00',
-    '14:30',
-    '15:00',
-    '15:30',
-    '16:00',
-    '16:30',
-    '17:00',
-    '17:30',
-    '18:00',
-    '18:30',
-    '19:00',
-    '19:30',
-    '20:00',
-  ]
 
   return (
     <div className="flex h-full flex-col items-center rounded-[15px] bg-primary px-6 py-10 text-center text-white">
@@ -202,175 +200,186 @@ export default function ServicePageCard({
 
       {openModal && (
         <div
-          id="modalOverlay"
-          className="fixed inset-0 p-4 flex flex-wrap justify-center items-center w-full h-full z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-[rgba(0,0,0,0.5)]"
+          className="fixed inset-0 z-[1000] flex flex-wrap justify-center items-center p-4 before:pointer-events-none before:fixed before:inset-0 before:z-0 before:bg-[rgba(0,0,0,0.5)]"
           onClick={() => setOpenModal(false)}
         >
           <div
             role="dialog"
-            className="w-full max-w-md bg-white border border-slate-100 shadow-lg rounded-lg relative max-h-[95vh] overflow-y-auto outline-none p-4 md:p-6"
+            className="relative z-10 w-full max-w-md rounded-lg border border-slate-100 bg-white shadow-lg outline-none overflow-y-auto max-h-[95vh] p-4 md:p-6"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="bg-secondary rounded-lg py-4 px-4 mb-4">
-              <h2 id="modal-title" className="text-white text-xl font-semibold mb-2">
-                {title}
-              </h2>
-              <p className="text-white text-sm">{description}</p>
+            <div className="mb-4 rounded-lg bg-secondary px-4 py-4">
+              <h2 className="mb-2 text-xl font-semibold text-white">{title}</h2>
+              <p className="text-sm text-white">{description}</p>
+              {hoursLabel?.weekDays || hoursLabel?.weekEnds ? (
+                <p className="mt-3 text-xs text-white/85">
+                  <span className="font-semibold">Hours</span>{' '}
+                  {hoursLabel.weekDays ? `Mon–Fri: ${hoursLabel.weekDays}` : null}
+                  {hoursLabel.weekDays && hoursLabel.weekEnds ? ' · ' : null}
+                  {hoursLabel.weekEnds ? `Sat–Sun: ${hoursLabel.weekEnds}` : null}
+                </p>
+              ) : null}
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-3 mt-4">
-              <div className="flex items-center gap-4">
-                <label className="text-slate-700 text-sm font-medium w-20 shrink-0">
-                  Name <span className="text-red-500">*</span>
-                </label>
+            <form onSubmit={handleSubmit} className="mt-4 space-y-3">
+              <FieldRow label="Name" required>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
                   placeholder="Enter your name"
-                  className="flex-1 px-4 py-2 border border-slate-300 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="flex-1 rounded-lg border border-slate-300 px-4 py-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />
-              </div>
+              </FieldRow>
 
-              <div className="flex items-center gap-4">
-                <label className="text-slate-700 text-sm font-medium w-20 shrink-0">
-                  Email <span className="text-red-500">*</span>
-                </label>
+              <FieldRow label="Email" required>
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="Enter your email"
-                  className="flex-1 px-4 py-2 border border-slate-300 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="flex-1 rounded-lg border border-slate-300 px-4 py-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />
-              </div>
+              </FieldRow>
 
-              <div className="flex items-center gap-4">
-                <label className="text-slate-700 text-sm font-medium w-20 shrink-0">
-                  Phone <span className="text-red-500">*</span>
-                </label>
+              <FieldRow label="Phone" required>
                 <input
                   type="tel"
                   name="contact"
                   value={formData.contact}
                   onChange={handleInputChange}
                   placeholder="Enter your phone number"
-                  className="flex-1 px-4 py-2 border border-slate-300 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="flex-1 rounded-lg border border-slate-300 px-4 py-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />
-              </div>
+              </FieldRow>
 
-              <div className="flex items-center gap-4">
-                <label className="text-slate-700 text-sm font-medium w-20 shrink-0">
-                  Date <span className="text-red-500">*</span>
-                </label>
-                <div className="flex-1 relative">
+              <FieldRow label="Date" required>
+                <div className="relative flex-1">
                   <input
                     type="date"
                     name="date"
                     value={formData.date}
                     onChange={handleInputChange}
-                    min={getMinDate()}
-                    max={getMaxDate()}
-                    className={`w-full px-4 py-2 border rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                      formData.date && isDateDisabled(formData.date)
-                        ? 'bg-red-100 border-red-300'
+                    min={bounds?.minDate}
+                    max={bounds?.maxDate}
+                    disabled={!bounds}
+                    className={`w-full rounded-lg border px-4 py-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 ${
+                      scheduleReady && usedCount >= capacity
+                        ? 'border-red-300 bg-red-100'
                         : 'border-slate-300'
                     }`}
                     required
                   />
-                  {formData.date && isDateDisabled(formData.date) && (
-                    <span className="absolute right-2 top-1/2 -translate-y-1/2 text-red-500 text-xs font-semibold">
-                      Full
+                  {scheduleLoading ? (
+                    <span className="absolute right-10 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-500">
+                      Loading…
                     </span>
-                  )}
-                  {formData.date && !isDateDisabled(formData.date) && (
-                    <span className="absolute right-10 top-1/2 -translate-y-1/2 text-green-600 text-xs font-semibold">
-                      ({bookedSlots[formData.date]?.length || 0}/5)
+                  ) : null}
+                  {formData.date && bounds && scheduleReady ? (
+                    <span className="absolute right-10 top-1/2 -translate-y-1/2 text-xs font-semibold text-green-700">
+                      ({Math.min(usedCount, capacity)}/{capacity})
                     </span>
-                  )}
+                  ) : null}
                 </div>
-              </div>
+              </FieldRow>
 
-              <div className="flex items-center gap-4">
-                <label className="text-slate-700 text-sm font-medium w-20 shrink-0">
-                  Time <span className="text-red-500">*</span>
-                </label>
+              <FieldRow label="Time" required>
                 <select
                   name="time"
                   value={formData.time}
                   onChange={handleInputChange}
-                  className="flex-1 px-4 py-2 border border-slate-300 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+                  className="flex-1 rounded-lg border border-slate-300 px-4 py-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+                  disabled={
+                    !formData.date ||
+                    scheduleLoading ||
+                    !slotsForUi.length ||
+                    noSlotsLeft ||
+                    isSubmitting
+                  }
                   required
-                  disabled={!formData.date || isDateDisabled(formData.date) || isSubmitting}
                 >
                   <option value="">Select time</option>
-                  {timeSlots.map((slot) => {
-                    const isBooked = isTimeSlotBooked(formData.date, slot)
-                    return (
-                      <option
-                        key={slot}
-                        value={slot}
-                        disabled={isBooked}
-                        className={isBooked ? 'line-through text-gray-400' : ''}
-                      >
-                        {slot} {isBooked ? '(Booked)' : ''}
-                      </option>
-                    )
-                  })}
+                  {slotsForUi.map((slot) => (
+                    <option key={slot} value={slot}>
+                      {slot}
+                    </option>
+                  ))}
                 </select>
-              </div>
+              </FieldRow>
 
-              <div className="flex items-center gap-4">
-                <label className="text-slate-700 text-sm font-medium w-20 shrink-0">Service</label>
+              <FieldRow label="Service">
                 <select
                   name="service"
                   value={formData.service}
                   onChange={handleInputChange}
-                  className="flex-1 px-4 py-2 border border-slate-300 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="flex-1 rounded-lg border border-slate-300 px-4 py-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value={title}>{title}</option>
-                  {services.map(
-                    (s, i) =>
-                      s !== title && (
-                        <option value={s} key={i}>
-                          {s}
-                        </option>
-                      ),
+                  {services.map((s, i) =>
+                    s !== title ? (
+                      <option value={s} key={i}>
+                        {s}
+                      </option>
+                    ) : null,
                   )}
                 </select>
-              </div>
+              </FieldRow>
 
-              <div className="flex gap-3 mt-6 pt-4 border-t">
+              {daySchedule?.error ? (
+                <p className="text-sm text-red-600">{daySchedule.error}</p>
+              ) : null}
+
+              <div className="mt-6 flex gap-3 border-t pt-4">
                 <button
                   type="button"
                   onClick={() => setOpenModal(false)}
-                  className="flex-1 px-4 py-2 text-slate-700 text-sm font-semibold rounded-md cursor-pointer bg-slate-200 border border-slate-300 transition-colors hover:bg-slate-300"
+                  className="flex-1 cursor-pointer rounded-md border border-slate-300 bg-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-300"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={
+                    scheduleLoading ||
                     !formData.date ||
                     !formData.time ||
-                    isDateDisabled(formData.date) ||
-                    isTimeSlotBooked(formData.date, formData.time) ||
+                    !slotsForUi.length ||
+                    noSlotsLeft ||
                     isSubmitting
                   }
-                  className="flex-1 px-4 py-2 text-white text-sm font-semibold rounded-md cursor-pointer bg-secondary transition-colors hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 cursor-pointer rounded-md bg-secondary px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-600 disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  {isSubmitting ? 'Submitting...' : 'Submit'}
+                  {isSubmitting ? 'Submitting…' : 'Submit'}
                 </button>
               </div>
             </form>
           </div>
         </div>
       )}
+    </div>
+  )
+}
+
+function FieldRow({
+  label,
+  required,
+  children,
+}: {
+  label: string
+  required?: boolean
+  children: React.ReactNode
+}) {
+  return (
+    <div className="flex items-center gap-4">
+      <label className="w-20 shrink-0 text-sm font-medium text-slate-700">
+        {label} {required ? <span className="text-red-500">*</span> : null}
+      </label>
+      {children}
     </div>
   )
 }
