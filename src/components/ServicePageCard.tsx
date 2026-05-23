@@ -3,6 +3,7 @@ import Image from 'next/image'
 import type { Setting } from '@/payload-types'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import { isValidFormEmail } from '@/lib/validateEmail'
 import type { ScheduleForDayPayload } from '@/lib/scheduling'
 
 interface ServicePageCardProps {
@@ -129,6 +130,11 @@ export default function ServicePageCard({
       return
     }
 
+    if (!isValidFormEmail(formData.email)) {
+      toast.error('Enter a valid email address')
+      return
+    }
+
     setIsSubmitting(true)
 
     try {
@@ -248,7 +254,9 @@ export default function ServicePageCard({
 
               <FieldRow label="Phone" required>
                 <input
-                  type="tel"
+                  type="number"
+                  maxLength={11}
+                  minLength={10}
                   name="contact"
                   value={formData.contact}
                   onChange={handleInputChange}

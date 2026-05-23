@@ -4,6 +4,7 @@ import { MapPin, Phone, Mail } from 'lucide-react'
 import type { Setting as ContactType } from '@/payload-types'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import { isValidFormEmail } from '@/lib/validateEmail'
 interface ContactProps {
   data: ContactType
 }
@@ -29,8 +30,8 @@ export default function ContactUs({ data }: ContactProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!formData.email.includes('@')) {
-      toast.error('Enter a valid email')
+    if (!isValidFormEmail(formData.email)) {
+      toast.error('Enter a valid email address')
       return
     }
 
@@ -133,6 +134,8 @@ export default function ContactUs({ data }: ContactProps) {
                   placeholder="Phone"
                   name="phone"
                   value={formData.phone}
+                  maxLength={11}
+                  minLength={10}
                   required
                   onChange={handleInputChange}
                   className="text-white/50 border border-white/50 px-3 py-3 outline-none rounded-[15px] bg-transparent"

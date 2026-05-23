@@ -2,8 +2,11 @@
 import Map from './MapClient'
 import { Card } from './appointment/AppointmentForm'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
+import { isValidFormEmail } from '@/lib/validateEmail'
 export default function ServiceCoverageForm() {
   const [activeCard, setActiveCard] = useState<Number | null>(null)
+  const [coverageEmail, setCoverageEmail] = useState('')
   const CarInfo = [
     {
       iconImg: '/appointmentForm/carhood.png',
@@ -50,6 +53,8 @@ export default function ServiceCoverageForm() {
             <input
               type="email"
               placeholder="Email"
+              value={coverageEmail}
+              onChange={(e) => setCoverageEmail(e.target.value)}
               className="text-white/50 border border-white/50 px-3 py-3 rounded-[15px] bg-transparent"
             />
             <input
@@ -89,7 +94,20 @@ export default function ServiceCoverageForm() {
               </div>
             </div>
 
-            <button className="bg-secondary rounded-lg text-white py-3 px-10 flex items-start">
+            <button
+              type="button"
+              onClick={() => {
+                if (!coverageEmail.trim()) {
+                  toast.error('Please enter your email')
+                  return
+                }
+                if (!isValidFormEmail(coverageEmail)) {
+                  toast.error('Enter a valid email address')
+                  return
+                }
+              }}
+              className="bg-secondary rounded-lg text-white py-3 px-10 flex items-start"
+            >
               Check Availability
             </button>
           </div>

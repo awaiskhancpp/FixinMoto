@@ -7,6 +7,7 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import ChatBot from '@/components/shared/ChatBot'
 export const metadata = {
   description: 'Fixing Moto. Fixing Cars Since 1900',
   title: 'Fixin Moto',
@@ -24,8 +25,9 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     <html lang="en">
       <body className="font-sans antialiased">
         <Navbar services={serviceTitles.docs} data={settings} />
-        <main>
+        <main className="relative">
           {children}
+          <ChatBot />
           <ToastContainer
             position="bottom-right"
             autoClose={3000}

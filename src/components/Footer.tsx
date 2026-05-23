@@ -4,6 +4,7 @@ import { MapPin, Phone, Mail, Globe, ArrowUpRight } from 'lucide-react'
 import type { Setting as FooterType } from '@/payload-types'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import { isValidFormEmail } from '@/lib/validateEmail'
 
 interface FooterProps {
   data: FooterType
@@ -13,10 +14,8 @@ export default function Footer({ data }: FooterProps) {
   const [email, setEmail] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const handleSubmit = async () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
-    if (!emailRegex.test(email)) {
-      toast.error('Please enter a valid email address')
+    if (!isValidFormEmail(email)) {
+      toast.error('Enter a valid email address')
       return
     }
     try {

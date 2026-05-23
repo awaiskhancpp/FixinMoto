@@ -5,6 +5,7 @@ import Image from 'next/image'
 import type { CarMake, CarModel, Service, Location, MainService } from '@/payload-types'
 import { toast } from 'react-toastify'
 import type { ScheduleForDayPayload } from '@/lib/scheduling'
+import { isValidFormEmail } from '@/lib/validateEmail'
 
 interface AppointmentFormProps {
   location: Location[]
@@ -142,8 +143,7 @@ export default function AppointmentForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const emailRegex = /^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-    if (!emailRegex.test(formData.email)) {
+    if (!isValidFormEmail(formData.email)) {
       toast.error('Enter a valid email address')
       return
     }

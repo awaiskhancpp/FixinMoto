@@ -1,9 +1,8 @@
 'use client'
-import { ArrowUpRight } from 'lucide-react'
-import Image from 'next/image'
+import { ArrowUpRight, Mail, CircleUserRound } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-import { Mail, CircleUserRound } from 'lucide-react'
+import { isValidFormEmail } from '@/lib/validateEmail'
 
 interface ContentFormProps {
   blogId: Number
@@ -18,6 +17,11 @@ export default function ContentForm({ blogId }: ContentFormProps) {
   const handleSubmit = async () => {
     if (!firstName || !email || !content) {
       toast.error('Please fill all fields')
+      return
+    }
+
+    if (!isValidFormEmail(email)) {
+      toast.error('Enter a valid email address')
       return
     }
 
