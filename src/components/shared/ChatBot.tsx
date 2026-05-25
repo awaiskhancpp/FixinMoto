@@ -1,6 +1,6 @@
 'use client'
 import { MessageCircle, X, Send } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 type Message = {
   role: 'user' | 'bot'
@@ -11,6 +11,12 @@ export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false)
   const [text, setText] = useState('')
   const [messages, setMessages] = useState<Message[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value)
@@ -24,11 +30,13 @@ export default function ChatBot() {
     setText('')
 
     try {
+      setIsLoading(true)
       const response = await fetch(`${process.env.NEXT_PUBLIC_FAST_API}/chat/send`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: text }),
       })
+      setIsLoading(false)
 
       const data = await response.json()
       const botMessage: Message = { role: 'bot', text: data.bot_reply }
@@ -52,12 +60,12 @@ export default function ChatBot() {
           <div className="relative w-full h-full">
             <X
               onClick={() => setIsOpen(false)}
-              className="text-secondary absolute top-1 right-2 cursor-pointer"
+              className="text-white/50 absolute top-1 right-2 cursor-pointer"
             />
 
             <div className="flex flex-col w-full h-full">
               <div
-                className="flex-1 overflow-y-auto flex flex-col gap-2 mx-2 mt-6"
+                className="flex-1 overflow-y-auto flex flex-col gap-2 mx-2 mt-7"
                 style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}
               >
                 {messages.map((msg, i) => (
@@ -70,6 +78,21 @@ export default function ChatBot() {
                     {msg.text}
                   </div>
                 ))}
+                {isLoading && (
+                  <div className="bg-white/30 self-start px-3 py-1 rounded-md">
+                    <div className="flex gap-1">
+                      <div className="w-1 h-1 bg-white/70 rounded-full animate-bounce"></div>
+                      <div
+                        className="w-1 h-1 bg-white/70 rounded-full animate-bounce"
+                        style={{ animationDelay: '0.2s' }}
+                      ></div>
+                      <div
+                        className="w-1 h-1 bg-white/70 rounded-full animate-bounce"
+                        style={{ animationDelay: '0.4s' }}
+                      ></div>
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className="flex items-center relative mt-2 mx-2 my-2">
