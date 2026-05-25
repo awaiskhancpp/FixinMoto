@@ -1,8 +1,9 @@
 'use client'
 import { MessageCircle, X, Send } from 'lucide-react'
-import { useState, useRef, useEffect, useCallback } from 'react'
+import Link from 'next/link'
+import { useState, useRef, useEffect } from 'react'
 import ReactMarkdown from 'react-markdown'
-
+import remarkGfm from 'remark-gfm'
 type Message = {
   role: 'user' | 'bot'
   text: string
@@ -154,7 +155,18 @@ export default function ChatBot() {
                     msg.role === 'user' ? 'bg-black text-white' : 'bg-gray-100 text-gray-900'
                   }`}
                 >
-                  <ReactMarkdown>{msg.text}</ReactMarkdown>
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    components={{
+                      a: ({ href, children }) => (
+                        <a href={href} className="text-blue-500 underline hover:text-blue-700">
+                          {children}
+                        </a>
+                      ),
+                    }}
+                  >
+                    {msg.text}
+                  </ReactMarkdown>
                 </div>
               </div>
             ))}
