@@ -19,8 +19,8 @@ function MapUpdater({ center }: MapProps) {
   const map = useMap()
 
   useEffect(() => {
-    if (center && center.lat && center.lon) {
-      map.setView([center.lat, center.lon], 13)
+    if (center?.lat && center?.lon) {
+      map.flyTo([center.lat, center.lon], 13, { animate: true, duration: 1.2 })
     }
   }, [center, map])
 
@@ -34,7 +34,7 @@ export default function Map({ center = { lat: 40.73061, lon: -73.935242 } }: Map
       zoom={13}
       zoomControl={false}
       scrollWheelZoom={false}
-      style={{ height: '400px', width: '100%' }}
+      style={{ height: '100%', width: '100%' }}
     >
       <TileLayer
         url={`https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}.png?apiKey=${process.env.NEXT_PUBLIC_GEOAPIFYKEY}`}
