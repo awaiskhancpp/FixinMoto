@@ -16,3 +16,38 @@
 .custom-date-input::-webkit-clear-button {
   display: none;
 }
+.Toastify__toast {
+  background: #000;
+  color: #fff;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  padding: 14px 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.Toastify__toast--success {
+  border-left: 4px solid #22c55e;
+}
+
+.Toastify__toast--error {
+  border-left: 4px solid #ef4444;
+}
+
+.Toastify__toast--warning {
+  border-left: 4px solid #f59e0b;
+}
+
+.Toastify__progress-bar {
+  background: #fff;
+  opacity: 0.4;
+}
+
+.Toastify__close-button {
+  color: #fff;
+  opacity: 0.6;
+}
+
+.Toastify__close-button:hover {
+  opacity: 1;
+}
