@@ -261,7 +261,7 @@ export interface Service {
  */
 export interface ServicePackage {
   id: number;
-  service: number | Service;
+  service: (number | Service)[];
   packageName?: string | null;
   description?: string | null;
   price?: number | null;
@@ -997,6 +997,7 @@ export interface Setting {
   phone?: string | null;
   address?: string | null;
   website?: string | null;
+  companyName?: string | null;
   serviceHours?: {
     weekDays?: string | null;
     weekEnds?: string | null;
@@ -1040,6 +1041,7 @@ export interface SettingsSelect<T extends boolean = true> {
   phone?: T;
   address?: T;
   website?: T;
+  companyName?: T;
   serviceHours?:
     | T
     | {

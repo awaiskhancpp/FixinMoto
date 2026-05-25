@@ -4,6 +4,7 @@ import { assertBookingSlotAllowed } from '@/lib/scheduling'
 
 export const Appointment: CollectionConfig = {
   slug: 'appointment',
+
   fields: [
     { name: 'firstName', type: 'text', required: true },
     { name: 'lastName', type: 'text', required: true },

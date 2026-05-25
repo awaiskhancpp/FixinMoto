@@ -2,11 +2,15 @@ import type { GlobalConfig } from 'payload'
 
 export const Settings: GlobalConfig = {
   slug: 'settings',
+  access: {
+    read: () => true,
+  },
   fields: [
     { name: 'contactEmail', type: 'email', label: 'Email' },
     { name: 'phone', type: 'text', label: 'Contact' },
     { name: 'address', type: 'text', label: 'Address' },
     { name: 'website', type: 'text', label: 'Website Link' },
+    { name: 'companyName', type: 'text' },
     {
       name: 'serviceHours',
       type: 'group',

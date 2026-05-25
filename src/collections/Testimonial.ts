@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 export const Testimonial: CollectionConfig = {
   slug: 'testimonial',
+  access: { read: () => true },
   fields: [
     {
       name: 'name',

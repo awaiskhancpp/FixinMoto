@@ -1,6 +1,7 @@
 import { CollectionConfig } from 'payload'
 export const CTA: CollectionConfig = {
   slug: 'cta',
+  access: { read: () => true },
   fields: [
     { name: 'ctaHeading', type: 'text', required: true },
     { name: 'ctaText', type: 'text', required: true },

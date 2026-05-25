@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload'
 export const Person: CollectionConfig = {
   slug: 'person',
   auth: false,
+  access: { read: () => true },
   fields: [
     {
       name: 'slug',

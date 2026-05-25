@@ -1,6 +1,7 @@
 import { CollectionConfig } from 'payload'
 export const CarModel: CollectionConfig = {
   slug: 'car-model',
+  access: { read: () => true },
   fields: [
     { name: 'name', type: 'text', required: true },
     {

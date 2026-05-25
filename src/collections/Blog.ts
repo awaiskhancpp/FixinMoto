@@ -3,6 +3,7 @@ import { FixedToolbarFeature, lexicalEditor } from '@payloadcms/richtext-lexical
 
 export const Blog: CollectionConfig = {
   slug: 'blog',
+  access: { read: () => true },
   fields: [
     {
       name: 'Category',

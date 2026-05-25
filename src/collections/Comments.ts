@@ -3,6 +3,7 @@ import { checkbox } from 'payload/shared'
 
 export const Comments: CollectionConfig = {
   slug: 'comments',
+  access: { read: () => true },
   fields: [
     {
       name: 'blog',

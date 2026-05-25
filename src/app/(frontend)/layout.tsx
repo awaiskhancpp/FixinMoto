@@ -20,6 +20,16 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     collection: 'services',
   })
   const { children } = props
+  const toastClass = (type: any) => {
+    const base = '!rounded-xl !shadow-lg !p-4'
+    const types: Record<string, string> = {
+      success: `${base} !bg-green-500 !text-white`,
+      error: `${base} !bg-red-500 !text-white`,
+      warning: `${base} !bg-yellow-500 !text-white`,
+      info: `${base} !bg-blue-500 !text-white`,
+    }
+    return types[type] || base
+  }
 
   return (
     <html lang="en">
@@ -29,7 +39,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           {children}
           <ChatBot />
           <ToastContainer
-            position="bottom-right"
+            position="top-right"
             autoClose={3000}
             hideProgressBar={false}
             newestOnTop={true}
@@ -38,6 +48,8 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
             pauseOnFocusLoss
             draggable
             pauseOnHover
+            toastClassName={(context) => toastClass(context?.type)}
+            style={{ top: '110px' }}
           />
         </main>
         <Footer data={settings} />

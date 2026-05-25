@@ -19,10 +19,7 @@ export default async function ServiceDetails({ params }: { params: Promise<{ slu
   const faq = await payload.find({
     collection: 'faq',
   })
-  const servicePackage = await payload.find({
-    collection: 'service-package',
-    depth: 1,
-  })
+
   const cta = await payload.find({
     collection: 'cta',
   })
@@ -30,6 +27,14 @@ export default async function ServiceDetails({ params }: { params: Promise<{ slu
   if (!currentService) {
     notFound()
   }
+  const servicePackage = await payload.find({
+    collection: 'service-package',
+    where: {
+      service: {
+        equals: currentService.id,
+      },
+    },
+  })
   return (
     <section className="bg-black">
       <PageHeader

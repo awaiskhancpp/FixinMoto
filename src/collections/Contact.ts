@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 export const Contact: CollectionConfig = {
   slug: 'contact',
+  access: { read: () => true },
   fields: [
     {
       name: 'firstName',
