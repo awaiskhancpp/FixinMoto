@@ -1,5 +1,6 @@
 import { Clock, User } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 interface BlogCardProps {
   title: string
   date: string
@@ -26,7 +27,7 @@ export function BlogCard({ title, date, author, imgSrc, category, slug }: BlogCa
     timeAgo = `${minutes} min${minutes > 1 ? 's' : ''} ago`
   }
   return (
-    <a href={`/blogs/${slug}`} className="bg-primary h-full text-white rounded-2xl">
+    <Link href={`/blogs/${slug}`} className="bg-primary h-full text-white rounded-2xl">
       <div className="relative aspect-[4/3] bg-primary w-full">
         <Image src={imgSrc} alt="..." fill className="rounded-t-2xl" />
       </div>
@@ -49,6 +50,6 @@ export function BlogCard({ title, date, author, imgSrc, category, slug }: BlogCa
           <span>{authorName}</span>
         </div>
       </div>
-    </a>
+    </Link>
   )
 }

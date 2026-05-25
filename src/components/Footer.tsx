@@ -1,5 +1,6 @@
 'use client'
 import Image from 'next/image'
+import Link from 'next/link'
 import { MapPin, Phone, Mail, Globe, ArrowUpRight } from 'lucide-react'
 import type { Setting as FooterType } from '@/payload-types'
 import { useState } from 'react'
@@ -104,21 +105,21 @@ export default function Footer({ data }: FooterProps) {
           <div className="grid">
             <h3 className="text-2xl font-medium lg:mt-5 pb-2">Quick Links</h3>
             <div className="space-y-2 mt-4 grid">
-              <a href="aboutus" className="text-white/50 hover:text-white">
+              <Link href="/aboutus" className="text-white/50 hover:text-white">
                 About us
-              </a>
-              <a href="/services" className="text-white/50 hover:text-white">
+              </Link>
+              <Link href="/services" className="text-white/50 hover:text-white">
                 Out Services
-              </a>
-              <a href="/appointment" className="text-white/50 hover:text-white">
+              </Link>
+              <Link href="/appointment" className="text-white/50 hover:text-white">
                 Appointment
-              </a>
-              <a href="/blogs" className="text-white/50 hover:text-white">
+              </Link>
+              <Link href="/blogs" className="text-white/50 hover:text-white">
                 Blogs
-              </a>
-              <a href="/contact" className="text-white/50 hover:text-white">
+              </Link>
+              <Link href="/contact" className="text-white/50 hover:text-white">
                 Contact us
-              </a>
+              </Link>
             </div>
           </div>
         </div>

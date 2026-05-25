@@ -1,5 +1,6 @@
 'use client'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { X, Menu, ChevronDown, ChevronUp } from 'lucide-react'
 import type { Service } from '@/payload-types'
@@ -50,7 +51,7 @@ export default function Navbar({ services, data }: NavbarProps) {
       }`}
     >
       <div className="hidden lg:flex justify-between items-center pt-6 pb-3 mx-auto w-full max-w-[1440px]">
-        <a href="/">
+        <Link href="/">
           <Image
             src={logoSrc}
             alt="logo"
@@ -58,13 +59,13 @@ export default function Navbar({ services, data }: NavbarProps) {
             height={42}
             className="object-cover transition-all duration-300"
           />
-        </a>
+        </Link>
 
         <div className="flex items-center gap-8">
           {NAV_LINKS.map((n, i) => (
-            <a href={n.href} key={i} className="py-2 hover:text-secondary">
+            <Link href={n.href} key={i} className="py-2 hover:text-secondary">
               {n.label}
-            </a>
+            </Link>
           ))}
 
           <div className="relative group">
@@ -82,31 +83,34 @@ export default function Navbar({ services, data }: NavbarProps) {
             >
               <ul className="p-2 text-sm font-medium">
                 {services.slice(0, 5).map((p, i) => (
-                  <a
+                  <Link
                     key={i}
                     href={`/services/${p.slug}`}
                     className="inline-flex w-full p-2 hover:text-secondary rounded"
                   >
                     {p.serviceName}
-                  </a>
+                  </Link>
                 ))}
-                <a href="/services" className="inline-flex w-full p-2 hover:text-secondary rounded">
+                <Link href="/services" className="inline-flex w-full p-2 hover:text-secondary rounded">
                   View all Services
-                </a>
+                </Link>
               </ul>
             </div>
           </div>
 
-          <a href="/contact">
-            <button className="rounded-lg bg-secondary px-6 h-12 text-white">Contact Us</button>
-          </a>
+          <Link
+            href="/contact"
+            className="inline-flex items-center justify-center rounded-lg bg-secondary px-6 h-12 text-white"
+          >
+            Contact Us
+          </Link>
         </div>
       </div>
 
       <div className="lg:hidden flex items-center justify-between pt-6 pb-3 mx-auto w-full max-w-[1440px]">
-        <a href="/">
+        <Link href="/">
           <Image src={logoSrc} alt="logo" width={120} height={36} className="object-cover" />
-        </a>
+        </Link>
 
         <button className="p-2 w-10 h-10" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X /> : <Menu />}
@@ -119,40 +123,38 @@ export default function Navbar({ services, data }: NavbarProps) {
         }`}
       >
         {NAV_LINKS.map((n, i) => (
-          <a href={n.href} key={i} className="text-lg py-3 border-b border-gray-100">
+          <Link href={n.href} key={i} className="text-lg py-3 border-b border-gray-100">
             {n.label}
-          </a>
+          </Link>
         ))}
 
-        <a href="/services">
-          <button
-            onClick={() => setIsPageClicked(!isPageClicked)}
-            className="flex items-center justify-between w-full text-lg py-3 border-b border-gray-100"
-          >
-            Services
-            {/* {isPageClicked ? <ChevronUp /> : <ChevronDown />} */}
-          </button>
-        </a>
+        <Link
+          href="/services"
+          className="flex items-center justify-between w-full text-lg py-3 border-b border-gray-100"
+        >
+          Services
+        </Link>
 
         {/* {isPageClicked && (
           <div className="flex flex-col">
             {services.slice(0, 5).map((p, i) => (
-              <a
+              <Link
                 href={`/services/${p.slug}`}
                 key={i}
                 className="text-lg py-3 border-b border-gray-100 hover:text-secondary"
               >
                 {p.serviceName}
-              </a>
+              </Link>
             ))}
           </div>
         )} */}
 
-        <a href="/contact">
-          <button className="mt-4 rounded-lg bg-secondary px-6 h-12 text-white w-full">
-            Contact Us
-          </button>
-        </a>
+        <Link
+          href="/contact"
+          className="mt-4 flex w-full items-center justify-center rounded-lg bg-secondary px-6 h-12 text-white"
+        >
+          Contact Us
+        </Link>
       </div>
     </nav>
   )

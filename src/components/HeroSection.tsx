@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import type { Homepage as HeroType } from '@/payload-types'
 interface HeroProps {
   data: HeroType
@@ -29,12 +30,18 @@ export default function HeroSection({ data }: HeroProps) {
         </div>
         <p className="md:hidden mt-10 max-w-xl text-white">{data.heroTagline}</p>
         <div className="flex gap-4 pt-10  text-white">
-          <button className="h-12 w-48 rounded-lg bg-secondary md:px-6 py-3">
-            <a href="/appointment">Appointment Now</a>
-          </button>
-          <button className="h-12 w-48 rounded-lg border border-white bg-transparent">
-            <a href="/services">Our Service</a>
-          </button>
+          <Link
+            href="/appointment"
+            className="flex h-12 w-48 items-center justify-center rounded-lg bg-secondary md:px-6 py-3"
+          >
+            Appointment Now
+          </Link>
+          <Link
+            href="/services"
+            className="flex h-12 w-48 items-center justify-center rounded-lg border border-white bg-transparent"
+          >
+            Our Service
+          </Link>
         </div>
 
         <p className="hidden md:block md:absolute md:right-0 mt-10 max-w-xl text-white md:mt-14">

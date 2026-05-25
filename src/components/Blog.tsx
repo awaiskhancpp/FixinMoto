@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { Calendar, User } from 'lucide-react'
 import { useState, useRef } from 'react'
 import { HeadingGrid } from './HeadingGrid'
@@ -65,7 +66,7 @@ export function BlogCard({ title, date, author, imgSrc, category, slug }: BlogCa
     timeAgo = `${minutes} min${minutes > 1 ? 's' : ''} ago`
   }
   return (
-    <a href={`/blogs/${slug}`} className="flex flex-col rounded-[17px] bg-[#edf2fd] pb-5">
+    <Link href={`/blogs/${slug}`} className="flex flex-col rounded-[17px] bg-[#edf2fd] pb-5">
       <div className="relative aspect-[387/300] w-full overflow-hidden rounded-t-lg">
         <Image src={imgSrc} alt="" fill className="object-cover" />
       </div>
@@ -95,7 +96,7 @@ export function BlogCard({ title, date, author, imgSrc, category, slug }: BlogCa
           <span className="text-xs font-normal ">{authorName}</span>
         </div>
       </div>
-    </a>
+    </Link>
   )
 }
 

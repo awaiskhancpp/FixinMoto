@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, Navigation } from 'swiper/modules'
 import 'swiper/css'
@@ -111,9 +112,15 @@ export default function WhyChooseFixinMoto() {
 
             <div className="hidden xl:grid md:grid-cols-12 md:gap-4 md:space-y-4">
               {CARDS.map((card, i) => (
-                <a href="#" key={i} className="md:col-span-6 lg:col-span-4 xl:col-span-3">
+                <Link
+                  href="#"
+                  scroll={false}
+                  prefetch={false}
+                  key={i}
+                  className="md:col-span-6 lg:col-span-4 xl:col-span-3"
+                >
                   <Card title={card.title} logoImg={card.logoImg} details={card.detail} />
-                </a>
+                </Link>
               ))}
             </div>
           </div>

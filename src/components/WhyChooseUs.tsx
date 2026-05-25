@@ -1,5 +1,6 @@
 import { CircleCheck } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 export default function WhyChooseUS() {
   return (
     <section className="w-full overflow-x-hidden bg-primary px-4 py-12 md:px-6 min-[1441px]:px-0 md:py-10 lg:py-20">
@@ -29,9 +30,12 @@ export default function WhyChooseUS() {
             </div>
           </div>
 
-          <button className="text-white bg-red-500 hover:border hover:border-white hover:bg-transparent hover:text-secondary w-40 h-14 px-7 py-4 rounded-lg mt-4 mb-4">
-            <a href="/aboutus">Learn More</a>
-          </button>
+          <Link
+            href="/aboutus"
+            className="text-white bg-red-500 hover:border hover:border-white hover:bg-transparent hover:text-secondary w-40 h-14 px-7 py-4 rounded-lg mt-4 mb-4 flex items-center justify-center"
+          >
+            Learn More
+          </Link>
         </div>
         <div className="relative h-[400px] w-full min-w-0 max-w-full rounded-xl md:h-[500px] md:flex-1 lg:h-[580px]">
           <Image

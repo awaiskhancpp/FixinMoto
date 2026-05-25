@@ -1,6 +1,7 @@
 'use client'
 import Card from '../Card'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState, useRef } from 'react'
 import { HeadingGrid } from '../HeadingGrid'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -61,7 +62,7 @@ export default function Service({ card, trustedBy }: CardProps) {
               >
                 {card.slice(0, 4).map((c) => (
                   <SwiperSlide key={c.id}>
-                    <a href="/services/" className="">
+                    <Link href="/services/" className="">
                       <Card
                         title={c.serviceName}
                         mainImg={
@@ -76,7 +77,7 @@ export default function Service({ card, trustedBy }: CardProps) {
                         }
                         cardNo={c.serviceNumber}
                       />
-                    </a>
+                    </Link>
                   </SwiperSlide>
                 ))}
               </Swiper>
@@ -97,7 +98,7 @@ export default function Service({ card, trustedBy }: CardProps) {
             </div>
             <div className="hidden xl:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {card.slice(0, 4).map((c, i) => (
-                <a href={`/services/${c.slug}`} key={i} className="">
+                <Link href={`/services/${c.slug}`} key={i} className="">
                   <Card
                     title={c.serviceName}
                     mainImg={
@@ -112,7 +113,7 @@ export default function Service({ card, trustedBy }: CardProps) {
                     }
                     cardNo={c.serviceNumber}
                   />
-                </a>
+                </Link>
               ))}
             </div>
           </div>

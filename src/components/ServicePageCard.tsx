@@ -1,5 +1,6 @@
 'use client'
 import Image from 'next/image'
+import Link from 'next/link'
 import type { Setting } from '@/payload-types'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -189,12 +190,12 @@ export default function ServicePageCard({
         {description}
       </p>
       <div className="mt-auto flex w-full flex-row items-center justify-center gap-2 pt-2">
-        <a
+        <Link
           href={`/services/${slug}`}
           className="rounded-lg border border-white px-11 xl:px-9 py-[15px] text-sm font-medium text-white"
         >
           Details
-        </a>
+        </Link>
         <button
           type="button"
           onClick={() => setOpenModal(!openModal)}

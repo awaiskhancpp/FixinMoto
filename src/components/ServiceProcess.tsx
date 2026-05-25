@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { HeadingGrid } from './HeadingGrid'
 
@@ -54,12 +55,12 @@ export default function ServiceProcess() {
           <p className="max-w-xl text-base md:text-lg">
             Save big on premium services with our exclusive promotions and discounts.
           </p>
-          <button
-            type="button"
-            className="mt-3 rounded-lg bg-secondary hover:border hover:border-white hover:bg-transparent hover:text-secondary px-8 py-4 text-base font-medium text-white"
+          <Link
+            href="/services"
+            className="mt-3 inline-flex items-center justify-center rounded-lg bg-secondary hover:border hover:border-white hover:bg-transparent hover:text-secondary px-8 py-4 text-base font-medium text-white"
           >
-            <a href="/services">View all promotion</a>
-          </button>
+            View all promotion
+          </Link>
         </div>
       </section>
 
