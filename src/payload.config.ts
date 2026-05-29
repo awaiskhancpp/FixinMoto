@@ -29,6 +29,7 @@ import { CTA } from './collections/CTA'
 import { Contact } from './collections/Contact'
 import { Comments } from './collections/Comments'
 import { ServiceBooking } from './collections/ServiceBookings'
+import { CoverageInquiries } from './collections/CoverageInquiries'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -61,6 +62,7 @@ export default buildConfig({
     Contact,
     Comments,
     ServiceBooking,
+    CoverageInquiries,
   ],
   globals: [Settings, Homepage],
   secret: process.env.PAYLOAD_SECRET || '',

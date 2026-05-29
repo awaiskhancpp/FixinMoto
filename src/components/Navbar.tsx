@@ -91,7 +91,10 @@ export default function Navbar({ services, data }: NavbarProps) {
                     {p.serviceName}
                   </Link>
                 ))}
-                <Link href="/services" className="inline-flex w-full p-2 hover:text-secondary rounded">
+                <Link
+                  href="/services"
+                  className="inline-flex w-full p-2 hover:text-secondary rounded"
+                >
                   View all Services
                 </Link>
               </ul>
@@ -108,9 +111,9 @@ export default function Navbar({ services, data }: NavbarProps) {
       </div>
 
       <div className="lg:hidden flex items-center justify-between pt-6 pb-3 mx-auto w-full max-w-[1440px]">
-        <Link href="/">
+        <a href="/">
           <Image src={logoSrc} alt="logo" width={120} height={36} className="object-cover" />
-        </Link>
+        </a>
 
         <button className="p-2 w-10 h-10" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X /> : <Menu />}
@@ -123,38 +126,23 @@ export default function Navbar({ services, data }: NavbarProps) {
         }`}
       >
         {NAV_LINKS.map((n, i) => (
-          <Link href={n.href} key={i} className="text-lg py-3 border-b border-gray-100">
+          <a href={n.href} key={i} className="text-lg py-3 border-b border-gray-100">
             {n.label}
-          </Link>
+          </a>
         ))}
 
-        <Link
+        <a
           href="/services"
           className="flex items-center justify-between w-full text-lg py-3 border-b border-gray-100"
         >
           Services
-        </Link>
-
-        {/* {isPageClicked && (
-          <div className="flex flex-col">
-            {services.slice(0, 5).map((p, i) => (
-              <Link
-                href={`/services/${p.slug}`}
-                key={i}
-                className="text-lg py-3 border-b border-gray-100 hover:text-secondary"
-              >
-                {p.serviceName}
-              </Link>
-            ))}
-          </div>
-        )} */}
-
-        <Link
+        </a>
+        <a
           href="/contact"
           className="mt-4 flex w-full items-center justify-center rounded-lg bg-secondary px-6 h-12 text-white"
         >
           Contact Us
-        </Link>
+        </a>
       </div>
     </nav>
   )

@@ -65,11 +65,7 @@ export default function BlogDetailed({ detail, comment, canonicalUrl }: BlogDeta
         </div>
         <RichText content={detail.blogDetail} />
         {detail.social && detail.social.length > 0 ? (
-          <BlogSocialShare
-            entries={detail.social}
-            canonicalUrl={canonicalUrl}
-            title={detail.title || ''}
-          />
+          <BlogSocialShare entries={detail.social} canonicalUrl={canonicalUrl} />
         ) : null}
         <div className="bg-primary mt-4  pb-6">
           <h2 className="text-white font-semibold mt-3 pt-2">Tags</h2>

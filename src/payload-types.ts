@@ -88,6 +88,7 @@ export interface Config {
     contact: Contact;
     comments: Comment;
     'service-booking': ServiceBooking;
+    'coverage-inquiries': CoverageInquiry;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -116,6 +117,7 @@ export interface Config {
     contact: ContactSelect<false> | ContactSelect<true>;
     comments: CommentsSelect<false> | CommentsSelect<true>;
     'service-booking': ServiceBookingSelect<false> | ServiceBookingSelect<true>;
+    'coverage-inquiries': CoverageInquiriesSelect<false> | CoverageInquiriesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -499,6 +501,38 @@ export interface ServiceBooking {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "coverage-inquiries".
+ */
+export interface CoverageInquiry {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  /**
+   * Stored as typed; sanitize digits on client/API if needed.
+   */
+  phone: string;
+  /**
+   * Address or landmark from the coverage form.
+   */
+  addressLine: string;
+  /**
+   * Optional “Select your area” choice.
+   */
+  selectedArea?: (number | null) | Location;
+  /**
+   * Main service card highlighted on the form.
+   */
+  mainServiceInterest?: (number | null) | MainService;
+  /**
+   * Internal notes (filled in Payload admin).
+   */
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -604,6 +638,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'service-booking';
         value: number | ServiceBooking;
+      } | null)
+    | ({
+        relationTo: 'coverage-inquiries';
+        value: number | CoverageInquiry;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -944,6 +982,22 @@ export interface ServiceBookingSelect<T extends boolean = true> {
   cardTitle?: T;
   cardDescription?: T;
   bookingStatus?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "coverage-inquiries_select".
+ */
+export interface CoverageInquiriesSelect<T extends boolean = true> {
+  firstName?: T;
+  lastName?: T;
+  email?: T;
+  phone?: T;
+  addressLine?: T;
+  selectedArea?: T;
+  mainServiceInterest?: T;
+  notes?: T;
   updatedAt?: T;
   createdAt?: T;
 }

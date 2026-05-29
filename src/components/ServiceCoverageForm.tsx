@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { ChevronDown, Mail, MapPin, Phone } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-import { isValidFormEmail } from '@/lib/validateEmail'
+import { validateCoveragePayload } from '@/lib/coverageFormValidation'
 import type { Location, MainService } from '@/payload-types'
 
 interface ServiceCoverageFormProps {
@@ -39,17 +39,60 @@ export default function ServiceCoverageForm({ services, locations }: ServiceCove
   const [phone, setPhone] = useState('')
   const [addressLine, setAddressLine] = useState('')
   const [selectedAreaId, setSelectedAreaId] = useState<string>('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const validateAndProceed = () => {
-    if (!coverageEmail.trim()) {
-      toast.error('Please enter your email')
-      return false
+  const handleSubmit = async () => {
+    const mainServiceId =
+      displayServices.length > 0 && activeCard !== null
+        ? (displayServices[activeCard]?.id ?? null)
+        : null
+
+    if (displayServices.length > 0 && mainServiceId == null) {
+      toast.error('Please select a service.')
+      return
     }
-    if (!isValidFormEmail(coverageEmail)) {
-      toast.error('Enter a valid email address')
-      return false
+
+    const payload = {
+      firstName,
+      lastName,
+      email: coverageEmail,
+      phone,
+      addressLine,
+      selectedAreaId: selectedAreaId ? Number(selectedAreaId) : null,
+      mainServiceId,
     }
-    return true
+
+    const check = validateCoveragePayload(payload, { requireArea: locations.length > 0 })
+    if (!check.ok) {
+      toast.error(check.message)
+      return
+    }
+
+    setIsSubmitting(true)
+    try {
+      const res = await fetch('/api/coverage-inquiries', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      const data = (await res.json()) as { success?: boolean; error?: string }
+      if (!res.ok) {
+        toast.error(data.error || 'Could not send your request.')
+        return
+      }
+      toast.success('Thanks! We received your details.')
+      setFirstName('')
+      setLastName('')
+      setCoverageEmail('')
+      setPhone('')
+      setAddressLine('')
+      setSelectedAreaId('')
+      if (displayServices.length > 0) setActiveCard(0)
+    } catch {
+      toast.error('Network error. Try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -219,15 +262,22 @@ export default function ServiceCoverageForm({ services, locations }: ServiceCove
                   ) : null}
                 </div>
 
-                <Link
-                  href="/appointment"
-                  onClick={(e) => {
-                    if (!validateAndProceed()) e.preventDefault()
-                  }}
-                  className="mt-2 flex min-h-[48px] w-full items-center justify-center rounded-lg bg-secondary px-8 text-sm font-medium text-white transition-opacity hover:opacity-95 sm:mt-4 sm:w-auto sm:self-start sm:min-w-[11rem]"
-                >
-                  Book Now
-                </Link>
+                <div className="mt-2 flex flex-col gap-3 sm:mt-4 sm:self-start">
+                  <button
+                    type="button"
+                    disabled={isSubmitting}
+                    onClick={() => void handleSubmit()}
+                    className="flex min-h-[48px] w-full items-center justify-center rounded-lg bg-secondary px-8 text-sm font-medium text-white transition-opacity hover:opacity-95 disabled:opacity-60 sm:w-auto sm:min-w-[11rem]"
+                  >
+                    {isSubmitting ? 'Sending…' : 'Submit inquiry'}
+                  </button>
+                  <Link
+                    href="/appointment"
+                    className="text-center text-sm text-white/70 underline underline-offset-2 hover:text-white sm:text-left"
+                  >
+                    Continue to book an appointment →
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
