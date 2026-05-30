@@ -5,7 +5,9 @@ import BlogSocialShare from './BlogSocialShare'
 import ContentForm from './ContentForm'
 import { Comment } from '@/payload-types'
 import '@/app/(frontend)/styles.css'
-import RichText from '../RichText'
+import RichText from '../RichText/index'
+import BlogTableOfContents from './BlogTableOfContents'
+import { getHeadingsFromLexical } from '@/lib/lexicalHeadings'
 
 function isPopulatedTag(entry: number | Tag): entry is Tag {
   return typeof entry === 'object' && entry !== null && 'name' in entry
@@ -39,11 +41,12 @@ export default function BlogDetailed({ detail, comment, canonicalUrl }: BlogDeta
     typeof detail.cardImg === 'object' && detail.cardImg?.url ? detail.cardImg.url : '/'
 
   const resolvedTags = detail.tags?.filter(isPopulatedTag) ?? []
+  const tocHeadings = getHeadingsFromLexical(detail.blogDetail)
 
   return (
     <>
-      <div className="text-white max-w-[800px] mx-auto">
-        <div className="relative h-[350px] w-full md:h-[523px]">
+      <div className="mx-auto w-full max-w-[1200px]">
+        <div className="relative h-[220px] w-full sm:h-[320px] md:h-[420px] lg:h-[523px]">
           <Image
             src={bannerSrc}
             fill
@@ -53,17 +56,26 @@ export default function BlogDetailed({ detail, comment, canonicalUrl }: BlogDeta
             priority
           />
         </div>
-        <div className="flex flex-row px-[14px] opacity-60 mt-4 mb-4">
-          <div className="flex w-32 gap-2">
+        <div className="mt-4 mb-4 flex flex-col gap-3 px-1 opacity-60 sm:flex-row sm:flex-wrap sm:gap-6 sm:px-[14px]">
+          <div className="flex min-w-0 items-center gap-2">
             <Clock className="size-4 shrink-0" strokeWidth={1.5} />
             <time className="text-xs font-normal">{timeAgo}</time>
           </div>
-          <div className="flex w-32 gap-2">
+          <div className="flex min-w-0 items-center gap-2">
             <User className="size-4 shrink-0" strokeWidth={1.5} />
-            <span className="text-xs font-normal">{authorName}</span>
+            <span className="truncate text-xs font-normal">{authorName}</span>
           </div>
         </div>
-        <RichText content={detail.blogDetail} />
+        <div className="mt-6 flex w-full flex-col gap-6 sm:mt-8 sm:gap-8 lg:flex-row lg:items-start lg:gap-10 xl:gap-12">
+          <article className="min-w-0 order-2 w-full flex-1 lg:order-1 lg:max-w-none">
+            <RichText content={detail.blogDetail} />
+          </article>
+          {tocHeadings.length > 0 ? (
+            <aside className="order-1 w-full shrink-0 lg:order-2 lg:sticky lg:top-24 lg:self-start lg:w-64 xl:w-72">
+              <BlogTableOfContents headings={tocHeadings} />
+            </aside>
+          ) : null}
+        </div>
         {detail.social && detail.social.length > 0 ? (
           <BlogSocialShare entries={detail.social} canonicalUrl={canonicalUrl} />
         ) : null}
